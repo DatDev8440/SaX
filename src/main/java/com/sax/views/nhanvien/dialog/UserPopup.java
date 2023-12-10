@@ -10,6 +10,8 @@ import com.sax.views.quanly.views.dialogs.NhanVienDialog;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class UserPopup extends JDialog {
     private JPanel main;
@@ -48,6 +50,12 @@ public class UserPopup extends JDialog {
         Point cornerPoint = new Point(cornerX - getWidth(), cornerY + 70);
 
         setLocation(cornerPoint);
+        lblTen.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                    new TaiKhoanDialog().setVisible(true);
+            }
+        });
     }
 
     private void dangXuat() {

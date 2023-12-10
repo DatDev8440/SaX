@@ -1,10 +1,12 @@
-package com.sax.views.quanly.views.dialogs;
+package com.sax.views.nhanvien.dialog;
 
 import com.sax.dtos.AccountDTO;
 import com.sax.services.IAccountService;
 import com.sax.services.impl.AccountService;
 import com.sax.utils.ContextUtils;
+import com.sax.utils.HashUtils;
 import com.sax.utils.MsgBox;
+import com.sax.utils.Session;
 import com.sax.views.quanly.viewmodel.NhanVienViewObject;
 import com.sax.views.quanly.views.panes.NhanVienPane;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -14,31 +16,36 @@ import javax.swing.*;
 import java.util.stream.Collectors;
 
 public class TaiKhoanDialog extends JDialog {
+    private JPanel contentPane;
+    private JLabel lblTitle;
+    private JButton btnSave;
     private JTextField txtTK;
+    private JPasswordField txtMK2;
     private JPasswordField txtMK1;
     private JLabel lblEmail;
-    private JButton btnSave;
-    private JPasswordField txtMK2;
-    private JPanel contentPane;
-    private IAccountService accountService = ContextUtils.getBean(AccountService.class);
-
-    public JLabel lblTitle;
     private JPasswordField txtOldPass;
+    private JButton buttonOK;
     public NhanVienPane parentPane;
-    public int id;
+    private IAccountService accountService = ContextUtils.getBean(AccountService.class);
+    private int id = Session.accountid.getId();
+
+
 
     public TaiKhoanDialog() {
+        setContentPane(contentPane);
+        setModal(true);
+        getRootPane().setDefaultButton(buttonOK);
         initComponent();
-        btnSave.addActionListener((e) -> save());
-    }
 
+    }
     private void initComponent() {
         setContentPane(contentPane);
         setModal(true);
         pack();
         setLocationRelativeTo(parentPane);
+        btnSave.addActionListener((e) -> save());
+        fillForm();
     }
-
     public void fillForm() {
         AccountDTO accountDTO = accountService.getById(id);
         txtTK.setText(accountDTO.getUsername());
@@ -52,15 +59,9 @@ public class TaiKhoanDialog extends JDialog {
                 if (id > 0) {
                     account.setId(id);
                     accountService.updateUsernamePassword(account);
-                } else {
-                    accountService.createAccount(account);
-                    parentPane.setPageValue(accountService.getTotalPage(parentPane.getSizeValue()));
-                    parentPane.setPageable(PageRequest.of(parentPane.getPageValue() - 1, parentPane.getSizeValue()));
-                    parentPane.fillListPage();
                 }
-                parentPane.fillTable(accountService.getPage(parentPane.getPageable()).stream().map(NhanVienViewObject::new).collect(Collectors.toList()));
                 dispose();
-            } catch (DataIntegrityViolationException e) {
+            } catch (Exception e) {
                 MsgBox.alert(parentPane, "Có lỗi: " + e.getMessage());
             }
         }
@@ -84,6 +85,12 @@ public class TaiKhoanDialog extends JDialog {
             JOptionPane.showMessageDialog(this, "Nhập lại mật khẩu không khớp với mật khẩu!");
             return null;
         }
+        String oldPass = new String(txtOldPass.getText().trim());
+        if (!HashUtils.checkPassword(oldPass, Session.accountid.getPassword())) {
+            JOptionPane.showMessageDialog(this, "Không trùng mật khẩu cũ!");
+            return null;
+        }
+
         accountDTO.setPassword(mk1);
         return accountDTO;
     }

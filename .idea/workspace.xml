@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="44e07298-6ca1-418a-a9af-b81f38961b47" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sax/utils/AudioUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/audios/beep.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/audios/beep.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sax/views/nhanvien/dialog/TaiKhoanDialog.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sax/views/nhanvien/dialog/TaiKhoanDialog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/views/nhanvien/product/ProductItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/views/nhanvien/product/ProductItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/views/quanly/views/dialogs/CameraDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/views/quanly/views/dialogs/CameraDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/views/nhanvien/dialog/UserPopup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/views/nhanvien/dialog/UserPopup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/views/quanly/views/dialogs/TaiKhoanDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/views/quanly/views/dialogs/TaiKhoanDialog.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,9 +37,21 @@
 }]]></component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "Merging update__service"
+    "Application.Unnamed.executor": "Run",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
+    "git-widget-placeholder": "update__service",
+    "last_opened_file_path": "D:/FPTPOLYTECHNIC/Semester4/DA1/sax/src/main/java/com/sax/views/nhanvien/dialog",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\FPTPOLYTECHNIC\Semester4\DA1\sax\src\main\java\com\sax\views\nhanvien\dialog" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sax.Application" />
