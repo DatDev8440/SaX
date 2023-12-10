@@ -7,6 +7,7 @@ import com.sax.Application;
 import com.sax.dtos.SachDTO;
 import com.sax.services.ISachService;
 import com.sax.services.impl.SachService;
+import com.sax.utils.AudioUtils;
 import com.sax.utils.Cart;
 import com.sax.utils.ContextUtils;
 import com.sax.utils.ImageUtils;
@@ -104,6 +105,7 @@ public class CameraDialog extends JDialog {
                                 table.repaint();
                             }
                             NhanVienView.nvv.tinhTien();
+                            AudioUtils.playAudio("beep.wav");
                             table.packAll();
                             Thread.sleep(1000);
                         }
