@@ -6,6 +6,7 @@ import com.sax.dtos.SachDTO;
 import com.sax.entities.DanhMuc;
 import com.sax.entities.Sach;
 import com.sax.repositories.IDanhMucRepository;
+import com.sax.repositories.IDonHangRepository;
 import com.sax.repositories.IKhachHangRepository;
 import com.sax.repositories.ISachRepository;
 import com.sax.services.*;
@@ -115,5 +116,9 @@ public class TestFile {
         dto.setUsername("ngu");
         dto.setPassword("c4ca4238a0b923820dcc509a6f75849b");
         service.updateUsernamePassword(dto);
+    }
+
+    @Test
+    public void delete() {
     }
 }
