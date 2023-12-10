@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RunManager">
+    <configuration name="TestFile.name" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SaX" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestFile" />
+      <option name="METHOD_NAME" value="name" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestFile.reg" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SaX" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestFile" />
+      <option name="METHOD_NAME" value="reg" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestFile.s" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SaX" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestFile" />
+      <option name="METHOD_NAME" value="s" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.TestFile.s" />
+        <item itemvalue="JUnit.TestFile.reg" />
+        <item itemvalue="JUnit.TestFile.name" />
+      </list>
+    </recent_temporary>
+  </component>
+</project>
