@@ -19,7 +19,7 @@ public class CustomHeaderTableCellRenderer extends DefaultTableCellRenderer {
         p.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(247, 247, 247)));
         l = new JLabel();
         l.setBackground(new Color(0, 0, 0, 0));
-        l.setText("  " + value.toString() + "  ");
+        l.setText(value + "  ");
         l.setFont(new Font(".SF NS Text", 1, 13));
         l.setForeground(Color.decode("#727272"));
         l.setVerticalAlignment(SwingConstants.TOP);

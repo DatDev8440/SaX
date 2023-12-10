@@ -62,7 +62,7 @@ public class UserPopup extends JDialog {
         dialog.fillForm();
         dialog.getPanelRole().setVisible(false);
         dialog.getTxtName().setEnabled(false);
-        dialog.getBtnSave().setVisible(false);
+//        dialog.getBtnSave().setVisible(false);
         dialog.getTxtEmail().setEnabled(false);
         dialog.getTxtSdt().setEnabled(false);
         dialog.getPanelTT().setVisible(false);

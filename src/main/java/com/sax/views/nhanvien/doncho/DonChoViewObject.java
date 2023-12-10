@@ -9,7 +9,6 @@ import java.util.List;
 
 @Data
 public class DonChoViewObject {
-    private JCheckBox chkDelete;
     private int id;
     private KhachHangDTO khachHang;
     private List<CartModel> listCart;
@@ -21,7 +20,6 @@ public class DonChoViewObject {
     }
 
     public DonChoViewObject(int id, KhachHangDTO tenKhachHang, List<CartModel> listCart, String tienHang, String chietKhau, String tongtien) {
-        this.chkDelete = new JCheckBox();
         this.id = id;
         this.khachHang = tenKhachHang;
         this.listCart = listCart;
@@ -31,6 +29,6 @@ public class DonChoViewObject {
     }
 
     public Object[] toObject() {
-        return new Object[]{chkDelete, id, khachHang, listCart.size() + " sản phẩm", tienHang, chietKhau, tongtien};
+        return new Object[]{id, khachHang, listCart.size() + " sản phẩm", tienHang, chietKhau, tongtien};
     }
 }

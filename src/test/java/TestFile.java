@@ -110,6 +110,10 @@ public class TestFile {
 
     @Test
     public void email() {
-        System.out.println(MailService.isValidEmail("$%^%&^@h"));
+        IAccountService service = ContextUtils.getBean(AccountService.class);
+        AccountDTO dto = service.getById(2008);
+        dto.setUsername("ngu");
+        dto.setPassword("c4ca4238a0b923820dcc509a6f75849b");
+        service.updateUsernamePassword(dto);
     }
 }

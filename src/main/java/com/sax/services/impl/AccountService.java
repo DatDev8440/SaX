@@ -77,12 +77,6 @@ public class AccountService implements IAccountService {
         try {
             File file = new File(e.getAnh());
             if (!e.getAnh().isEmpty())account.setAnh(file.getName());
-            ImageUtils.saveImage(file);
-        } catch (IOException ex) {
-            e.setAnh("no-image.png");
-        }
-        catch (NullPointerException exception){
-            account.setAnh(account.getAnh());
             if (repository.findByUsername(e.getUsername())==null){
                 account.setUsername(e.getUsername());
             }
@@ -90,6 +84,9 @@ public class AccountService implements IAccountService {
                 account.setUsername(e.getUsername());
             }
             else throw new RuntimeException("Trùng username");
+            ImageUtils.saveImage(file);
+        } catch (IOException ex) {
+            e.setAnh("no-image.png");
         }
         if (e.getEmail().equals(account.getEmail()))
             DTOUtils.getInstance().converter(repository.save(account), AccountDTO.class);
@@ -163,7 +160,6 @@ public class AccountService implements IAccountService {
     public void updateUsernamePassword(AccountDTO accountDTO) {
         Account account = repository.findById(accountDTO.getId()).orElseThrow();
         account.setPassword(HashUtils.hashPassword(accountDTO.getPassword()));
-        account.setUsername(account.getUsername());
         repository.save(account);
     }
 

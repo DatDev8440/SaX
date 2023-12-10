@@ -28,13 +28,13 @@ public class CustomCart extends JXTable {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 JPanel p = new JPanel();
-                p.setBorder(new EmptyBorder(0, 5, 0, 5));
+//                p.setBorder(new EmptyBorder(0, 5, 0, 5));
                 if (value instanceof NameItem) p.add((NameItem) value);
                 else if (column == 2) {
                     p.add(list.get(row).getSoLuong());
                     p.setBorder(new EmptyBorder(new Insets(3, 3, 3, 3)));
                 } else if (column == 3) p.add(list.get(row).getXoa());
-                else p.add(new JLabel(value.toString()));
+                else p.add(new JLabel(" " + value + " "));
                 p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
                 p.setAlignmentY(Component.CENTER_ALIGNMENT);
                 return p;

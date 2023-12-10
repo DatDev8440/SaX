@@ -3,6 +3,7 @@ package com.sax.views.nhanvien.product;
 import com.sax.dtos.SachDTO;
 import com.sax.utils.Cart;
 import com.sax.utils.ImageUtils;
+import com.sax.views.nhanvien.NhanVienView;
 import com.sax.views.nhanvien.cart.CartModel;
 import com.sax.views.components.libraries.PictureBox;
 import lombok.Getter;
@@ -29,17 +30,17 @@ public class ProductItem extends JPanel {
     private boolean selected = false;
     private SachDTO data;
 
-    public ProductItem(JXTable table, JLabel lblTienHang, JLabel lblTrietKhau, JLabel lblTPT, JCheckBox chkDiem) {
+    public ProductItem(JXTable table) {
         btnAddToCart.addActionListener((e) -> {
             Optional<CartModel> cartModel = Cart.getCart().stream().filter(i -> i.getId() == data.getId()).findFirst();
             if (cartModel.isEmpty())
-                Cart.getCart().add(new CartModel(data, table, lblTienHang, lblTrietKhau, lblTPT, chkDiem));
+                Cart.getCart().add(new CartModel(data));
             else {
                 JSpinner s = cartModel.get().getSoLuong();
                 s.setValue(s.getNextValue());
                 table.repaint();
             }
-            Cart.tinhTien(table, lblTienHang, lblTrietKhau, lblTPT, chkDiem);
+            NhanVienView.nvv.tinhTien();
             table.packAll();
         });
         setCursor(new Cursor(Cursor.HAND_CURSOR));

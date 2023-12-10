@@ -35,7 +35,7 @@ public class NhanVienDialog extends JDialog {
     private JRadioButton rdoQuanLy;
     @Getter
     private JButton btnImg;
-    private IAccountService accountService = ContextUtils.getBean(AccountService.class);
+    private final IAccountService accountService = ContextUtils.getBean(AccountService.class);
     private JPanel pnImage;
     private String image;
     private JRadioButton rdoDL;
@@ -43,17 +43,14 @@ public class NhanVienDialog extends JDialog {
 
     @Getter
     @Setter
-    private JPanel panelRole;
-    @Getter
-    @Setter
     private JPanel panelTT;
 
     public JLabel lblTitle;
-    private JPanel panelGender;
+    private JTextField txtTK;
+    @Getter
+    private JPanel panelRole;
     public int id;
     public NhanVienPane parentPane;
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
-
 
     public NhanVienDialog() {
         initComponent();
@@ -72,6 +69,7 @@ public class NhanVienDialog extends JDialog {
         if (id > 0) {
             AccountDTO accountDTO = accountService.getById(id);
             lblTitle.setText("Thông tin nhân viên " + accountDTO.getTenNhanVien());
+            txtTK.setText(accountDTO.getUsername());
             txtEmail.setText(accountDTO.getEmail());
             txtName.setText(accountDTO.getTenNhanVien());
             txtSdt.setText(accountDTO.getSdt());
@@ -88,8 +86,6 @@ public class NhanVienDialog extends JDialog {
 
     private void update() {
         AccountDTO dto = readForm();
-        Loading loading = new Loading(this);
-       executorService.submit(() -> {
            if (dto != null) {
                try {
                    dto.setId(id);
@@ -105,14 +101,10 @@ public class NhanVienDialog extends JDialog {
                        parentPane.fillTable(accountService.getPage(parentPane.getPageable()).stream().map(NhanVienViewObject::new).collect(Collectors.toList()));
                    Session.reload();
                    dispose();
-                  loading.setVisible(false);
                } catch (Exception ex) {
-                   loading.setVisible(false);
                    MsgBox.alert(this, "Có lỗi! " + ex.getMessage());
                }
            }
-       });
-       loading.setVisible(true);
     }
 
     private AccountDTO readForm() {
@@ -126,6 +118,17 @@ public class NhanVienDialog extends JDialog {
             MsgBox.alert(this, "Số điện thoại phải là số!");
             return null;
         }
+        String taiKhoan = txtTK.getText().trim();
+
+        if (taiKhoan.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tài khoản không được để trống!");
+            return null;
+        }
+        if (taiKhoan.length() < 6) {
+            JOptionPane.showMessageDialog(this, "Tài khoản phải it nhất 6 ký tự!");
+            return null;
+        }
+        accountDTO.setUsername(taiKhoan);
         String email = txtEmail.getText().trim();
         accountDTO.setEmail(email);
         boolean gioiTinh = rdoNam.isSelected() ? true : false;
