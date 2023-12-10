@@ -4,6 +4,7 @@ import com.sax.dtos.SachDTO;
 import com.sax.utils.AudioUtils;
 import com.sax.utils.Cart;
 import com.sax.utils.ImageUtils;
+import com.sax.utils.Session;
 import com.sax.views.nhanvien.NhanVienView;
 import com.sax.views.nhanvien.cart.CartModel;
 import com.sax.views.components.libraries.PictureBox;
@@ -33,6 +34,7 @@ public class ProductItem extends JPanel {
 
     public ProductItem(JXTable table) {
         btnAddToCart.addActionListener((e) -> {
+            Session.executorService.submit(() -> AudioUtils.playAudio("beep.wav"));
             Optional<CartModel> cartModel = Cart.getCart().stream().filter(i -> i.getId() == data.getId()).findFirst();
             if (cartModel.isEmpty())
                 Cart.getCart().add(new CartModel(data));
@@ -42,7 +44,6 @@ public class ProductItem extends JPanel {
                 table.repaint();
             }
             NhanVienView.nvv.tinhTien();
-            AudioUtils.playAudio("beep.wav");
             table.packAll();
         });
         setCursor(new Cursor(Cursor.HAND_CURSOR));

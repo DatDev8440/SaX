@@ -54,7 +54,6 @@ public class DonHangPane extends JPanel {
     private JList listPage;
     private IDonHangService donHangService = ContextUtils.getBean(DonHangService.class);
     private IDonHangChiTetService donHangChiTetService = ContextUtils.getBean(DonHangChiTietService.class);
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private Set tempIdSet = new HashSet();
     private List<JCheckBox> listCbk = new ArrayList<>();
     private Loading loading = new Loading(this);
@@ -109,12 +108,12 @@ public class DonHangPane extends JPanel {
     }
 
     public void fillTable(List<AbstractViewObject> list) {
-        Session.fillTable(list, table, cbkSelectedAll, executorService, tempIdSet, listCbk);
+        Session.fillTable(list, table, cbkSelectedAll, tempIdSet, listCbk);
     }
 
     private void update() {
         if (table.getSelectedRow() >= 0) {
-            executorService.submit(() -> {
+            Session.executorService.submit(() -> {
                 try {
                     DonHangDTO donHangDTO = donHangService.getById((int) table.getValueAt(table.getSelectedRow(), 1));
                     donHangDTO.setChiTietDonHangs(donHangChiTetService.getAllByDonHang(donHangDTO));

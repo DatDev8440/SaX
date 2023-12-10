@@ -13,22 +13,20 @@ public class DonChoViewObject {
     private KhachHangDTO khachHang;
     private List<CartModel> listCart;
     private String tienHang;
-    private String chietKhau;
-    private String tongtien;
+    private boolean diem;
 
     public DonChoViewObject() {
     }
 
-    public DonChoViewObject(int id, KhachHangDTO tenKhachHang, List<CartModel> listCart, String tienHang, String chietKhau, String tongtien) {
+    public DonChoViewObject(int id, KhachHangDTO tenKhachHang, List<CartModel> listCart, String tienHang, boolean diem) {
         this.id = id;
         this.khachHang = tenKhachHang;
         this.listCart = listCart;
         this.tienHang = tienHang;
-        this.chietKhau = chietKhau;
-        this.tongtien = tongtien;
+        this.diem = diem;
     }
 
     public Object[] toObject() {
-        return new Object[]{id, khachHang, listCart.size() + " sản phẩm", tienHang, chietKhau, tongtien};
+        return new Object[]{id, khachHang, listCart.size() + " sản phẩm", tienHang, diem ? "Có" : "Không"};
     }
 }

@@ -52,13 +52,12 @@ public class SanPhamPane extends JPanel {
     private JList listPage;
     private JComboBox cboHienThi;
     private Search timKiem;
-    private ISachService sachService = ContextUtils.getBean(SachService.class);
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
-    private Set tempIdSet = new HashSet();
-    private List<JCheckBox> listCbk = new ArrayList<>();
-    private Loading loading = new Loading(this);
+    private final ISachService sachService = ContextUtils.getBean(SachService.class);
+    private final Set tempIdSet = new HashSet();
+    private final List<JCheckBox> listCbk = new ArrayList<>();
+    private final Loading loading = new Loading(this);
 
-    private DefaultListModel listPageModel = new DefaultListModel();
+    private final DefaultListModel listPageModel = new DefaultListModel();
     @Getter
     @Setter
     private int sizeValue = 14;
@@ -115,7 +114,7 @@ public class SanPhamPane extends JPanel {
     }
 
     public void fillTable(List<AbstractViewObject> list) {
-        Session.fillTable(list, table, cbkSelectedAll, executorService, tempIdSet, listCbk);
+        Session.fillTable(list, table, cbkSelectedAll, tempIdSet, listCbk);
     }
 
     private void nhapHang() {
@@ -139,7 +138,7 @@ public class SanPhamPane extends JPanel {
 
     private void update() {
         if (table.getSelectedRow() >= 0) {
-            executorService.submit(() -> {
+            Session.executorService.submit(() -> {
                 SachDialog sachDialog = new SachDialog();
                 sachDialog.parentPane = this;
                 sachDialog.id = (int) table.getValueAt(table.getSelectedRow(), 1);

@@ -11,6 +11,7 @@ import com.sax.services.impl.CtkmService;
 import com.sax.services.impl.SachService;
 import com.sax.utils.ContextUtils;
 import com.sax.utils.MsgBox;
+import com.sax.utils.Session;
 import com.sax.views.components.ListPageNumber;
 import com.sax.views.components.Loading;
 import com.sax.views.components.libraries.ButtonToolItem;
@@ -44,7 +45,6 @@ public class CtkmSachDialog extends JDialog {
     private JButton btnDel;
     private JButton btnSave;
     private JList listPage;
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private List<CtkmSachDTO> listCtkmSach = new ArrayList<>();
     private ICtkmService ctkmService = ContextUtils.getBean(CtkmService.class);
     private ICtkmSachService ctkmSachService = ContextUtils.getBean(CtkmSachService.class);
@@ -155,7 +155,7 @@ public class CtkmSachDialog extends JDialog {
             @Override
             public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
                 JComboBox jComboBox = new JComboBox();
-                executorService.submit(() -> {
+                Session.executorService.submit(() -> {
                     sachService.getAllSachNotInCTKM().stream().filter(i -> {
                         for (CtkmSachDTO s : listCtkmSach)
                             if (s.getSach() != null && s.getSach().getId() == i.getId()) return false;

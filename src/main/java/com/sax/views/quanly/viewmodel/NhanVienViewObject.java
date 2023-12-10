@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
 
 @Data
 public class NhanVienViewObject extends AbstractViewObject {
@@ -42,13 +41,13 @@ public class NhanVienViewObject extends AbstractViewObject {
     }
 
     @Override
-    public Object[] toObject(ExecutorService executorService, JTable tbl, Set tempIdSet, List<JCheckBox> setCbk) {
+    public Object[] toObject(JTable tbl, Set tempIdSet, List<JCheckBox> setCbk) {
         setCbk.add(checkBoxDelete);
         checkBoxDelete.addActionListener((e) -> {
             if (checkBoxDelete.isSelected()) tempIdSet.add(id);
             else tempIdSet.remove(id);
         });
-        return new Object[]{checkBoxDelete, id, new CellNameRender(executorService, tbl, hinhAnh, name), username, email, sdt, getGioiTinh(), vaiTro ? "Quản lý" : "Nhân viên", ngayThem, trangThai ? "Đang làm" : "Đã nghỉ"};
+        return new Object[]{checkBoxDelete, id, new CellNameRender(tbl, hinhAnh, name), username, email, sdt, getGioiTinh(), vaiTro ? "Quản lý" : "Nhân viên", ngayThem, trangThai ? "Đang làm" : "Đã nghỉ"};
     }
 
     @Override

@@ -3,7 +3,9 @@ package com.sax.views.nhanvien.cart;
 import com.formdev.flatlaf.ui.FlatBorder;
 import com.formdev.flatlaf.ui.FlatButtonBorder;
 import com.sax.dtos.SachDTO;
+import com.sax.utils.AudioUtils;
 import com.sax.utils.Cart;
+import com.sax.utils.Session;
 import com.sax.views.components.libraries.ButtonToolItem;
 import com.sax.views.nhanvien.NhanVienView;
 import lombok.Getter;
@@ -39,14 +41,18 @@ public class CartModel {
                 return false;
             }
         };
-
+//
         soLuong.setBorder(flatBorder);
         soLuong.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        soLuong.addChangeListener((e) -> NhanVienView.nvv.tinhTien());
+        soLuong.addChangeListener((e) -> {
+            Session.executorService.submit(() -> AudioUtils.playAudio("beep.wav"));
+            NhanVienView.nvv.tinhTien();
+        });
 
         xoa.setBorder(flatBorder);
         xoa.setCursor(new Cursor(Cursor.HAND_CURSOR));
         xoa.addActionListener((e) -> {
+            Session.executorService.submit(() -> AudioUtils.playAudio("beep.wav"));
             Cart.getCart().remove(this);
             NhanVienView.nvv.tinhTien();
         });

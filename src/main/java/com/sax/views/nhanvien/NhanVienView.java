@@ -72,14 +72,13 @@ public class NhanVienView extends JPanel {
     private JPanel useDiem;
     private JButton btnDonHangCho;
     private JButton btnThemTam;
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
-    private ISachService sachService = ContextUtils.getBean(ISachService.class);
-    private IDonHangService donHangService = ContextUtils.getBean(DonHangService.class);
-    private IKhachHangService khachHangService = ContextUtils.getBean(KhachHangService.class);
-    private IAccountService accountService = ContextUtils.getBean(AccountService.class);
-    private IDanhMucService danhMucService = ContextUtils.getBean(DanhMucService.class);
-    private DefaultListModel danhMucLM = new DefaultListModel();
-    private Loading loading = new Loading(this);
+    private final ISachService sachService = ContextUtils.getBean(ISachService.class);
+    private final IDonHangService donHangService = ContextUtils.getBean(DonHangService.class);
+    private final IKhachHangService khachHangService = ContextUtils.getBean(KhachHangService.class);
+    private final IAccountService accountService = ContextUtils.getBean(AccountService.class);
+    private final IDanhMucService danhMucService = ContextUtils.getBean(DanhMucService.class);
+    private final DefaultListModel danhMucLM = new DefaultListModel();
+    private final Loading loading = new Loading(this);
     private Timer timer;
 
     public NhanVienView() {
@@ -191,6 +190,24 @@ public class NhanVienView extends JPanel {
         donItem.repaint();
     }
 
+    public void fillKhachHang(List<KhachHangDTO> list) {
+        cboKH.removeAllItems();
+        list.forEach(i -> cboKH.addItem(i));
+    }
+
+    private void chonDanhMuc() {
+        if (danhMuc.getSelectedIndex() >= 0) {
+            timKiem.txtSearch.setText("");
+            if (danhMuc.getSelectedValue() instanceof String) {
+                new Worker(0).execute();
+                loading.setVisible(true);
+            } else {
+                new Worker(1).execute();
+                loading.setVisible(true);
+            }
+        }
+    }
+
     private void thanhToan() {
         try {
             DonHangDTO donHangDTO = readCart();
@@ -205,11 +222,6 @@ public class NhanVienView extends JPanel {
         } catch (SQLServerException | FileNotFoundException | InvalidDataAccessApiUsageException e) {
             MsgBox.alert(this, e.getMessage());
         }
-    }
-
-    public void fillKhachHang(List<KhachHangDTO> list) {
-        cboKH.removeAllItems();
-        list.forEach(i -> cboKH.addItem(i));
     }
 
     private DonHangDTO readCart() {
@@ -229,8 +241,6 @@ public class NhanVienView extends JPanel {
     }
 
     public void tinhTien() {
-        btnDonHangCho.setText(String.valueOf(Session.listDonCho.size()));
-        cart.packAll();
         if (cart.getRowCount() == 0) {
             lblTienHang.setText("0đ");
             lblChietKhau.setText("0đ");
@@ -253,19 +263,6 @@ public class NhanVienView extends JPanel {
             if (tienHang < km) {
                 lblChietKhau.setText("-" + CurrencyConverter.parseString(tienHang));
                 lblTPT.setText("0đ");
-            }
-        }
-    }
-
-    private void chonDanhMuc() {
-        if (danhMuc.getSelectedIndex() >= 0) {
-            timKiem.txtSearch.setText("");
-            if (danhMuc.getSelectedValue() instanceof String) {
-                new Worker(0).execute();
-                loading.setVisible(true);
-            } else {
-                new Worker(1).execute();
-                loading.setVisible(true);
             }
         }
     }
@@ -300,8 +297,7 @@ public class NhanVienView extends JPanel {
             DonChoViewObject donCho = new DonChoViewObject();
             donCho.setId(Session.listDonCho.size() + 1);
             donCho.setTienHang(lblTienHang.getText());
-            donCho.setChietKhau(lblChietKhau.getText());
-            donCho.setTongtien(lblTPT.getText());
+            donCho.setDiem(chkDiem.isSelected());
             donCho.setListCart(new ArrayList<>(Cart.getCart()));
             if (cboKH.getSelectedIndex() == 0) {
                 KhachHangDTO khachHangDTO = new KhachHangDTO();
@@ -316,7 +312,21 @@ public class NhanVienView extends JPanel {
         }
     }
 
+    public void sentDonTamToDonHang(int id) {
+        DonChoViewObject donCho = Session.listDonCho.stream().filter(i -> i.getId() == id).findFirst().orElse(null);
+        Cart.getCart().clear();
+        Cart.getCart().addAll(donCho.getListCart());
+        cart.packAll();
+        if (donCho.getKhachHang().getId() == 0) cboKH.setSelectedIndex(0);
+        else cboKH.setSelectedItem(donCho.getKhachHang());
+        chkDiem.setSelected(donCho.isDiem());
+        Session.listDonCho.remove(donCho);
+        btnDonHangCho.setText(String.valueOf(Session.listDonCho.size()));
+        NhanVienView.nvv.tinhTien();
+    }
+
     private void clear() {
+        cboKH.setSelectedIndex(0);
         chkDiem.setSelected(false);
         useDiem.setVisible(false);
         Cart.getCart().clear();

@@ -24,6 +24,7 @@ import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.*;
@@ -37,6 +38,7 @@ public class Session {
     public static JLabel lblName;
     public static JPanel avatar;
     public static List<DonChoViewObject> listDonCho = new ArrayList<>();
+    public static ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private static final String CONFIG_FILE_PATH = "config.yaml";
 
@@ -73,12 +75,12 @@ public class Session {
         }
     }
 
-    public static void fillTable(List<AbstractViewObject> list, JXTable table, JCheckBox cbkSelectedAll, ExecutorService executorService, Set tempIdSet, List<JCheckBox> listCbk) {
+    public static void fillTable(List<AbstractViewObject> list, JXTable table, JCheckBox cbkSelectedAll, Set tempIdSet, List<JCheckBox> listCbk) {
         tempIdSet.clear();
         listCbk.clear();
         cbkSelectedAll.setSelected(false);
         ((DefaultTableModel) table.getModel()).setRowCount(0);
-        list.forEach(i -> ((DefaultTableModel) table.getModel()).addRow(i.toObject(executorService, table, tempIdSet, listCbk)));
+        list.forEach(i -> ((DefaultTableModel) table.getModel()).addRow(i.toObject(table, tempIdSet, listCbk)));
         table.setDefaultEditor(Object.class, null);
         table.getTableHeader().setDefaultRenderer(new CustomHeaderTableCellRenderer());
         table.getTableHeader().setEnabled(false);

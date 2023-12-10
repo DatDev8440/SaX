@@ -66,7 +66,7 @@ public class DonHangChoDialog extends JDialog {
         setModal(true);
         setLocationRelativeTo(Application.app);
 
-        ((DefaultTableModel) table.getModel()).setColumnIdentifiers(new String[]{"ID", "Tên khách hàng", "Số sản phẩm", "Tiền hàng", "Chiết khấu", "Tổng tiền"});
+        ((DefaultTableModel) table.getModel()).setColumnIdentifiers(new String[]{"ID", "Tên khách hàng", "Số sản phẩm", "Tiền hàng", "Chiết khấu"});
         fillTable(Session.listDonCho);
     }
 
@@ -118,10 +118,7 @@ public class DonHangChoDialog extends JDialog {
     private void sentDonTamToDonHang() {
         if (table.getSelectedRow() >= 0) {
             int id = (int) table.getValueAt(table.getSelectedRow(), 0);
-            DonChoViewObject donCho = Session.listDonCho.stream().filter(i -> i.getId() == id).findFirst().orElse(null);
-            Cart.getCart().addAll(donCho.getListCart());
-            Session.listDonCho.remove(donCho);
-            NhanVienView.nvv.tinhTien();
+            NhanVienView.nvv.sentDonTamToDonHang(id);
             dispose();
         }
     }
