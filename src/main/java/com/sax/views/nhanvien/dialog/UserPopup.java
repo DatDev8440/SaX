@@ -2,13 +2,10 @@ package com.sax.views.nhanvien.dialog;
 
 import com.formdev.flatlaf.ui.FlatLineBorder;
 import com.sax.Application;
-import com.sax.utils.MsgBox;
 import com.sax.utils.Session;
-import com.sax.views.LoginView;
 import com.sax.views.components.libraries.ButtonToolItem;
 import com.sax.views.components.libraries.PanelShadow;
 import com.sax.views.quanly.views.dialogs.NhanVienDialog;
-import lombok.Setter;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -61,8 +58,15 @@ public class UserPopup extends JDialog {
         dialog.id = Session.accountid.getId();
         dialog.fillForm();
         dialog.getPanelRole().setVisible(false);
+        dialog.getTxtName().setEnabled(false);
+        dialog.getBtnSave().setVisible(false);
+        dialog.getTxtEmail().setEnabled(false);
+        dialog.getTxtSdt().setEnabled(false);
         dialog.getPanelTT().setVisible(false);
         dialog.setLocationRelativeTo(Application.app);
+        dialog.getRdoNam().setEnabled(false);
+        dialog.getRdoNu().setEnabled(false);
+        dialog.getBtnImg().setVisible(false);
         dialog.setVisible(true);
     }
 

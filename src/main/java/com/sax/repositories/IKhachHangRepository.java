@@ -15,6 +15,6 @@ public interface IKhachHangRepository extends JpaRepository<KhachHang,Integer> {
     public Integer getCountInvoiceByUid(@Param("id") int id);
     @Query("SELECT e FROM KhachHang e WHERE CAST(e.id AS string) like %:keyword% OR e.tenKhach LIKE %:keyword%")
     List<KhachHang> findAllByKeyword(@Param("keyword") String keyword);
-    @Query("SELECT s FROM KhachHang s JOIN s.hoaDonsById where s.id=:id")
+    @Query("SELECT s FROM KhachHang s JOIN s.donHangs where s.id=:id")
     KhachHang findRelative(@Param("id")int id);
 }

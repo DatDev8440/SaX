@@ -54,7 +54,17 @@ public class DonHangChiTietService implements IDonHangChiTetService {
 
     @Override
     public void update(ChiTietDonHangDTO e) throws SQLServerException {
-        ChiTietDonHang chiTietDonHang = DTOUtils.getInstance().converter(e, ChiTietDonHang.class);
+        ChiTietDonHang chiTietDonHang = repository.findById(e.getId()).orElseThrow();
+        Sach sach = chiTietDonHang.getSach();
+        int soLuong = e.getSoLuong() - chiTietDonHang.getSoLuong();
+        sach.setSoLuong(sach.getSoLuong()+soLuong);
+        chiTietDonHang.setSoLuong(chiTietDonHang.getSoLuong()+soLuong);
+        long giaSach = (chiTietDonHang.getGiaBan()-chiTietDonHang.getGiaGiam())*soLuong;
+        DonHang donHang = chiTietDonHang.getDonHang();
+        donHang.setTienHang(donHang.getTienHang()-giaSach);
+        donHang.setTongTien(donHang.getTongTien()-giaSach);
+        sachRepository.save(sach);
+        donHangRepository.save(donHang);
         repository.save(chiTietDonHang);
     }
 
@@ -65,6 +75,8 @@ public class DonHangChiTietService implements IDonHangChiTetService {
         sach.setSoLuong(sach.getSoLuong() - chiTietDonHang.getSoLuong());
         DonHang donHang = chiTietDonHang.getDonHang();
         donHang.setTongTien(donHang.getTongTien() - chiTietDonHang.getSoLuong() *
+                (chiTietDonHang.getGiaBan() - chiTietDonHang.getGiaGiam()));
+        donHang.setTienHang(donHang.getTienHang()-chiTietDonHang.getSoLuong() *
                 (chiTietDonHang.getGiaBan() - chiTietDonHang.getGiaGiam()));
         sachRepository.save(sach);
         donHangRepository.save(donHang);

@@ -1,0 +1,342 @@
+Index: src/main/java/com/sax/entities/CtkmSach.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.sax.entities;\r\n\r\nimport lombok.*;\r\n\r\nimport javax.persistence.*;\r\n\r\n@Entity\r\n@AllArgsConstructor\r\n@NoArgsConstructor\r\n@Getter\r\n@Setter\r\n@Table(name = \"ctkm_sach\", schema = \"dbo\", catalog = \"SaX\")\r\npublic class CtkmSach {\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    @Id\r\n    @Column(name = \"id\", nullable = false)\r\n    private int id;\r\n    @Basic\r\n    @Column(name = \"gia_tri_giam\", nullable = false)\r\n    private long giaTriGiam;\r\n    @Column(name = \"id_sach\", nullable = false,insertable = false,updatable = false)\r\n    private int idSach;\r\n    @Basic\r\n    @Column(name = \"id_giam_gia\", nullable = false,insertable = false,updatable = false)\r\n    private int idKM;\r\n    @ManyToOne(fetch = FetchType.EAGER)\r\n    @JoinColumn(name = \"id_sach\", referencedColumnName = \"id\", nullable = false)\r\n    private Sach sach;\r\n    @ManyToOne\r\n    @JoinColumn(name = \"id_giam_gia\", referencedColumnName = \"id\", nullable = false)\r\n    private Ctkm ctkm;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/sax/entities/CtkmSach.java b/src/main/java/com/sax/entities/CtkmSach.java
+--- a/src/main/java/com/sax/entities/CtkmSach.java	
++++ b/src/main/java/com/sax/entities/CtkmSach.java	
+@@ -7,8 +7,7 @@
+ @Entity
+ @AllArgsConstructor
+ @NoArgsConstructor
+-@Getter
+-@Setter
++@Data
+ @Table(name = "ctkm_sach", schema = "dbo", catalog = "SaX")
+ public class CtkmSach {
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+Index: src/main/java/com/sax/entities/DonHang.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.sax.entities;\r\n\r\nimport lombok.*;\r\nimport org.hibernate.annotations.Immutable;\r\n\r\nimport javax.persistence.*;\r\nimport java.time.LocalDateTime;\r\nimport java.util.Collection;\r\n\r\n@Entity\r\n@AllArgsConstructor\r\n@NoArgsConstructor\r\n@Getter\r\n@Setter\r\n@Table(name = \"hoa_don\", schema = \"dbo\", catalog = \"SaX\")\r\npublic class DonHang {\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    @Id\r\n    @Column(name = \"id\", nullable = false)\r\n    private int id;\r\n    @Basic\r\n    @Column(name = \"tien_hang\")\r\n    private long tienHang = 0L;\r\n    @Basic\r\n    @Column(name = \"chiet_khau\")\r\n    private long chietKhau = 0L;\r\n    @Basic\r\n    @Column(name = \"tong_tien\", nullable = true)\r\n    private Long tongTien  = 0L;\r\n    @Basic\r\n    @Column(name = \"ngay_tao\", nullable = false)\r\n    private LocalDateTime ngayTao;\r\n    @Basic\r\n    @Column(name = \"id_khach\", nullable = false,insertable = false,updatable = false)\r\n    private int idKhach;\r\n    @Basic\r\n    @Column(name = \"id_tai_khoan\", nullable = false,insertable = false,updatable = false)\r\n    private int idTaiKhoan;\r\n    @Basic\r\n    @Column(name = \"phuong_thuc_thanh_toan\", nullable = true)\r\n    private Boolean pttt;\r\n    @ManyToOne\r\n    @JoinColumn(name = \"id_khach\", referencedColumnName = \"id\", nullable = false)\r\n    private KhachHang khachHangByIdKhach;\r\n    @ManyToOne\r\n    @JoinColumn(name = \"id_tai_khoan\", referencedColumnName = \"id\", nullable = false)\r\n    private Account account;\r\n\r\n    @OneToMany(mappedBy = \"donHang\",fetch = FetchType.EAGER)\r\n    private Collection<ChiTietDonHang> chiTietDonHangs;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/sax/entities/DonHang.java b/src/main/java/com/sax/entities/DonHang.java
+--- a/src/main/java/com/sax/entities/DonHang.java	
++++ b/src/main/java/com/sax/entities/DonHang.java	
+@@ -10,8 +10,7 @@
+ @Entity
+ @AllArgsConstructor
+ @NoArgsConstructor
+-@Getter
+-@Setter
++@Data
+ @Table(name = "hoa_don", schema = "dbo", catalog = "SaX")
+ public class DonHang {
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+Index: src/main/java/com/sax/entities/Account.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.sax.entities;\r\n\r\nimport lombok.AllArgsConstructor;\r\nimport lombok.Getter;\r\nimport lombok.NoArgsConstructor;\r\nimport lombok.Setter;\r\n\r\nimport javax.persistence.*;\r\nimport java.io.Serializable;\r\nimport java.time.LocalDateTime;\r\nimport java.util.Collection;\r\n\r\n@AllArgsConstructor\r\n@NoArgsConstructor\r\n@Getter\r\n@Setter\r\n@Entity\r\n@Table(name = \"account\", schema = \"dbo\", catalog = \"SaX\")\r\npublic class Account implements Serializable {\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    @Id\r\n    @Column(name = \"id\", nullable = false)\r\n    private int id;\r\n    @Basic\r\n    @Column(name = \"username\", nullable = false,columnDefinition = \"varchar(64)\",unique = true)\r\n    private String username;\r\n    @Basic\r\n    @Column(name = \"password\", nullable = false)\r\n    private String password;\r\n    @Basic\r\n    @Column(name = \"ten_nhan_vien\", nullable = true,columnDefinition = \"nvarchar(255)\")\r\n    private String tenNhanVien;\r\n    @Basic\r\n    @Column(name = \"anh\", nullable = true,columnDefinition = \"varchar(64)\")\r\n    private String anh;\r\n    @Basic\r\n    @Column(name = \"email\", nullable = true, length = 255)\r\n    private String email;\r\n    @Column(name = \"sdt\", nullable = true, length = 13,unique = true)\r\n    private String sdt;\r\n    @Basic\r\n    @Column(name = \"ngay_dang_ki\", nullable = false)\r\n    private LocalDateTime ngayDangKi;\r\n    @Basic\r\n    @Column(name = \"trang_thai\", nullable = false)\r\n    private boolean trangThai;\r\n    @Basic\r\n    @Column(name = \"gioi_tinh\", nullable = true)\r\n    private Boolean gioiTinh;\r\n    @Basic\r\n    @Column(name = \"vai_tro\",nullable = false)\r\n    private boolean vaiTro;\r\n    @OneToMany(mappedBy = \"account\")\r\n    private Collection<DonHang> donHangs;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/sax/entities/Account.java b/src/main/java/com/sax/entities/Account.java
+--- a/src/main/java/com/sax/entities/Account.java	
++++ b/src/main/java/com/sax/entities/Account.java	
+@@ -1,9 +1,6 @@
+ package com.sax.entities;
+ 
+-import lombok.AllArgsConstructor;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
++import lombok.*;
+ 
+ import javax.persistence.*;
+ import java.io.Serializable;
+@@ -12,8 +9,7 @@
+ 
+ @AllArgsConstructor
+ @NoArgsConstructor
+-@Getter
+-@Setter
++@Data
+ @Entity
+ @Table(name = "account", schema = "dbo", catalog = "SaX")
+ public class Account implements Serializable {
+Index: src/main/java/com/sax/entities/DanhMuc.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.sax.entities;\r\n\r\nimport lombok.AllArgsConstructor;\r\nimport lombok.Getter;\r\nimport lombok.NoArgsConstructor;\r\nimport lombok.Setter;\r\n\r\nimport javax.persistence.*;\r\nimport java.util.Collection;\r\nimport java.util.HashSet;\r\nimport java.util.Set;\r\n\r\n@Entity\r\n@AllArgsConstructor\r\n@NoArgsConstructor\r\n@Getter\r\n@Setter\r\n@Table(name = \"danh_muc\", schema = \"dbo\", catalog = \"SaX\")\r\npublic class DanhMuc {\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    @Id\r\n    @Column(name = \"id\", nullable = false)\r\n    private int id;\r\n    @Basic\r\n    @Column(name = \"ten_danh_muc\", nullable = false, columnDefinition = \"nvarchar(255)\")\r\n    private String tenDanhMuc;\r\n    @Basic\r\n    @Column(name = \"ghi_chu\", nullable = true, columnDefinition = \"nvarchar(255)\")\r\n    private String ghiChu;\r\n    @Basic\r\n    @Column(name = \"id_loai_cha\",insertable = false,updatable = false)\r\n    private Integer idDanhMucCha;\r\n\r\n    @ManyToOne\r\n    @JoinColumn(name = \"id_loai_cha\", referencedColumnName = \"id\")\r\n    private DanhMuc danhMucCha;\r\n\r\n    @OneToMany(mappedBy = \"danhMucCha\",fetch = FetchType.EAGER)\r\n    private Set<DanhMuc> danhMucCon;\r\n    @ManyToMany(mappedBy = \"setDanhMuc\",fetch = FetchType.EAGER)\r\n    private Set<Sach> setSach = new HashSet<>();\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/sax/entities/DanhMuc.java b/src/main/java/com/sax/entities/DanhMuc.java
+--- a/src/main/java/com/sax/entities/DanhMuc.java	
++++ b/src/main/java/com/sax/entities/DanhMuc.java	
+@@ -1,9 +1,6 @@
+ package com.sax.entities;
+ 
+-import lombok.AllArgsConstructor;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
++import lombok.*;
+ 
+ import javax.persistence.*;
+ import java.util.Collection;
+@@ -13,8 +10,7 @@
+ @Entity
+ @AllArgsConstructor
+ @NoArgsConstructor
+-@Getter
+-@Setter
++@Data
+ @Table(name = "danh_muc", schema = "dbo", catalog = "SaX")
+ public class DanhMuc {
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+Index: src/main/java/com/sax/services/impl/DonHangChiTietService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.sax.services.impl;\r\n\r\nimport com.microsoft.sqlserver.jdbc.SQLServerException;\r\nimport com.sax.dtos.ChiTietDonHangDTO;\r\nimport com.sax.dtos.DonHangDTO;\r\nimport com.sax.entities.ChiTietDonHang;\r\nimport com.sax.entities.DonHang;\r\nimport com.sax.entities.Sach;\r\nimport com.sax.repositories.IDonHangChiTietRepository;\r\nimport com.sax.repositories.IDonHangRepository;\r\nimport com.sax.repositories.ISachRepository;\r\nimport com.sax.services.IDonHangChiTetService;\r\nimport com.sax.utils.DTOUtils;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.data.domain.Pageable;\r\nimport org.springframework.stereotype.Service;\r\n\r\nimport java.util.List;\r\nimport java.util.NoSuchElementException;\r\nimport java.util.Set;\r\n\r\n@Service\r\npublic class DonHangChiTietService implements IDonHangChiTetService {\r\n    @Autowired\r\n    private IDonHangChiTietRepository repository;\r\n    @Autowired\r\n    private ISachRepository sachRepository;\r\n    @Autowired\r\n    IDonHangRepository donHangRepository;\r\n\r\n    @Override\r\n    public List<ChiTietDonHangDTO> getAll() {\r\n        return DTOUtils.getInstance().convertToDTOList(repository.findAll(), ChiTietDonHangDTO.class);\r\n    }\r\n\r\n    @Override\r\n    public List<ChiTietDonHangDTO> getAllByIds(List<Integer> ids) throws SQLServerException {\r\n        return null;\r\n    }\r\n\r\n    @Override\r\n    public ChiTietDonHangDTO getById(Integer id) {\r\n        return DTOUtils.getInstance()\r\n                .converter(repository.findById(id)\r\n                        .orElseThrow(()\r\n                                -> new NoSuchElementException(\"Khong tim thay\")), ChiTietDonHangDTO.class);\r\n    }\r\n\r\n    @Override\r\n    public ChiTietDonHangDTO insert(ChiTietDonHangDTO e) throws SQLServerException {\r\n        return null;\r\n    }\r\n\r\n\r\n    @Override\r\n    public void update(ChiTietDonHangDTO e) throws SQLServerException {\r\n        ChiTietDonHang chiTietDonHang = DTOUtils.getInstance().converter(e, ChiTietDonHang.class);\r\n        repository.save(chiTietDonHang);\r\n    }\r\n\r\n    @Override\r\n    public void delete(Integer id) throws SQLServerException {\r\n        ChiTietDonHang chiTietDonHang = repository.findById(id).orElseThrow();\r\n        Sach sach = chiTietDonHang.getSach();\r\n        sach.setSoLuong(sach.getSoLuong() - chiTietDonHang.getSoLuong());\r\n        DonHang donHang = chiTietDonHang.getDonHang();\r\n        donHang.setTongTien(donHang.getTongTien() - chiTietDonHang.getSoLuong() *\r\n                (chiTietDonHang.getGiaBan() - chiTietDonHang.getGiaGiam()));\r\n        sachRepository.save(sach);\r\n        donHangRepository.save(donHang);\r\n        repository.deleteById(id);\r\n    }\r\n\r\n    @Override\r\n    public void deleteAll(Set<Integer> ids) throws SQLServerException {\r\n\r\n    }\r\n\r\n    @Override\r\n    public int getTotalPage(int amount) {\r\n        return repository.findAll(Pageable.ofSize(amount)).getTotalPages();\r\n    }\r\n\r\n    @Override\r\n    public List<ChiTietDonHangDTO> getPage(Pageable page) {\r\n        return DTOUtils.getInstance().convertToDTOList(repository.findAll(page).stream().toList(), ChiTietDonHangDTO.class);\r\n    }\r\n\r\n    @Override\r\n    public List<ChiTietDonHangDTO> searchByKeyword(String keyword) {\r\n        return null;\r\n    }\r\n\r\n\r\n    @Override\r\n    public List<ChiTietDonHangDTO> getAllByDonHang(DonHangDTO donHangDTO) {\r\n        return DTOUtils.getInstance()\r\n                .convertToDTOList(repository.findAllByDonHang(DTOUtils.getInstance().\r\n                        converter(donHangDTO, DonHang.class)), ChiTietDonHangDTO.class);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/sax/services/impl/DonHangChiTietService.java b/src/main/java/com/sax/services/impl/DonHangChiTietService.java
+--- a/src/main/java/com/sax/services/impl/DonHangChiTietService.java	
++++ b/src/main/java/com/sax/services/impl/DonHangChiTietService.java	
+@@ -54,7 +54,17 @@
+ 
+     @Override
+     public void update(ChiTietDonHangDTO e) throws SQLServerException {
+-        ChiTietDonHang chiTietDonHang = DTOUtils.getInstance().converter(e, ChiTietDonHang.class);
++        ChiTietDonHang chiTietDonHang = repository.findById(e.getId()).orElseThrow();
++        Sach sach = chiTietDonHang.getSach();
++        int soLuong = e.getSoLuong() - chiTietDonHang.getSoLuong();
++        sach.setSoLuong(sach.getSoLuong()+soLuong);
++        chiTietDonHang.setSoLuong(chiTietDonHang.getSoLuong()+soLuong);
++        long giaSach = (chiTietDonHang.getGiaBan()-chiTietDonHang.getGiaGiam())*soLuong;
++        DonHang donHang = chiTietDonHang.getDonHang();
++        donHang.setTienHang(donHang.getTienHang()-giaSach);
++        donHang.setTongTien(donHang.getTongTien()-giaSach);
++        sachRepository.save(sach);
++        donHangRepository.save(donHang);
+         repository.save(chiTietDonHang);
+     }
+ 
+@@ -65,6 +75,8 @@
+         sach.setSoLuong(sach.getSoLuong() - chiTietDonHang.getSoLuong());
+         DonHang donHang = chiTietDonHang.getDonHang();
+         donHang.setTongTien(donHang.getTongTien() - chiTietDonHang.getSoLuong() *
++                (chiTietDonHang.getGiaBan() - chiTietDonHang.getGiaGiam()));
++        donHang.setTienHang(donHang.getTienHang()-chiTietDonHang.getSoLuong() *
+                 (chiTietDonHang.getGiaBan() - chiTietDonHang.getGiaGiam()));
+         sachRepository.save(sach);
+         donHangRepository.save(donHang);
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"MavenProjectsManager\">\r\n    <option name=\"originalFiles\">\r\n      <list>\r\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_17\" default=\"true\" project-jdk-name=\"17\" project-jdk-type=\"JavaSDK\" />\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	
++++ b/.idea/misc.xml	
+@@ -7,6 +7,7 @@
+         <option value="$PROJECT_DIR$/pom.xml" />
+       </list>
+     </option>
++    <option name="workspaceImportForciblyTurnedOn" value="true" />
+   </component>
+   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK" />
+ </project>
+\ No newline at end of file
+Index: src/main/java/com/sax/entities/Sach.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.sax.entities;\r\n\r\nimport lombok.*;\r\nimport org.hibernate.annotations.*;\r\n\r\nimport javax.persistence.*;\r\nimport javax.persistence.Entity;\r\nimport javax.persistence.Table;\r\nimport java.time.LocalDateTime;\r\nimport java.util.Collection;\r\nimport java.util.HashSet;\r\nimport java.util.List;\r\nimport java.util.Set;\r\n\r\n@Entity\r\n@AllArgsConstructor\r\n@NoArgsConstructor\r\n@Getter\r\n@Setter\r\n@Table(name = \"sach\", schema = \"dbo\", catalog = \"SaX\")\r\npublic class Sach {\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    @Id\r\n    @Column(name = \"id\", nullable = false)\r\n    private int id;\r\n    @Basic\r\n    @Column(name = \"ten_sach\", nullable = false,columnDefinition = \"nvarchar(255)\")\r\n    private String tenSach;\r\n    @Basic\r\n    @Column(name = \"bar_code\", nullable = true,columnDefinition = \"varchar(13)\")\r\n    private String barCode;\r\n    @Basic\r\n    @Column(name = \"gia_ban\", nullable = false)\r\n    private long giaBan;\r\n    @Basic\r\n    @Column(name = \"nxb\", nullable = false,columnDefinition = \"nvarchar(128)\")\r\n    private String nxb;\r\n    @Basic\r\n    @Column(name = \"so_luong\", nullable = false)\r\n    private int soLuong;\r\n    @Basic\r\n    @Column(name = \"ngay_them\", nullable = false)\r\n    private LocalDateTime ngayThem;\r\n    @Basic\r\n    @Column(name = \"ngay_sua\", nullable = true)\r\n    private LocalDateTime ngaySua;\r\n    @Basic\r\n    @Column(name = \"trang_thai\", nullable = false)\r\n    private boolean trangThai;\r\n    @Basic\r\n    @Column(name = \"hinh_anh\", nullable = true, length = 2000)\r\n    private String hinhAnh;\r\n\r\n    @ManyToMany(fetch = FetchType.EAGER)\r\n    @JoinTable(\r\n            name = \"sach_danh_muc\",\r\n            joinColumns = { @JoinColumn(name = \"id_sach\") },\r\n            inverseJoinColumns = { @JoinColumn(name = \"id_danh_muc\") }\r\n    )\r\n    Set<DanhMuc> setDanhMuc = new HashSet<>();\r\n    @OneToMany(mappedBy = \"sach\",fetch = FetchType.EAGER)\r\n    @Fetch(value = FetchMode.SUBSELECT)\r\n    private List<CtkmSach> CtkmSach;\r\n    @OneToMany(mappedBy = \"sach\")\r\n    private Collection<ChiTietDonHang> chiTietDonHangs;\r\n    @OneToMany(mappedBy = \"sach\",fetch = FetchType.EAGER)\r\n    List<LichSuNhapHang> lichSuNhapHangList;\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/sax/entities/Sach.java b/src/main/java/com/sax/entities/Sach.java
+--- a/src/main/java/com/sax/entities/Sach.java	
++++ b/src/main/java/com/sax/entities/Sach.java	
+@@ -15,8 +15,7 @@
+ @Entity
+ @AllArgsConstructor
+ @NoArgsConstructor
+-@Getter
+-@Setter
++@Data
+ @Table(name = "sach", schema = "dbo", catalog = "SaX")
+ public class Sach {
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+Index: src/main/java/com/sax/entities/ChiTietDonHang.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.sax.entities;\r\n\r\nimport lombok.AllArgsConstructor;\r\nimport lombok.Getter;\r\nimport lombok.NoArgsConstructor;\r\nimport lombok.Setter;\r\n\r\nimport javax.persistence.*;\r\nimport java.time.LocalDateTime;\r\n\r\n@Entity\r\n@AllArgsConstructor\r\n@NoArgsConstructor\r\n@Getter\r\n@Setter\r\n@Table(name = \"hoa_don_chi_tiet\", schema = \"dbo\", catalog = \"SaX\")\r\npublic class ChiTietDonHang {\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    @Id\r\n    @Column(name = \"id\", nullable = false)\r\n    private int id;\r\n    @Basic\r\n    @Column(name = \"gia_ban\", nullable = false)\r\n    private long giaBan;\r\n    @Basic\r\n    @Column(name = \"gia_giam\", nullable = false)\r\n    private long giaGiam;\r\n    @Basic\r\n    @Column(name = \"so_luong\", nullable = false)\r\n    private int soLuong;\r\n    @Basic\r\n    @Column(name = \"ghichu\", nullable = true,columnDefinition = \"nvarchar(255)\")\r\n    private String ghichu;\r\n    @Basic\r\n    @Column(name = \"id_hoa_don\",insertable = false,updatable = false)\r\n    private int idDonHang;\r\n    @Basic\r\n    @Column(name = \"id_sach\",insertable = false,updatable = false)\r\n    private int idSach;\r\n    @ManyToOne\r\n    @JoinColumn(name = \"id_hoa_don\", referencedColumnName = \"id\", nullable = false)\r\n    private DonHang donHang;\r\n    @ManyToOne\r\n    @JoinColumn(name = \"id_sach\", referencedColumnName = \"id\", nullable = false)\r\n    private Sach sach;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/sax/entities/ChiTietDonHang.java b/src/main/java/com/sax/entities/ChiTietDonHang.java
+--- a/src/main/java/com/sax/entities/ChiTietDonHang.java	
++++ b/src/main/java/com/sax/entities/ChiTietDonHang.java	
+@@ -1,9 +1,6 @@
+ package com.sax.entities;
+ 
+-import lombok.AllArgsConstructor;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
++import lombok.*;
+ 
+ import javax.persistence.*;
+ import java.time.LocalDateTime;
+@@ -11,8 +8,7 @@
+ @Entity
+ @AllArgsConstructor
+ @NoArgsConstructor
+-@Getter
+-@Setter
++@Data
+ @Table(name = "hoa_don_chi_tiet", schema = "dbo", catalog = "SaX")
+ public class ChiTietDonHang {
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+Index: src/main/java/com/sax/entities/KhachHang.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.sax.entities;\r\n\r\nimport lombok.AllArgsConstructor;\r\nimport lombok.Getter;\r\nimport lombok.NoArgsConstructor;\r\nimport lombok.Setter;\r\n\r\nimport javax.persistence.*;\r\nimport java.time.LocalDateTime;\r\nimport java.util.Collection;\r\n\r\n@Entity\r\n@AllArgsConstructor\r\n@NoArgsConstructor\r\n@Getter\r\n@Setter\r\n@Table(name = \"khach_hang\", schema = \"dbo\", catalog = \"SaX\")\r\npublic class KhachHang {\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    @Id\r\n    @Column(name = \"id\", nullable = false)\r\n    private int id;\r\n    @Basic\r\n    @Column(name = \"ten_khach\", nullable = false,columnDefinition = \"nvarchar(255)\")\r\n    private String tenKhach;\r\n    @Basic\r\n    @Column(name = \"sdt\", nullable = false, length = 15)\r\n    private String sdt;\r\n    @Basic\r\n    @Column(name = \"diem\", nullable = false)\r\n    private Integer diem;\r\n    @Basic\r\n    @Column(name = \"ngay_them\", nullable = false)\r\n    private LocalDateTime ngayThem;\r\n    @Basic\r\n    @Column(name = \"gioi_tinh\", nullable = false)\r\n    private boolean gioiTinh;\r\n    @OneToMany(mappedBy = \"khachHangByIdKhach\")\r\n    private Collection<DonHang> hoaDonsById;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/sax/entities/KhachHang.java b/src/main/java/com/sax/entities/KhachHang.java
+--- a/src/main/java/com/sax/entities/KhachHang.java	
++++ b/src/main/java/com/sax/entities/KhachHang.java	
+@@ -1,9 +1,6 @@
+ package com.sax.entities;
+ 
+-import lombok.AllArgsConstructor;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
++import lombok.*;
+ 
+ import javax.persistence.*;
+ import java.time.LocalDateTime;
+@@ -12,8 +9,7 @@
+ @Entity
+ @AllArgsConstructor
+ @NoArgsConstructor
+-@Getter
+-@Setter
++@Data
+ @Table(name = "khach_hang", schema = "dbo", catalog = "SaX")
+ public class KhachHang {
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+Index: .idea/dataSources.local.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"dataSourceStorageLocal\" created-in=\"IU-232.10227.8\">\r\n    <data-source name=\"sax@localhost\" uuid=\"ba8ced40-d405-43a7-9c2a-d158020de620\">\r\n      <database-info product=\"Microsoft SQL Server\" version=\"14.00.1000\" jdbc-version=\"4.2\" driver-name=\"Microsoft JDBC Driver 12.2 for SQL Server\" driver-version=\"12.2.0.0\" dbms=\"MSSQL\" exact-version=\"14.0.1000\" exact-driver-version=\"12.2\">\r\n        <extra-name-characters>$#@</extra-name-characters>\r\n        <identifier-quote-string>&quot;</identifier-quote-string>\r\n      </database-info>\r\n      <case-sensitivity plain-identifiers=\"mixed\" quoted-identifiers=\"mixed\" />\r\n      <secret-storage>master_key</secret-storage>\r\n      <user-name>sa</user-name>\r\n      <schema-mapping>\r\n        <introspection-scope>\r\n          <node kind=\"database\" qname=\"@\">\r\n            <node kind=\"schema\" qname=\"@\" />\r\n          </node>\r\n        </introspection-scope>\r\n      </schema-mapping>\r\n    </data-source>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/dataSources.local.xml b/.idea/dataSources.local.xml
+--- a/.idea/dataSources.local.xml	
++++ b/.idea/dataSources.local.xml	
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="dataSourceStorageLocal" created-in="IU-232.10227.8">
++  <component name="dataSourceStorageLocal" created-in="IU-233.11799.241">
+     <data-source name="sax@localhost" uuid="ba8ced40-d405-43a7-9c2a-d158020de620">
+       <database-info product="Microsoft SQL Server" version="14.00.1000" jdbc-version="4.2" driver-name="Microsoft JDBC Driver 12.2 for SQL Server" driver-version="12.2.0.0" dbms="MSSQL" exact-version="14.0.1000" exact-driver-version="12.2">
+         <extra-name-characters>$#@</extra-name-characters>
+Index: src/main/java/com/sax/entities/Ctkm.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.sax.entities;\r\n\r\nimport lombok.*;\r\n\r\nimport javax.persistence.*;\r\nimport java.time.LocalDateTime;\r\nimport java.util.Collection;\r\n\r\n@Entity\r\n@AllArgsConstructor\r\n@NoArgsConstructor\r\n@Getter\r\n@Setter\r\n@Table(name = \"ctkm\", schema = \"dbo\", catalog = \"SaX\")\r\npublic class Ctkm {\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    @Id\r\n    @Column(name = \"id\", nullable = false)\r\n    private int id;\r\n    @Basic\r\n    @Column(name = \"ten_su_kien\", nullable = false,columnDefinition = \"nvarchar(100)\")\r\n    private String tenSuKien;\r\n    @Basic\r\n    @Column(name = \"ngay_bat_dau\", nullable = false)\r\n    private LocalDateTime ngayBatDau;\r\n    @Basic\r\n    @Column(name = \"ngay_ket_thuc\", nullable = false)\r\n    private LocalDateTime ngayKetThuc;\r\n    @Column(name = \"kieu_giam_gia\", nullable = false)\r\n    private boolean kieuGiamGia;\r\n    @OneToMany(mappedBy = \"ctkm\")\r\n    private Collection<CtkmSach> ctkm;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/sax/entities/Ctkm.java b/src/main/java/com/sax/entities/Ctkm.java
+--- a/src/main/java/com/sax/entities/Ctkm.java	
++++ b/src/main/java/com/sax/entities/Ctkm.java	
+@@ -9,8 +9,7 @@
+ @Entity
+ @AllArgsConstructor
+ @NoArgsConstructor
+-@Getter
+-@Setter
++@Data
+ @Table(name = "ctkm", schema = "dbo", catalog = "SaX")
+ public class Ctkm {
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+Index: .idea/dataSources/ba8ced40-d405-43a7-9c2a-d158020de620.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/dataSources/ba8ced40-d405-43a7-9c2a-d158020de620.xml b/.idea/dataSources/ba8ced40-d405-43a7-9c2a-d158020de620.xml
+--- a/.idea/dataSources/ba8ced40-d405-43a7-9c2a-d158020de620.xml	
++++ b/.idea/dataSources/ba8ced40-d405-43a7-9c2a-d158020de620.xml	
+@@ -1,42 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <dataSource name="sax@localhost">
+-  <database-model serializer="dbm" dbms="MSSQL" family-id="MSSQL" format-version="4.49">
+-    <root id="1">
+-      <Grants>2|||2|connect|G
+-3|||2|connect|G
+-4|||2|connect|G
+-5|||2|connect|G
+-0|root||263|alter any availability group|G
+-0|root||265|alter any event session|G
+-0|root||102|authenticate server|G
+-0|root||103|authenticate server|G
+-0|root||265|connect any database|G
+-0|root||1|connect sql|G
+-0|root||256|connect sql|G
+-0|root||257|connect sql|G
+-0|root||258|connect sql|G
+-0|root||259|connect sql|G
+-0|root||260|connect sql|G
+-0|root||261|connect sql|G
+-0|root||262|connect sql|G
+-0|root||263|connect sql|G
+-0|root||264|connect sql|G
+-0|root||265|connect sql|G
+-0|root||105|control server|G
+-0|root||2|view any database|G
+-0|root||101|view any definition|G
+-0|root||102|view any definition|G
+-0|root||105|view any definition|G
+-0|root||106|view any definition|G
+-0|root||257|view any definition|G
+-0|root||265|view any definition|G
+-0|root||102|view server state|G
+-0|root||257|view server state|G
+-0|root||263|view server state|G
+-0|root||265|view server state|G</Grants>
+-      <PermissionsCheckSum>43840685535</PermissionsCheckSum>
+-      <ServerVersion>14.0.1000</ServerVersion>
+-    </root>
++  <database-model serializer="dbm" dbms="MSSQL" family-id="MSSQL" format-version="4.51">
++    <root id="1"/>
+     <collation id="2" parent="1" name="Albanian_BIN">
+       <Description>Albanian, binary sort</Description>
+     </collation>
+@@ -12331,8 +12296,7 @@
+     </schema>
+     <schema id="4050" parent="3957" name="dbo">
+       <Current>1</Current>
+-      <IntrospectionTimestamp>2023-12-08.04:29:05.983</IntrospectionTimestamp>
+-      <LocalIntrospectionTimestamp>2023-12-07.14:29:05</LocalIntrospectionTimestamp>
++      <LastIntrospectionLocalTimestamp>2023-12-07.14:29:05</LastIntrospectionLocalTimestamp>
+       <ObjectId>1</ObjectId>
+     </schema>
+     <schema id="4051" parent="3957" name="guest">

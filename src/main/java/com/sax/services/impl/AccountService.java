@@ -74,12 +74,22 @@ public class AccountService implements IAccountService {
         account.setVaiTro(e.isVaiTro());
         account.setTrangThai(e.getTrangThai());
         account.setNgayDangKi(LocalDateTime.now());
-        File file = new File(e.getAnh());
         try {
-            account.setAnh(file.getName());
+            File file = new File(e.getAnh());
+            if (!e.getAnh().isEmpty())account.setAnh(file.getName());
             ImageUtils.saveImage(file);
         } catch (IOException ex) {
             e.setAnh("no-image.png");
+        }
+        catch (NullPointerException exception){
+            account.setAnh(account.getAnh());
+            if (repository.findByUsername(e.getUsername())==null){
+                account.setUsername(e.getUsername());
+            }
+            else if(account.getUsername().equals(e.getUsername())){
+                account.setUsername(e.getUsername());
+            }
+            else throw new RuntimeException("Trùng username");
         }
         if (e.getEmail().equals(account.getEmail()))
             DTOUtils.getInstance().converter(repository.save(account), AccountDTO.class);

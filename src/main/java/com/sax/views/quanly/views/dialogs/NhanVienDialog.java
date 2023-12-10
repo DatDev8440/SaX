@@ -15,15 +15,22 @@ import javax.swing.*;
 import java.util.stream.Collectors;
 
 public class NhanVienDialog extends JDialog {
+    @Getter
     private JTextField txtName;
+    @Getter
     private JTextField txtSdt;
+    @Getter
     private JTextField txtEmail;
+    @Getter
     private JButton btnSave;
     private JPanel contentPane;
+    @Getter
     private JRadioButton rdoNu;
+    @Getter
     private JRadioButton rdoNam;
     private JRadioButton rdoNhanVien;
     private JRadioButton rdoQuanLy;
+    @Getter
     private JButton btnImg;
     private IAccountService accountService = ContextUtils.getBean(AccountService.class);
     private JPanel pnImage;
@@ -39,12 +46,12 @@ public class NhanVienDialog extends JDialog {
     private JPanel panelTT;
 
     public JLabel lblTitle;
+    private JPanel panelGender;
     public int id;
     public NhanVienPane parentPane;
 
     public NhanVienDialog() {
         initComponent();
-
         btnSave.addActionListener((e) -> update());
         btnImg.addActionListener(e -> image = ImageUtils.openImageFile(pnImage));
     }
