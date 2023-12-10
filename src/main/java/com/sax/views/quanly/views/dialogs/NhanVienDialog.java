@@ -4,6 +4,7 @@ import com.sax.dtos.AccountDTO;
 import com.sax.services.IAccountService;
 import com.sax.services.impl.AccountService;
 import com.sax.utils.*;
+import com.sax.views.components.Loading;
 import com.sax.views.components.libraries.ButtonToolItem;
 import com.sax.views.quanly.viewmodel.NhanVienViewObject;
 import com.sax.views.quanly.views.panes.NhanVienPane;
@@ -12,6 +13,8 @@ import lombok.Setter;
 import org.springframework.data.domain.Pageable;
 
 import javax.swing.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class NhanVienDialog extends JDialog {
@@ -49,6 +52,8 @@ public class NhanVienDialog extends JDialog {
     private JPanel panelGender;
     public int id;
     public NhanVienPane parentPane;
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
+
 
     public NhanVienDialog() {
         initComponent();
@@ -74,6 +79,8 @@ public class NhanVienDialog extends JDialog {
             else rdoNhanVien.setSelected(true);
             if (accountDTO.isGioiTinh()) rdoNam.setSelected(true);
             else rdoNu.setSelected(true);
+            if (accountDTO.getTrangThai()) rdoDL.setSelected(true);
+            else rdoDN.setSelected(true);
             image = "images/" + accountDTO.getAnh();
             pnImage.add(ImageUtils.getCircleImage(accountDTO.getAnh(), 200, 20, null, 0));
         }
@@ -81,24 +88,31 @@ public class NhanVienDialog extends JDialog {
 
     private void update() {
         AccountDTO dto = readForm();
-        if (dto != null) {
-            try {
-                dto.setId(id);
-                accountService.update(dto);
-                if (Session.accountid.getId() == id) {
-                    AccountDTO ac = accountService.getById(id);
-                    Session.lblName.setText(ac.getTenNhanVien());
-                    Session.avatar.removeAll();
-                    Session.avatar.add(ImageUtils.getCircleImage(ac.getAnh(), 30, 20, null, 0));
-                    Session.avatar.revalidate();
-                }
-                if (parentPane != null)
-                    parentPane.fillTable(accountService.getPage(parentPane.getPageable()).stream().map(NhanVienViewObject::new).collect(Collectors.toList()));
-                dispose();
-            } catch (Exception ex) {
-                MsgBox.alert(this, "Có lỗi! " + ex.getMessage());
-            }
-        }
+        Loading loading = new Loading(this);
+       executorService.submit(() -> {
+           if (dto != null) {
+               try {
+                   dto.setId(id);
+                   accountService.update(dto);
+                   if (Session.accountid.getId() == id) {
+                       AccountDTO ac = accountService.getById(id);
+                       Session.lblName.setText(ac.getTenNhanVien());
+                       Session.avatar.removeAll();
+                       Session.avatar.add(ImageUtils.getCircleImage(ac.getAnh(), 30, 20, null, 0));
+                       Session.avatar.revalidate();
+                   }
+                   if (parentPane != null)
+                       parentPane.fillTable(accountService.getPage(parentPane.getPageable()).stream().map(NhanVienViewObject::new).collect(Collectors.toList()));
+                   Session.reload();
+                   dispose();
+                  loading.setVisible(false);
+               } catch (Exception ex) {
+                   loading.setVisible(false);
+                   MsgBox.alert(this, "Có lỗi! " + ex.getMessage());
+               }
+           }
+       });
+       loading.setVisible(true);
     }
 
     private AccountDTO readForm() {

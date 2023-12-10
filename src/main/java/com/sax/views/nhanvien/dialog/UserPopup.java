@@ -20,7 +20,10 @@ public class UserPopup extends JDialog {
     private JButton btnClose;
 
     public UserPopup() {
-        btnThongTin.addActionListener((e) -> thongTinChiTiet());
+        btnThongTin.addActionListener((e) -> {
+            if (Session.accountid.isVaiTro()) thongTinChiTietQuanLy();
+            else thongTinChiTiet();
+        });
         btnLogout.addActionListener((e) -> dangXuat());
 
         lblTen.setText(Session.accountid.getTenNhanVien());
@@ -70,10 +73,19 @@ public class UserPopup extends JDialog {
         dialog.setVisible(true);
     }
 
+    private void thongTinChiTietQuanLy() {
+        dispose();
+        NhanVienDialog dialog = new NhanVienDialog();
+        dialog.id = Session.accountid.getId();
+        dialog.fillForm();
+        dialog.setLocationRelativeTo(Application.app);
+        dialog.setVisible(true);
+    }
+
     private void createUIComponents() {
         contentPane = new PanelShadow(10);
         btnThongTin = new ButtonToolItem("info-c.svg", "info-c.svg");
         btnLogout = new ButtonToolItem("exit-c.svg", "exit-c.svg");
-        btnClose = new ButtonToolItem("x-c.svg","x-c.svg");
+        btnClose = new ButtonToolItem("x-c.svg", "x-c.svg");
     }
 }

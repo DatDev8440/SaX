@@ -13,6 +13,7 @@ import com.sax.services.impl.*;
 import com.sax.utils.AccountUtils;
 import com.sax.utils.ContextUtils;
 import com.sax.utils.ImageUtils;
+import com.sax.utils.MailService;
 import org.junit.Test;
 
 import javax.print.PrintService;
@@ -105,5 +106,10 @@ public class TestFile {
         for (PrintService printService : printServices) {
             System.out.println(printService.getName());
         }
+    }
+
+    @Test
+    public void email() {
+        System.out.println(MailService.isValidEmail("$%^%&^@h"));
     }
 }

@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="RunManager">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8efe25e2-8a0b-4c9b-9694-bb5c35535883" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/utils/MailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/utils/MailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/utils/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/utils/Session.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/views/nhanvien/dialog/UserPopup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/views/nhanvien/dialog/UserPopup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/views/quanly/views/QuanLyView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/views/quanly/views/QuanLyView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/views/quanly/views/dialogs/NhanVienDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/views/quanly/views/dialogs/NhanVienDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TestFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestFile.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="fix_service" />
+      </map>
+    </option>
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Application.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "JUnit.TestFile.email.executor": "Run",
+    "git-widget-placeholder": "update__service",
+    "node.js.selected.package.tslint": "(autodetect)"
+  }
+}]]></component>
+  <component name="RunManager" selected="Application.Unnamed">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sax.Application" />
+      <module name="SaX" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestFile.email" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SaX" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestFile" />
+      <option name="METHOD_NAME" value="email" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TestFile.name" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="SaX" />
       <option name="PACKAGE_NAME" value="" />
@@ -31,12 +82,34 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Unnamed" />
+      <item itemvalue="JUnit.TestFile.email" />
+      <item itemvalue="JUnit.TestFile.name" />
+      <item itemvalue="JUnit.TestFile.reg" />
+      <item itemvalue="JUnit.TestFile.s" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TestFile.email" />
         <item itemvalue="JUnit.TestFile.s" />
         <item itemvalue="JUnit.TestFile.reg" />
         <item itemvalue="JUnit.TestFile.name" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/sax/entities/Account.java</url>
+          <line>14</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
