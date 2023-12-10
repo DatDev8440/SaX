@@ -55,7 +55,6 @@ public class KhachHangPane extends JPanel {
     private JList listPage;
     private Search timKiem;
     private IKhachHangService khachHangService = ContextUtils.getBean(KhachHangService.class);
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private Set tempIdSet = new HashSet();
     private List<JCheckBox> listCbk = new ArrayList<>();
     private Loading loading = new Loading(this);
@@ -110,7 +109,7 @@ public class KhachHangPane extends JPanel {
     }
 
     public void fillTable(List<AbstractViewObject> list) {
-        Session.fillTable(list, table, cbkSelectedAll, executorService, tempIdSet, listCbk);
+        Session.fillTable(list, table, cbkSelectedAll, tempIdSet, listCbk);
     }
 
     private void add() {
@@ -124,7 +123,7 @@ public class KhachHangPane extends JPanel {
 
     private void update() {
         if (table.getSelectedRow() >= 0) {
-            executorService.submit(() -> {
+            Session.executorService.submit(() -> {
                 KhachHangDialog khachHangDialog = new KhachHangDialog();
                 khachHangDialog.parentPane = this;
                 khachHangDialog.id = (int) table.getValueAt(table.getSelectedRow(), 1);

@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
 
 @Data
 public class KhachHangViewObject extends AbstractViewObject {
@@ -31,7 +30,7 @@ public class KhachHangViewObject extends AbstractViewObject {
     }
 
     @Override
-    public Object[] toObject(ExecutorService executorService, JTable tbl, Set tempIdSet, List<JCheckBox> setCbk) {
+    public Object[] toObject(JTable tbl, Set tempIdSet, List<JCheckBox> setCbk) {
         setCbk.add(checkBoxDelete);
         checkBoxDelete.addActionListener((e) -> {
             if (checkBoxDelete.isSelected()) tempIdSet.add(id);

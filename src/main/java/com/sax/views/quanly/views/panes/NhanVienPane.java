@@ -51,7 +51,6 @@ public class NhanVienPane extends JPanel {
     private Search timKiem;
     private JButton btnDoiMatKhau;
     private IAccountService accountService = ContextUtils.getBean(AccountService.class);
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private List<JCheckBox> listCbk = new ArrayList<>();
     private Set tempIdSet = new HashSet();
     private Loading loading = new Loading(this);
@@ -107,7 +106,7 @@ public class NhanVienPane extends JPanel {
     }
 
     public void fillTable(List<AbstractViewObject> list) {
-        Session.fillTable(list, table, cbkSelectedAll, executorService, tempIdSet, listCbk);
+        Session.fillTable(list, table, cbkSelectedAll, tempIdSet, listCbk);
     }
 
     private void add() {
@@ -132,7 +131,7 @@ public class NhanVienPane extends JPanel {
 
     private void update() {
         if (table.getSelectedRow() >= 0) {
-            executorService.submit(() -> {
+            Session.executorService.submit(() -> {
                 NhanVienDialog nhanVienDialog = new NhanVienDialog();
                 nhanVienDialog.parentPane = this;
                 nhanVienDialog.id = (int) table.getValueAt(table.getSelectedRow(), 1);

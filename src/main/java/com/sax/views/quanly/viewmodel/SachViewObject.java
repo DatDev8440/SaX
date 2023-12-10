@@ -9,7 +9,6 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
 
 @Data
 public class SachViewObject extends AbstractViewObject {
@@ -34,13 +33,13 @@ public class SachViewObject extends AbstractViewObject {
     }
 
     @Override
-    public Object[] toObject(ExecutorService executorService, JTable tbl, Set tempIdSet, List<JCheckBox> listCbk) {
+    public Object[] toObject(JTable tbl, Set tempIdSet, List<JCheckBox> listCbk) {
         listCbk.add(checkBoxDelete);
         checkBoxDelete.addActionListener((e) -> {
             if (checkBoxDelete.isSelected()) tempIdSet.add(id);
             else tempIdSet.remove(id);
         });
-        return new Object[]{checkBoxDelete, id, barcode, new CellNameRender(executorService, tbl, hinhAnh, name), soLuong, giaBan, danhMucList, ngayThem, trangThai ? "Hiển thị" : "Ẩn"};
+        return new Object[]{checkBoxDelete, id, barcode, new CellNameRender(tbl, hinhAnh, name), soLuong, giaBan, danhMucList, ngayThem, trangThai ? "Hiển thị" : "Ẩn"};
     }
 
     @Override

@@ -35,6 +35,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor.code.editing&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;77c70b646374c700c5ebbfc677618f24&quot;
   }
 }</component>
@@ -67,6 +68,7 @@
       <option name="presentableId" value="Default" />
       <updated>1702217729058</updated>
       <workItem from="1702217732443" duration="5157000" />
+      <workItem from="1702229707555" duration="6201000" />
     </task>
     <servers />
   </component>

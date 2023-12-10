@@ -62,7 +62,6 @@ public class DanhMucPane extends JPanel {
     private JComboBox cboHienThi;
     private JList listPage;
     private IDanhMucService danhMucService = ContextUtils.getBean(DanhMucService.class);
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private Set<Integer> tempIdSet = new HashSet<>();
     private List<JCheckBox> listCbk = new ArrayList<>();
@@ -109,7 +108,7 @@ public class DanhMucPane extends JPanel {
     }
 
     public void fillTable(List<AbstractViewObject> list) {
-        Session.fillTable(list, table, cbkSelectedAll, null, tempIdSet, listCbk);
+        Session.fillTable(list, table, cbkSelectedAll, tempIdSet, listCbk);
     }
 
     public void fillDanhMucCha(int id) {
@@ -122,7 +121,7 @@ public class DanhMucPane extends JPanel {
     }
 
     public void showItem() {
-        executorService.submit(() -> {
+        Session.executorService.submit(() -> {
             int id = (int) table.getModel().getValueAt(table.getSelectedRow(), 1);
             DanhMucDTO dm = danhMucService.getById(id);
             txtTen.setText(String.valueOf(dm.getTenDanhMuc()));

@@ -27,7 +27,6 @@ public class LoginView extends CurvesPanel {
     private JButton btnLogin;
     private JTextField txtUsername;
     private AccountDTO accountDTO;
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private IAccountService accountService = ContextUtils.getBean(IAccountService.class);
 
     public LoginView() {
@@ -104,7 +103,7 @@ public class LoginView extends CurvesPanel {
 
     private void login() {
         Loading loading = new Loading(this);
-        executorService.submit(() -> {
+        Session.executorService.submit(() -> {
             try {
                 String pass = new String(txtPass.getPassword());
                 if (!txtUsername.getText().trim().isEmpty() || !pass.trim().isEmpty()) {

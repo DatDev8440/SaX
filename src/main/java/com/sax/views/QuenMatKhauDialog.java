@@ -34,8 +34,6 @@ public class QuenMatKhauDialog extends JDialog {
     private AccountDTO accountDTO;
     private Timer timer;
     private int secondsRemaining;
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
-
 
     public QuenMatKhauDialog() {
         initComponent();
@@ -124,7 +122,7 @@ public class QuenMatKhauDialog extends JDialog {
 
     private AccountDTO sendOtp() {
         Loading loading = new Loading(this);
-        executorService.submit(() -> {
+        Session.executorService.submit(() -> {
             try {
                 if (!txtEmail.getText().trim().isEmpty()) {
                     if (Session.isValidEmail(txtEmail.getText())) {

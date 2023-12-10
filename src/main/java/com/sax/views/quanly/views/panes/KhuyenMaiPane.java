@@ -68,7 +68,6 @@ public class KhuyenMaiPane extends JPanel {
     private JLabel lblTitleSach;
     private ICtkmSachService ctkmSachService = ContextUtils.getBean(ICtkmSachService.class);
     private ICtkmService ctkmService = ContextUtils.getBean(CtkmService.class);
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private Set tempIdSetCTKM = new HashSet();
     private Set tempIdSetSP = new HashSet();
     private List<JCheckBox> listCbkCTKM = new ArrayList<>();
@@ -155,7 +154,7 @@ public class KhuyenMaiPane extends JPanel {
     }
 
     public void fillTableKM(List<AbstractViewObject> list) {
-        Session.fillTable(list, tableCTKM, cbkSelectedAllCTKM, executorService, tempIdSetCTKM, listCbkCTKM);
+        Session.fillTable(list, tableCTKM, cbkSelectedAllCTKM, tempIdSetCTKM, listCbkCTKM);
     }
 
     private void addKM() {
@@ -176,7 +175,7 @@ public class KhuyenMaiPane extends JPanel {
                 MsgBox.alert(this, "Sự kiện đã kết thúc, bạn không thể chỉnh sửa!");
                 return;
             }
-            executorService.submit(() -> {
+            Session.executorService.submit(() -> {
                 CtkmDialog ctkmDialog = new CtkmDialog();
                 ctkmDialog.parentPane = this;
                 ctkmDialog.id = (int) tableCTKM.getValueAt(tableCTKM.getSelectedRow(), 1);
@@ -246,7 +245,7 @@ public class KhuyenMaiPane extends JPanel {
 
     //Table CTKM_Sach
     public void fillCboCtkm() {
-        executorService.submit(() -> {
+        Session.executorService.submit(() -> {
             cboCTKM.addItem("-Tất cả-");
             ctkmService.getAll().stream()
                     .filter(i -> ctkmSachService.getAllSachInCtkm(i).size() > 0)
@@ -255,7 +254,7 @@ public class KhuyenMaiPane extends JPanel {
     }
 
     public void fillTableSP(List<AbstractViewObject> list) {
-        Session.fillTable(list, tableSP, cbkSelectedAllSP, executorService, tempIdSetSP, listCbkSP);
+        Session.fillTable(list, tableSP, cbkSelectedAllSP, tempIdSetSP, listCbkSP);
     }
 
     public void addSP() {
@@ -309,7 +308,7 @@ public class KhuyenMaiPane extends JPanel {
         if (!tempIdSetSP.isEmpty()) {
             boolean check = MsgBox.confirm(this, "Bạn có muốn xoá " + tempIdSetSP.size() + " sản phẩm trong chương trình khuyến mại này không?");
             if (check) {
-                executorService.submit(() -> {
+                Session.executorService.submit(() -> {
                     try {
                         ctkmSachService.deleteAll(tempIdSetSP);
                         tableSP.clearSelection();
