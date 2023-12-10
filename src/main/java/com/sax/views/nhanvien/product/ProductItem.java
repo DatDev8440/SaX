@@ -1,6 +1,7 @@
 package com.sax.views.nhanvien.product;
 
 import com.sax.dtos.SachDTO;
+import com.sax.utils.AudioUtils;
 import com.sax.utils.Cart;
 import com.sax.utils.ImageUtils;
 import com.sax.views.nhanvien.NhanVienView;
@@ -41,6 +42,7 @@ public class ProductItem extends JPanel {
                 table.repaint();
             }
             NhanVienView.nvv.tinhTien();
+            AudioUtils.playAudio("beep.wav");
             table.packAll();
         });
         setCursor(new Cursor(Cursor.HAND_CURSOR));
