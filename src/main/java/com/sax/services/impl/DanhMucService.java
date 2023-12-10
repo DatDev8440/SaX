@@ -25,7 +25,6 @@ public class DanhMucService implements IDanhMucService {
     private IDanhMucRepository repository;
     @Autowired
     private ISachRepository sachRepository;
-
     @Override
     public List<DanhMucDTO> getAll() {
         List<DanhMucDTO> danhMucDTOList = new ArrayList<>();

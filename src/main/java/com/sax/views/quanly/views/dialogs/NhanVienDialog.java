@@ -15,17 +15,24 @@ import javax.swing.*;
 import java.util.stream.Collectors;
 
 public class NhanVienDialog extends JDialog {
+    @Getter
     private JTextField txtName;
+    @Getter
     private JTextField txtSdt;
+    @Getter
     private JTextField txtEmail;
+    @Getter
     private JButton btnSave;
     private JPanel contentPane;
+    @Getter
     private JRadioButton rdoNu;
+    @Getter
     private JRadioButton rdoNam;
     private JRadioButton rdoNhanVien;
     private JRadioButton rdoQuanLy;
+    @Getter
     private JButton btnImg;
-    private IAccountService accountService = ContextUtils.getBean(AccountService.class);
+    private final IAccountService accountService = ContextUtils.getBean(AccountService.class);
     private JPanel pnImage;
     private String image;
     private JRadioButton rdoDL;
@@ -33,18 +40,17 @@ public class NhanVienDialog extends JDialog {
 
     @Getter
     @Setter
-    private JPanel panelRole;
-    @Getter
-    @Setter
     private JPanel panelTT;
 
     public JLabel lblTitle;
+    private JTextField txtTK;
+    @Getter
+    private JPanel panelRole;
     public int id;
     public NhanVienPane parentPane;
 
     public NhanVienDialog() {
         initComponent();
-
         btnSave.addActionListener((e) -> update());
         btnImg.addActionListener(e -> image = ImageUtils.openImageFile(pnImage));
     }
@@ -60,6 +66,7 @@ public class NhanVienDialog extends JDialog {
         if (id > 0) {
             AccountDTO accountDTO = accountService.getById(id);
             lblTitle.setText("Thông tin nhân viên " + accountDTO.getTenNhanVien());
+            txtTK.setText(accountDTO.getUsername());
             txtEmail.setText(accountDTO.getEmail());
             txtName.setText(accountDTO.getTenNhanVien());
             txtSdt.setText(accountDTO.getSdt());
@@ -105,6 +112,17 @@ public class NhanVienDialog extends JDialog {
             MsgBox.alert(this, "Số điện thoại phải là số!");
             return null;
         }
+        String taiKhoan = txtTK.getText().trim();
+
+        if (taiKhoan.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tài khoản không được để trống!");
+            return null;
+        }
+        if (taiKhoan.length() < 6) {
+            JOptionPane.showMessageDialog(this, "Tài khoản phải it nhất 6 ký tự!");
+            return null;
+        }
+        accountDTO.setUsername(taiKhoan);
         String email = txtEmail.getText().trim();
         accountDTO.setEmail(email);
         boolean gioiTinh = rdoNam.isSelected() ? true : false;

@@ -15,6 +15,8 @@ import com.sax.utils.ContextUtils;
 import com.sax.utils.ImageUtils;
 import org.junit.Test;
 
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -93,4 +95,15 @@ public class TestFile {
         service.getAllTongTienTheoThang(12,2023).forEach(System.out::println);
     }
 
+    @Test
+    public void des1() {
+        // Lấy danh sách tất cả các máy in
+        PrintService[] printServices = PrintServiceLookup.lookupPrintServices(null, null);
+
+        // Liệt kê các máy in
+        System.out.println("Danh sách các máy in:");
+        for (PrintService printService : printServices) {
+            System.out.println(printService.getName());
+        }
+    }
 }

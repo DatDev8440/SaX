@@ -5,6 +5,7 @@ import com.formdev.flatlaf.ui.FlatButtonBorder;
 import com.sax.dtos.SachDTO;
 import com.sax.utils.Cart;
 import com.sax.views.components.libraries.ButtonToolItem;
+import com.sax.views.nhanvien.NhanVienView;
 import lombok.Getter;
 import lombok.Setter;
 import org.jdesktop.swingx.JXTable;
@@ -23,7 +24,7 @@ public class CartModel {
     private long giaBan;
     private JButton xoa;
 
-    public CartModel(SachDTO sachDTO, JXTable table, JLabel lblTT, JLabel lblKM, JLabel lblTPT, JCheckBox chkdiem) {
+    public CartModel(SachDTO sachDTO) {
         id = sachDTO.getId();
         icon = sachDTO.getHinhAnh();
         name = sachDTO.getTenSach();
@@ -41,13 +42,13 @@ public class CartModel {
 
         soLuong.setBorder(flatBorder);
         soLuong.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        soLuong.addChangeListener((e) -> Cart.tinhTien(table, lblTT, lblKM, lblTPT, chkdiem));
+        soLuong.addChangeListener((e) -> NhanVienView.nvv.tinhTien());
 
         xoa.setBorder(flatBorder);
         xoa.setCursor(new Cursor(Cursor.HAND_CURSOR));
         xoa.addActionListener((e) -> {
             Cart.getCart().remove(this);
-            Cart.tinhTien(table, lblTT, lblKM, lblTPT, chkdiem);
+            NhanVienView.nvv.tinhTien();
         });
     }
 }

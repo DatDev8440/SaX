@@ -1,9 +1,6 @@
 package com.sax.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,8 +8,7 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Table(name = "hoa_don_chi_tiet", schema = "dbo", catalog = "SaX")
 public class ChiTietDonHang {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

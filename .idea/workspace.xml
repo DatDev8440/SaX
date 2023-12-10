@@ -4,57 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0ffb811-376f-493b-b8c3-7151ca704633" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/clear-c.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account.dat" beforeDir="false" afterPath="$PROJECT_DIR$/account.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/repositories/ICtkmSachRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/repositories/ICtkmSachRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/services/ICtkmSachService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/services/ICtkmSachService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/services/ICtkmService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/services/ICtkmService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/services/impl/CtkmSachService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/services/impl/CtkmSachService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/services/impl/DonHangService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/services/impl/DonHangService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/utils/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/utils/Session.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/views/quanly/views/panes/DanhMucPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/views/quanly/views/panes/DanhMucPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/views/quanly/views/panes/KhuyenMaiPane.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/views/quanly/views/panes/KhuyenMaiPane.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sax/views/quanly/views/panes/KhuyenMaiPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sax/views/quanly/views/panes/KhuyenMaiPane.java" afterDir="false" />
-    </list>
+    <list default="true" id="dce73a6b-dd24-49d3-9523-3495e70c20e6" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectId" id="2ZFqT2WhzW7Qa9JhuWOf9Vrbo9h" />
+  <component name="ProjectId" id="2ZM2fC96NIrbAhWU8NfQsdINbrl" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Merging fix__service&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/admin/Desktop/sax/src/main/java/com/sax/views/nhanvien/cart/scroll&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;77c70b646374c700c5ebbfc677618f24&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "spring.configuration.checksum": "77c70b646374c700c5ebbfc677618f24"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/java/com/sax/views/nhanvien/cart/scroll" />
-      <recent name="$PROJECT_DIR$/src/main/java/com/sax/views/nhanvien/cart/table" />
-      <recent name="$PROJECT_DIR$/src/main/java/com/sax/views/nhanvien/cart" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/java/com/sax/views/nhanvien/dialog/hoadon" />
-    </key>
-  </component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sax.Application" />
@@ -78,16 +54,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e0ffb811-376f-493b-b8c3-7151ca704633" name="Changes" comment="" />
-      <created>1702028179093</created>
+      <changelist id="dce73a6b-dd24-49d3-9523-3495e70c20e6" name="Changes" comment="" />
+      <created>1702217729058</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1702028179093</updated>
-      <workItem from="1702028181408" duration="7415000" />
-      <workItem from="1702050480963" duration="1851000" />
-      <workItem from="1702089254601" duration="8191000" />
-      <workItem from="1702107158803" duration="19427000" />
-      <workItem from="1702133916507" duration="15122000" />
+      <updated>1702217729058</updated>
+      <workItem from="1702217732443" duration="5157000" />
     </task>
     <servers />
   </component>

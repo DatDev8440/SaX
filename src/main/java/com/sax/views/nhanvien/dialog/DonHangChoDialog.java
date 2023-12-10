@@ -9,6 +9,7 @@ import com.sax.views.components.Loading;
 import com.sax.views.components.Search;
 import com.sax.views.components.libraries.ButtonToolItem;
 import com.sax.views.components.libraries.RoundPanel;
+import com.sax.views.components.table.CellNameRender;
 import com.sax.views.components.table.CustomHeaderTableCellRenderer;
 import com.sax.views.components.table.CustomTableCellEditor;
 import com.sax.views.components.table.CustomTableCellRender;
@@ -19,6 +20,7 @@ import com.sax.views.quanly.viewmodel.DonHangViewObject;
 import org.jdesktop.swingx.JXTable;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
@@ -56,6 +58,7 @@ public class DonHangChoDialog extends JDialog {
                 }
             }
         });
+        btnDel.addActionListener((e) -> delete());
     }
 
     private void initComponent() {
@@ -63,7 +66,7 @@ public class DonHangChoDialog extends JDialog {
         setModal(true);
         setLocationRelativeTo(Application.app);
 
-        ((DefaultTableModel) table.getModel()).setColumnIdentifiers(new String[]{"", "ID", "Tên khách hàng", "Số sản phẩm", "Tiền hàng", "Chiết khấu", "Tổng tiền"});
+        ((DefaultTableModel) table.getModel()).setColumnIdentifiers(new String[]{"ID", "Tên khách hàng", "Số sản phẩm", "Tiền hàng", "Chiết khấu", "Tổng tiền"});
         fillTable(Session.listDonCho);
     }
 
@@ -74,8 +77,38 @@ public class DonHangChoDialog extends JDialog {
         table.getTableHeader().setDefaultRenderer(new CustomHeaderTableCellRenderer());
         table.getTableHeader().setEnabled(false);
         table.getTableHeader().setPreferredSize(new Dimension(-1, 28));
-//        table.getColumnModel().getColumn(0).setCellEditor(new CustomTableCellEditor(list));
-//        table.setDefaultRenderer(Object.class, new CustomTableCellRender(list));
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JPanel p = new JPanel();
+                p.setLayout(new GridLayout());
+                p.setBackground(new Color(0, 0, 0, 0));
+                if (value instanceof List) {
+                    List<String> list = (List<String>) value;
+                    String text = "";
+                    for (int i = 0; i < list.size(); i++) {
+                        if (i == list.size() - 1) text = text + list.get(i);
+                        else text = text + list.get(i) + ", ";
+                    }
+                    JLabel l = new JLabel(text);
+                    l.setFont(new Font(".SF NS Text", 4, 13));
+                    l.setForeground(Color.decode("#727272"));
+                    p.add(l);
+                } else {
+                    JLabel l = (value == null) ? new JLabel("") : new JLabel(value + "  ");
+                    l.setFont(new Font(".SF NS Text", 4, 13));
+                    l.setForeground(Color.decode("#727272"));
+                    p.add(l);
+                }
+                if (isSelected) {
+                    if (column == 0) p.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 0, Color.decode("#EA6C20")));
+                    else if (column == table.getColumnCount() - 1)
+                        p.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 1, Color.decode("#EA6C20")));
+                    else p.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.decode("#EA6C20")));
+                }
+                return p;
+            }
+        });
         table.packAll();
         pack();
         table.getColumns().forEach(TableColumn::sizeWidthToFit);
@@ -84,12 +117,18 @@ public class DonHangChoDialog extends JDialog {
 
     private void sentDonTamToDonHang() {
         if (table.getSelectedRow() >= 0) {
-            int id = (int) table.getValueAt(table.getSelectedRow(), 1);
+            int id = (int) table.getValueAt(table.getSelectedRow(), 0);
             DonChoViewObject donCho = Session.listDonCho.stream().filter(i -> i.getId() == id).findFirst().orElse(null);
             Cart.getCart().addAll(donCho.getListCart());
             Session.listDonCho.remove(donCho);
+            NhanVienView.nvv.tinhTien();
             dispose();
         }
+    }
+
+    private void delete() {
+        Session.listDonCho.remove(table.getSelectedRow());
+        fillTable(Session.listDonCho);
     }
 
     private void createUIComponents() {

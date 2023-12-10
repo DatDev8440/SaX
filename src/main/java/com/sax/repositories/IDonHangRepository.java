@@ -35,6 +35,6 @@ public interface IDonHangRepository extends JpaRepository<DonHang,Integer>, Pagi
             "    WHERE MONTH(ls.ngayNhap) = :month AND YEAR(ls.ngayNhap) = :year")
     Long findDailyExpenseForMonth(@Param("month") int month, @Param("year") int year);
 
-    @Query("SELECT e FROM DonHang e WHERE CAST(e.id AS string) like %:keyword% OR e.account.tenNhanVien LIKE %:keyword% OR e.khachHangByIdKhach.tenKhach LIKE %:keyword%")
+    @Query("SELECT e FROM DonHang e WHERE CAST(e.id AS string) like %:keyword% OR e.account.tenNhanVien LIKE %:keyword% OR e.khachHang.tenKhach LIKE %:keyword%")
     List<DonHang> findAllByKeyword(@Param("keyword") String keyword);
 }

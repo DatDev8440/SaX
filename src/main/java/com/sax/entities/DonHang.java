@@ -10,8 +10,7 @@ import java.util.Collection;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Table(name = "hoa_don", schema = "dbo", catalog = "SaX")
 public class DonHang {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,11 +40,11 @@ public class DonHang {
     private Boolean pttt;
     @ManyToOne
     @JoinColumn(name = "id_khach", referencedColumnName = "id", nullable = false)
-    private KhachHang khachHangByIdKhach;
+    private KhachHang khachHang;
     @ManyToOne
     @JoinColumn(name = "id_tai_khoan", referencedColumnName = "id", nullable = false)
     private Account account;
 
-    @OneToMany(mappedBy = "donHang",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "donHang")
     private Collection<ChiTietDonHang> chiTietDonHangs;
 }

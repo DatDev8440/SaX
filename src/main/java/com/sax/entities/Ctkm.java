@@ -9,8 +9,7 @@ import java.util.Collection;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Table(name = "ctkm", schema = "dbo", catalog = "SaX")
 public class Ctkm {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -31,9 +31,6 @@ public class DonHangService implements IDonHangService {
     private ISachRepository sachRepository;
     @Autowired
     private IKhachHangRepository khachHangRepository;
-    @Autowired
-    private IKhachHangService choNayBan;
-
 
     @Override
     public List<DonHangDTO> getAll() {
@@ -63,7 +60,7 @@ public class DonHangService implements IDonHangService {
         Account account = DTOUtils.getInstance().converter(e.getAccount(), Account.class);
 
         donHang.setNgayTao(LocalDateTime.now());
-        donHang.setKhachHangByIdKhach(khachHang);
+        donHang.setKhachHang(khachHang);
         donHang.setAccount(account);
         DonHang save = null;
         List<ChiTietDonHang> chiTietDonHang = DTOUtils
@@ -95,8 +92,8 @@ public class DonHangService implements IDonHangService {
             }catch (Exception ex){
                 throw new InvalidDataAccessApiUsageException("Vượt quá số lượng hàng còn lại");
             }
-            KhachHang khach = donHang.getKhachHangByIdKhach();
-        if (donHang.getKhachHangByIdKhach().getDiem()>=0)
+            KhachHang khach = donHang.getKhachHang();
+        if (donHang.getKhachHang().getDiem()>=0)
         {
             int point = (int) (donHang.getChietKhau()/1000);
             int totalPoint = khach.getDiem() - point;

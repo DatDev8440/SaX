@@ -10,6 +10,7 @@ import com.sax.services.impl.SachService;
 import com.sax.utils.Cart;
 import com.sax.utils.ContextUtils;
 import com.sax.utils.ImageUtils;
+import com.sax.views.nhanvien.NhanVienView;
 import com.sax.views.nhanvien.cart.CartModel;
 import lombok.Getter;
 import org.jdesktop.swingx.JXTable;
@@ -71,7 +72,7 @@ public class CameraDialog extends JDialog {
         dispose();
     }
 
-    public CameraDialog(JXTable table, JLabel lblTienHang, JLabel lblTrietKhau, JLabel lblTPT, JCheckBox chkDiem) {
+    public CameraDialog(JXTable table) {
         initComponent();
 
         thread = new Thread(new Runnable() {
@@ -96,13 +97,13 @@ public class CameraDialog extends JDialog {
                             SachDTO data = sachService.getByBarCode(result.getText());
                             Optional<CartModel> cartModel = Cart.getCart().stream().filter(i -> i.getId() == data.getId()).findFirst();
                             if (cartModel.isEmpty())
-                                Cart.getCart().add(new CartModel(data, table, lblTienHang, lblTrietKhau, lblTPT, chkDiem));
+                                Cart.getCart().add(new CartModel(data));
                             else {
                                 JSpinner s = cartModel.get().getSoLuong();
                                 s.setValue(s.getNextValue());
                                 table.repaint();
                             }
-                            Cart.tinhTien(table, lblTienHang, lblTrietKhau, lblTPT, chkDiem);
+                            NhanVienView.nvv.tinhTien();
                             table.packAll();
                             Thread.sleep(1000);
                         }

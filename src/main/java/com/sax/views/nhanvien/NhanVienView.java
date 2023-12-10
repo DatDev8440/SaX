@@ -115,7 +115,7 @@ public class NhanVienView extends JPanel {
         });
         btnScan.addActionListener((e) -> openScan());
         cboKH.addActionListener(e -> fillDiem());
-        chkDiem.addActionListener(e -> Cart.tinhTien(cart, lblTienHang, lblChietKhau, lblTPT, chkDiem));
+        chkDiem.addActionListener(e -> tinhTien());
         btnThemTam.addActionListener((e) -> themTam());
         btnDonHangCho.addActionListener((e) -> openDonHangCho());
     }
@@ -175,7 +175,7 @@ public class NhanVienView extends JPanel {
     private void fillSach(List<SachDTO> list) {
         donItem.removeAll();
         list.forEach(i -> {
-            ProductItem pdi = new ProductItem(cart, lblTienHang, lblChietKhau, lblTPT, chkDiem);
+            ProductItem pdi = new ProductItem(cart);
             pdi.setData(i);
             donItem.add(pdi);
             pdi.revalidate();
@@ -207,13 +207,6 @@ public class NhanVienView extends JPanel {
         }
     }
 
-    private void clear() {
-        chkDiem.setSelected(false);
-        useDiem.setVisible(false);
-        Cart.getCart().clear();
-        Cart.tinhTien(cart, lblTienHang, lblChietKhau, lblTPT, chkDiem);
-    }
-
     public void fillKhachHang(List<KhachHangDTO> list) {
         cboKH.removeAllItems();
         list.forEach(i -> cboKH.addItem(i));
@@ -235,12 +228,33 @@ public class NhanVienView extends JPanel {
         return new DonHangDTO(kh, nv, tienPhaiTra, LocalDateTime.now(), pttt, chietKhau, tienHang, chiTietDonHangDTOList);
     }
 
-    private void openKhachHang() {
-        new KhachHangNVDialog().setVisible(true);
-    }
-
-    private void openDonHang() {
-        new DonHangDialog().setVisible(true);
+    public void tinhTien() {
+        btnDonHangCho.setText(String.valueOf(Session.listDonCho.size()));
+        cart.packAll();
+        if (cart.getRowCount() == 0) {
+            lblTienHang.setText("0đ");
+            lblChietKhau.setText("0đ");
+            lblTPT.setText("0đ");
+        } else {
+            long tienHang = 0;
+            for (int i = 0; i < cart.getRowCount(); i++) {
+                long donGia = Long.parseLong(cart.getValueAt(i, 1).toString());
+                int soLuong = Integer.parseInt(((JSpinner) cart.getValueAt(i, 2)).getValue().toString());
+                tienHang += donGia * soLuong;
+            }
+            lblTienHang.setText(CurrencyConverter.parseString(tienHang));
+            if (chkDiem.isSelected()) {
+                lblChietKhau.setText("-" + CurrencyConverter.parseString(Integer.valueOf(chkDiem.getText()) * 1000));
+            } else {
+                lblChietKhau.setText(CurrencyConverter.parseString(0));
+            }
+            long km = CurrencyConverter.parseLong(lblChietKhau.getText().replace("-", ""));
+            lblTPT.setText(CurrencyConverter.parseString(tienHang - km));
+            if (tienHang < km) {
+                lblChietKhau.setText("-" + CurrencyConverter.parseString(tienHang));
+                lblTPT.setText("0đ");
+            }
+        }
     }
 
     private void chonDanhMuc() {
@@ -254,11 +268,6 @@ public class NhanVienView extends JPanel {
                 loading.setVisible(true);
             }
         }
-    }
-
-    private void openUserPopup() {
-        UserPopup userPopup = new UserPopup();
-        userPopup.setVisible(true);
     }
 
     public void searchByKeyword() {
@@ -282,13 +291,8 @@ public class NhanVienView extends JPanel {
                 useDiem.setVisible(false);
                 chkDiem.setSelected(false);
             }
-            Cart.tinhTien(cart, lblTienHang, lblChietKhau, lblTPT, chkDiem);
+            tinhTien();
         }
-    }
-
-    private void openScan() {
-        CameraDialog dialog = new CameraDialog(cart, lblTienHang, lblChietKhau, lblTPT, chkDiem);
-        dialog.setVisible(true);
     }
 
     private void themTam() {
@@ -307,8 +311,32 @@ public class NhanVienView extends JPanel {
                 donCho.setKhachHang(khachHangDTO);
             } else donCho.setKhachHang((KhachHangDTO) cboKH.getSelectedItem());
             Session.listDonCho.add(donCho);
+            btnDonHangCho.setText(String.valueOf(Session.listDonCho.size()));
             clear();
         }
+    }
+
+    private void clear() {
+        chkDiem.setSelected(false);
+        useDiem.setVisible(false);
+        Cart.getCart().clear();
+        tinhTien();
+    }
+
+    private void openScan() {
+        new CameraDialog(cart).setVisible(true);
+    }
+
+    private void openUserPopup() {
+        new UserPopup().setVisible(true);
+    }
+
+    private void openKhachHang() {
+        new KhachHangNVDialog().setVisible(true);
+    }
+
+    private void openDonHang() {
+        new DonHangDialog().setVisible(true);
     }
 
     private void openDonHangCho() {
@@ -336,6 +364,7 @@ public class NhanVienView extends JPanel {
         btnDonHang = new ButtonToolItem("donhang-c.svg", "donhang-c.svg");
         btnTK = new ButtonToolItem("tknv-c.svg", "tknv-c.svg");
         btnThemTam = new ButtonToolItem("", "");
+        btnDonHangCho = new ButtonToolItem("cart-c.svg", "cart-c.svg");
 
         cboKH = new ComboBoxSearch();
 

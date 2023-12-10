@@ -37,7 +37,7 @@ public class CustomTableCellRender extends DefaultTableCellRenderer {
             l.setForeground(Color.decode("#727272"));
             p.add(l);
         } else {
-            JLabel l = (value == null) ? new JLabel("") : new JLabel("  " + value.toString() + "  ");
+            JLabel l = (value == null) ? new JLabel("") : new JLabel(value + "  ");
             l.setFont(new Font(".SF NS Text", 4, 13));
             l.setForeground(Color.decode("#727272"));
             p.add(l);

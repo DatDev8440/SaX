@@ -15,8 +15,7 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Table(name = "sach", schema = "dbo", catalog = "SaX")
 public class Sach {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,19 +50,18 @@ public class Sach {
     @Column(name = "hinh_anh", nullable = true, length = 2000)
     private String hinhAnh;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
             name = "sach_danh_muc",
             joinColumns = { @JoinColumn(name = "id_sach") },
             inverseJoinColumns = { @JoinColumn(name = "id_danh_muc") }
     )
     Set<DanhMuc> setDanhMuc = new HashSet<>();
-    @OneToMany(mappedBy = "sach",fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "sach")
     private List<CtkmSach> CtkmSach;
     @OneToMany(mappedBy = "sach")
     private Collection<ChiTietDonHang> chiTietDonHangs;
-    @OneToMany(mappedBy = "sach",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "sach")
     List<LichSuNhapHang> lichSuNhapHangList;
 
 }
