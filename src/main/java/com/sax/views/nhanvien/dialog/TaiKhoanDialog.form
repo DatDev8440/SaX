@@ -53,8 +53,8 @@
           </component>
           <component id="5d61f" class="javax.swing.JTextField" binding="txtTK">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="40"/>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="300" height="40"/>
               </grid>
             </constraints>
             <properties>
@@ -74,8 +74,8 @@
         <children>
           <component id="c9809" class="javax.swing.JPasswordField" binding="txtMK2">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="40"/>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="300" height="40"/>
               </grid>
             </constraints>
             <properties/>
@@ -100,8 +100,8 @@
         <children>
           <component id="111f8" class="javax.swing.JPasswordField" binding="txtMK1">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="40"/>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="300" height="40"/>
               </grid>
             </constraints>
             <properties/>
@@ -126,8 +126,8 @@
         <children>
           <component id="8e0b2" class="javax.swing.JPasswordField" binding="txtOldPass">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="40"/>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="300" height="40"/>
               </grid>
             </constraints>
             <properties/>

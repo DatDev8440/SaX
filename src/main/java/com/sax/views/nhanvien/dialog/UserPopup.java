@@ -77,8 +77,8 @@ public class UserPopup extends JDialog {
         dialog.setVisible(true);
     }
 
-    private void doiMatKhau()
-    {
+    private void doiMatKhau() {
+        dispose();
         new TaiKhoanDialog().setVisible(true);
     }
 

@@ -64,7 +64,6 @@ public class DonHangChoDialog extends JDialog {
     private void initComponent() {
         setContentPane(donHangChoPane);
         setModal(true);
-        setLocationRelativeTo(Application.app);
 
         ((DefaultTableModel) table.getModel()).setColumnIdentifiers(new String[]{"ID", "Tên khách hàng", "Số sản phẩm", "Tiền hàng", "Chiết khấu"});
         fillTable(Session.listDonCho);
@@ -111,6 +110,7 @@ public class DonHangChoDialog extends JDialog {
         });
         table.packAll();
         pack();
+        setLocationRelativeTo(Application.app);
         table.getColumns().forEach(TableColumn::sizeWidthToFit);
         table.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }

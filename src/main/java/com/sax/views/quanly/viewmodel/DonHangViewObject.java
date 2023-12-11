@@ -1,5 +1,6 @@
 package com.sax.views.quanly.viewmodel;
 
+import com.sax.dtos.AccountDTO;
 import com.sax.dtos.DonHangDTO;
 import com.sax.utils.CurrencyConverter;
 import com.sax.utils.DateUtils;
@@ -12,7 +13,7 @@ import java.util.Set;
 
 @Data
 public class DonHangViewObject extends AbstractViewObject {
-    private int maNV;
+    private AccountDTO maNV;
     private String tongTien;
     private LocalDateTime ngayTao;
     private boolean pttt;
@@ -21,7 +22,7 @@ public class DonHangViewObject extends AbstractViewObject {
 
     public DonHangViewObject(DonHangDTO donHangDTO) {
         super(donHangDTO.getId(), donHangDTO.getKhach().getTenKhach());
-        maNV = donHangDTO.getAccount().getId();
+        maNV = donHangDTO.getAccount();
         tongTien = CurrencyConverter.parseString(donHangDTO.getTongTien());
         tienHang = CurrencyConverter.parseString(donHangDTO.getTienHang());
         chietKhau = CurrencyConverter.parseString(donHangDTO.getChietKhau());
@@ -36,7 +37,7 @@ public class DonHangViewObject extends AbstractViewObject {
             if (checkBoxDelete.isSelected()) tempIdSet.add(id);
             else tempIdSet.remove(id);
         });
-        return new Object[]{checkBoxDelete, id, name, maNV, tienHang, chietKhau, tongTien, pttt ? "Tiền mặt" : "Chuyển khoản", DateUtils.parseString(ngayTao)};
+        return new Object[]{checkBoxDelete, id, name, maNV.getId() + " " + maNV.getTenNhanVien(), tienHang, chietKhau, tongTien, pttt ? "Tiền mặt" : "Chuyển khoản", DateUtils.parseString(ngayTao)};
     }
     
     public Object[] toObject()

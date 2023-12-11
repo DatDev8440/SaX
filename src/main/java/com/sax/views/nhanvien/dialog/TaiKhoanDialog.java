@@ -41,10 +41,10 @@ public class TaiKhoanDialog extends JDialog {
     private void initComponent() {
         setContentPane(contentPane);
         setModal(true);
-        pack();
-        setLocationRelativeTo(parentPane);
         btnSave.addActionListener((e) -> save());
         fillForm();
+        pack();
+        setLocationRelativeTo(parentPane);
     }
     public void fillForm() {
         AccountDTO accountDTO = accountService.getById(id);
