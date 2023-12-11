@@ -95,7 +95,7 @@ public class ThungRacDialog extends JDialog{
             new Worker().execute();
             loading.setVisible(true);
             parentPane.fillListPage();
-            dispose();
+            parentPane.fillTable(donHangService.getPage(parentPane.getPageable()).stream().map(DonHangViewObject::new).collect(Collectors.toList()));
         } else MsgBox.alert(this, "Vui lòng tick ít nhất một đơn hàng!");
     }
 
