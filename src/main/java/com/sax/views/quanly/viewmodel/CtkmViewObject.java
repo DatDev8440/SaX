@@ -34,9 +34,4 @@ public class CtkmViewObject extends AbstractViewObject {
         });
         return new Object[]{checkBoxDelete, id, name, DateUtils.parseString(ngayBatDau), DateUtils.parseString(ngayKetThuc), kieuGiamGia ? "Phần trăm" : "Số tiền", trangThai};
     }
-
-    @Override
-    public Object[] toObject() {
-        return new Object[0];
-    }
 }

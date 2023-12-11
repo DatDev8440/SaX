@@ -36,8 +36,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class DonHangPane extends JPanel {
@@ -52,6 +50,7 @@ public class DonHangPane extends JPanel {
     private JPanel phanTrangPane;
     private JComboBox cboHienThi;
     private JList listPage;
+    private JButton btnTrash;
     private IDonHangService donHangService = ContextUtils.getBean(DonHangService.class);
     private IDonHangChiTetService donHangChiTetService = ContextUtils.getBean(DonHangChiTietService.class);
     private Set tempIdSet = new HashSet();
@@ -72,7 +71,6 @@ public class DonHangPane extends JPanel {
 
     public DonHangPane() {
         initComponent();
-        btnEdit.addActionListener((e) -> update());
         btnDel.addActionListener((e) -> delete());
         table.addMouseListener(new MouseAdapter() {
             @Override
@@ -130,18 +128,22 @@ public class DonHangPane extends JPanel {
 
     private void delete() {
         if (!tempIdSet.isEmpty()) {
-            boolean check = MsgBox.confirm(this, "Bạn có muốn xoá " + tempIdSet.size() + " đơn hàng này không?");
-            if (check) {
-                try {
-                    donHangService.deleteAll(tempIdSet);
-                    tempIdSet.clear();
-                } catch (Exception e) {
-                    MsgBox.alert(this, e.getMessage());
-                }
-                fillTable(donHangService.getAll().stream().map(i -> new DonHangViewObject(i)).collect(Collectors.toList()));
-            }
-        }
-        MsgBox.alert(this, "Vui lòng tick vào ít nhất một đơn hàng!");
+            Object[] options = {"Xoá", "Chuyển vào thùng rác", "Huỷ"};
+            int choice = JOptionPane.showOptionDialog(null, "Bạn có muốn xoá " + tempIdSet.size() + " đơn hàng này không?", "Quản lý bán hàng SaX",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+
+            if (choice == 0) {
+                // Xoá
+                JOptionPane.showMessageDialog(null, "Bạn đã chọn xoá");
+                // Thực hiện hành động xoá tại đây
+            } else if (choice == 1) {
+                // Chuyển thùng rác
+                JOptionPane.showMessageDialog(null, "Bạn đã chọn chuyển thùng rác");
+                // Thực hiện hành động chuyển thùng rác tại đây
+            } else if (choice == 2) return;
+            new Worker().execute();
+            loading.setVisible(true);
+        } else MsgBox.alert(this, "Vui lòng tick vào ít nhất một đơn hàng!");
     }
 
     public void searchByKeyword() {
@@ -182,6 +184,7 @@ public class DonHangPane extends JPanel {
         btnAdd = new ButtonToolItem("add.svg", "add.svg");
         btnDel = new ButtonToolItem("trash-c.svg", "trash-c.svg");
         btnEdit = new ButtonToolItem("pencil.svg", "pencil.svg");
+        btnTrash = new ButtonToolItem("trash-c.svg", "trash-c.svg");
 
         listPage = new ListPageNumber();
     }

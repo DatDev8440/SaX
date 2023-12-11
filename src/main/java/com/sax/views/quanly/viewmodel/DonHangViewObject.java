@@ -2,6 +2,7 @@ package com.sax.views.quanly.viewmodel;
 
 import com.sax.dtos.DonHangDTO;
 import com.sax.utils.CurrencyConverter;
+import com.sax.utils.DateUtils;
 import lombok.Data;
 
 import javax.swing.*;
@@ -35,7 +36,7 @@ public class DonHangViewObject extends AbstractViewObject {
             if (checkBoxDelete.isSelected()) tempIdSet.add(id);
             else tempIdSet.remove(id);
         });
-        return new Object[]{checkBoxDelete, id, name, maNV, tienHang, chietKhau, tongTien, pttt ? "Tiền mặt" : "Chuyển khoản", ngayTao};
+        return new Object[]{checkBoxDelete, id, name, maNV, tienHang, chietKhau, tongTien, pttt ? "Tiền mặt" : "Chuyển khoản", DateUtils.parseString(ngayTao)};
     }
     
     public Object[] toObject()

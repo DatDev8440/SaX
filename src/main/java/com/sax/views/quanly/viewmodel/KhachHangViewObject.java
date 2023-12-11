@@ -1,6 +1,7 @@
 package com.sax.views.quanly.viewmodel;
 
 import com.sax.dtos.KhachHangDTO;
+import com.sax.utils.DateUtils;
 import lombok.Data;
 
 import javax.swing.*;
@@ -36,11 +37,6 @@ public class KhachHangViewObject extends AbstractViewObject {
             if (checkBoxDelete.isSelected()) tempIdSet.add(id);
             else tempIdSet.remove(id);
         });
-        return new Object[]{checkBoxDelete, id, name, diemTichLuy, sdt, getGioiTinh(), ngayThem};
-    }
-
-    @Override
-    public Object[] toObject() {
-        return new Object[0];
+        return new Object[]{checkBoxDelete, id, name, diemTichLuy, sdt, getGioiTinh(), DateUtils.parseString(ngayThem)};
     }
 }

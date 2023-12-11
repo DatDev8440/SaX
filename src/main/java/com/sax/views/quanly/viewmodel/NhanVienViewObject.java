@@ -1,6 +1,7 @@
 package com.sax.views.quanly.viewmodel;
 
 import com.sax.dtos.AccountDTO;
+import com.sax.utils.DateUtils;
 import com.sax.views.components.table.CellNameRender;
 import lombok.Data;
 
@@ -47,11 +48,6 @@ public class NhanVienViewObject extends AbstractViewObject {
             if (checkBoxDelete.isSelected()) tempIdSet.add(id);
             else tempIdSet.remove(id);
         });
-        return new Object[]{checkBoxDelete, id, new CellNameRender(tbl, hinhAnh, name), username, email, sdt, getGioiTinh(), vaiTro ? "Quản lý" : "Nhân viên", ngayThem, trangThai ? "Đang làm" : "Đã nghỉ"};
-    }
-
-    @Override
-    public Object[] toObject() {
-        return new Object[0];
+        return new Object[]{checkBoxDelete, id, new CellNameRender(tbl, hinhAnh, name), username, email, sdt, getGioiTinh(), vaiTro ? "Quản lý" : "Nhân viên", DateUtils.parseString(ngayThem), trangThai ? "Đang làm" : "Đã nghỉ"};
     }
 }
