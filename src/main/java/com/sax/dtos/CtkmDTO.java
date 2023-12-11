@@ -18,6 +18,12 @@ public class CtkmDTO extends AbstractDTO {
     private LocalDateTime ngayKetThuc;
     private boolean kieuGiamGia;
 
+    public String getTrangThai() {
+        if (LocalDateTime.now().isAfter(ngayBatDau) && LocalDateTime.now().isBefore(ngayKetThuc)) return "Đang diễn ra";
+        else if (LocalDateTime.now().isAfter(ngayKetThuc)) return "Đã kết thúc";
+        return "Chưa bắt đầu";
+    }
+
     @Override
     public String toString() {
         return tenSuKien;

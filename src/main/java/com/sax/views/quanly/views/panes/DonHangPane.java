@@ -16,6 +16,7 @@ import com.sax.views.components.libraries.RoundPanel;
 import com.sax.views.nhanvien.dialog.hoadon.HoaDonDialog;
 import com.sax.views.quanly.viewmodel.AbstractViewObject;
 import com.sax.views.quanly.viewmodel.DonHangViewObject;
+import com.sax.views.quanly.views.dialogs.ThungRacDialog;
 import lombok.Getter;
 import lombok.Setter;
 import org.jdesktop.swingworker.SwingWorker;
@@ -36,8 +37,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class DonHangPane extends JPanel {
@@ -52,6 +51,7 @@ public class DonHangPane extends JPanel {
     private JPanel phanTrangPane;
     private JComboBox cboHienThi;
     private JList listPage;
+    private JButton btnTrash;
     private IDonHangService donHangService = ContextUtils.getBean(DonHangService.class);
     private IDonHangChiTetService donHangChiTetService = ContextUtils.getBean(DonHangChiTietService.class);
     private Set tempIdSet = new HashSet();
@@ -72,7 +72,6 @@ public class DonHangPane extends JPanel {
 
     public DonHangPane() {
         initComponent();
-        btnEdit.addActionListener((e) -> update());
         btnDel.addActionListener((e) -> delete());
         table.addMouseListener(new MouseAdapter() {
             @Override
@@ -94,17 +93,19 @@ public class DonHangPane extends JPanel {
             }
         });
         cbkSelectedAll.addActionListener((e) -> Session.chonTatCa(cbkSelectedAll, table, listCbk, tempIdSet));
+        btnTrash.addActionListener((e) -> openTrash());
     }
 
     public void initComponent() {
         ((DefaultTableModel) table.getModel()).setColumnIdentifiers(new String[]{"", "Mã đơn hàng", "Tên khách hàng", "Nhân viên", "Tiền hàng", "Chiết khấu", "Tổng tiền", "Phương thức thanh toán", "Ngày tạo"});
-
+        Session.executorService.submit(() -> btnTrash.setText(String.valueOf(donHangService.countByTrangThai(false))));
         new Worker().execute();
         loading.setVisible(true);
         timer = new Timer(300, e -> {
             searchByKeyword();
             timer.stop();
         });
+
     }
 
     public void fillTable(List<AbstractViewObject> list) {
@@ -130,18 +131,26 @@ public class DonHangPane extends JPanel {
 
     private void delete() {
         if (!tempIdSet.isEmpty()) {
-            boolean check = MsgBox.confirm(this, "Bạn có muốn xoá " + tempIdSet.size() + " đơn hàng này không?");
-            if (check) {
-                try {
-                    donHangService.deleteAll(tempIdSet);
-                    tempIdSet.clear();
-                } catch (Exception e) {
-                    MsgBox.alert(this, e.getMessage());
-                }
-                fillTable(donHangService.getAll().stream().map(i -> new DonHangViewObject(i)).collect(Collectors.toList()));
-            }
-        }
-        MsgBox.alert(this, "Vui lòng tick vào ít nhất một đơn hàng!");
+            Object[] options = {"Xoá", "Chuyển vào thùng rác", "Huỷ"};
+            int choice = JOptionPane.showOptionDialog(null, "Bạn có muốn xoá " + tempIdSet.size() + " đơn hàng này không?", "Quản lý bán hàng SaX",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+
+            if (choice == 0) {
+                // Xoá
+                JOptionPane.showMessageDialog(null, "Bạn đã chọn xoá");
+                // Thực hiện hành động xoá tại đây
+            } else if (choice == 1) {
+                Session.executorService.submit(() ->
+                {
+                    donHangService.updateStatus(tempIdSet, false);
+                    btnTrash.setText(String.valueOf(donHangService.countByTrangThai(false)));
+                    loading.dispose();
+                });
+                loading.setVisible(true);
+            } else if (choice == 2) return;
+            new Worker().execute();
+            loading.setVisible(true);
+        } else MsgBox.alert(this, "Vui lòng tick vào ít nhất một đơn hàng!");
     }
 
     public void searchByKeyword() {
@@ -159,7 +168,7 @@ public class DonHangPane extends JPanel {
         Session.fillListPage(pageValue, listPageModel, donHangService, sizeValue, listPage);
     }
 
-    public void selectPageDisplay() {
+    private void selectPageDisplay() {
         if (listPage.getSelectedValue() instanceof Integer) {
             pageValue = Integer.parseInt(listPage.getSelectedValue().toString());
             pageable = PageRequest.of(pageValue - 1, sizeValue);
@@ -168,12 +177,20 @@ public class DonHangPane extends JPanel {
         }
     }
 
-    public void selectSizeDisplay() {
+    private void selectSizeDisplay() {
         sizeValue = Integer.parseInt(cboHienThi.getSelectedItem().toString());
         pageValue = 1;
         pageable = PageRequest.of(pageValue - 1, sizeValue);
         new Worker().execute();
         loading.setVisible(true);
+    }
+
+    private void openTrash() {
+        if (Integer.parseInt(btnTrash.getText()) > 0) {
+            ThungRacDialog thungRacDialog = new ThungRacDialog();
+            thungRacDialog.setParentPane(this);
+            thungRacDialog.setVisible(true);
+        }
     }
 
     private void createUIComponents() {
@@ -182,11 +199,12 @@ public class DonHangPane extends JPanel {
         btnAdd = new ButtonToolItem("add.svg", "add.svg");
         btnDel = new ButtonToolItem("trash-c.svg", "trash-c.svg");
         btnEdit = new ButtonToolItem("pencil.svg", "pencil.svg");
+        btnTrash = new ButtonToolItem("trash-c.svg", "trash-c.svg");
 
         listPage = new ListPageNumber();
     }
 
-    class Worker extends SwingWorker<List<AbstractViewObject>, Integer> {
+    public class Worker extends SwingWorker<List<AbstractViewObject>, Integer> {
 
         @Override
         protected List<AbstractViewObject> doInBackground() {

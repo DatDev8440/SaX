@@ -148,7 +148,7 @@ public class KhachHangPane extends JPanel {
                     MsgBox.alert(this, e.getMessage());
                 }
                 pageValue = khachHangService.getTotalPage(sizeValue) < pageValue ? khachHangService.getTotalPage(sizeValue) : pageValue;
-                pageable = PageRequest.of(pageValue - 1, sizeValue);
+                pageable = PageRequest.of(pageValue > 0 ? pageValue - 1 : pageValue, sizeValue);
                 fillTable(khachHangService.getPage(pageable).stream().map(KhachHangViewObject::new).collect(Collectors.toList()));
                 fillListPage();
                 loading.dispose();

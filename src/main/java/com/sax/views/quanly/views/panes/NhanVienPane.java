@@ -126,7 +126,7 @@ public class NhanVienPane extends JPanel {
             taiKhoanDialog.fillForm();
             taiKhoanDialog.setVisible(true);
             table.clearSelection();
-        }
+        } else MsgBox.alert(this, "Vui lòng chọn một tài khoản!");
     }
 
     private void update() {
@@ -155,7 +155,7 @@ public class NhanVienPane extends JPanel {
                     MsgBox.alert(this, e.getMessage());
                 }
                 pageValue = accountService.getTotalPage(sizeValue) < pageValue ? accountService.getTotalPage(sizeValue) : pageValue;
-                pageable = PageRequest.of(pageValue - 1, sizeValue);
+                pageable = PageRequest.of(pageValue > 0 ? pageValue - 1 : pageValue, sizeValue);
                 fillTable(accountService.getPage(pageable).stream().map(NhanVienViewObject::new).collect(Collectors.toList()));
                 fillListPage();
                 loading.dispose();

@@ -4,6 +4,7 @@ import com.sax.dtos.CtkmDTO;
 import com.sax.dtos.CtkmSachDTO;
 import com.sax.dtos.SachDTO;
 import com.sax.utils.CurrencyConverter;
+import com.sax.utils.DateUtils;
 import com.sax.views.components.table.CellNameRender;
 import lombok.Data;
 
@@ -39,11 +40,6 @@ public class CtkmSachViewObject extends AbstractViewObject {
             if (checkBoxDelete.isSelected()) tempIdSet.add(id);
             else tempIdSet.remove(id);
         });
-        return new Object[]{checkBoxDelete, id, new CellNameRender(tbl, sach.getHinhAnh(), name), ctkm.getTenSuKien(), ctkm.getNgayBatDau(), ctkm.getNgayKetThuc(), ctkm.isKieuGiamGia() ? giaTriGiam + "%" : CurrencyConverter.parseString(giaTriGiam), getTrangThai()};
-    }
-
-    @Override
-    public Object[] toObject() {
-        return new Object[0];
+        return new Object[]{checkBoxDelete, id, new CellNameRender(tbl, sach.getHinhAnh(), name), CurrencyConverter.parseString(sach.getGiaBan()), ctkm.getTenSuKien(), DateUtils.parseString(ctkm.getNgayBatDau()), DateUtils.parseString(ctkm.getNgayKetThuc()), ctkm.isKieuGiamGia() ? giaTriGiam + "%" : CurrencyConverter.parseString(giaTriGiam), getTrangThai()};
     }
 }

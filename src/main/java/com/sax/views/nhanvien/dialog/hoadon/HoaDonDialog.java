@@ -2,6 +2,7 @@ package com.sax.views.nhanvien.dialog.hoadon;
 
 import com.sax.dtos.DonHangDTO;
 import com.sax.utils.CurrencyConverter;
+import com.sax.utils.DateUtils;
 import com.sax.utils.ImageUtils;
 import com.sax.views.components.libraries.ButtonToolItem;
 import com.sax.views.nhanvien.dialog.hoadon.table.TableCustom;
@@ -70,10 +71,7 @@ public class HoaDonDialog extends JDialog {
 
         sp.add(scrollPane);
 
-        lblNgayTao.setText("Ngày tạo: "
-                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-                + " - "
-                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        lblNgayTao.setText("Ngày tạo: " + DateUtils.parseString(donHangDTO.getNgayTao()));
         lblTienHang.setText(CurrencyConverter.parseString(donHangDTO.getTienHang()));
         lblChietKhau.setText(donHangDTO.getChietKhau() > 0 ? "-" + CurrencyConverter.parseString(donHangDTO.getChietKhau()) : CurrencyConverter.parseString(donHangDTO.getChietKhau()));
         lblTPT.setText(CurrencyConverter.parseString(donHangDTO.getTongTien()));

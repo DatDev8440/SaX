@@ -123,6 +123,14 @@ public class TestFile {
     @Test
     public void delete() {
         IDonHangService service = ContextUtils.getBean(IDonHangService.class);
+<<<<<<< HEAD
+        System.out.println(service.getPageHidenInvoice(PageRequest.of(0,14)));
+//        System.out.println(service.countByTrangThai(false));
+//        System.out.println(        service.getTotalHindenPage(14)
+//        );
+//        service.getPageHidenInvoice(PageRequest.of(0,14)).forEach(System.out::println);
+=======
         service.getAllHindenInvoice().forEach(System.out::println);
+>>>>>>> 25865100d2c818a5c1cc7533e54f3d371dfe60dd
     }
 }

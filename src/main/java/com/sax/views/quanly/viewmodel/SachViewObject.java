@@ -1,6 +1,7 @@
 package com.sax.views.quanly.viewmodel;
 
 import com.sax.dtos.SachDTO;
+import com.sax.utils.DateUtils;
 import com.sax.views.components.table.CellNameRender;
 import lombok.Data;
 
@@ -39,11 +40,7 @@ public class SachViewObject extends AbstractViewObject {
             if (checkBoxDelete.isSelected()) tempIdSet.add(id);
             else tempIdSet.remove(id);
         });
-        return new Object[]{checkBoxDelete, id, barcode, new CellNameRender(tbl, hinhAnh, name), soLuong, giaBan, danhMucList, ngayThem, trangThai ? "Hiển thị" : "Ẩn"};
+        return new Object[]{checkBoxDelete, id, barcode, new CellNameRender(tbl, hinhAnh, name), soLuong, giaBan, danhMucList, DateUtils.parseString(ngayThem), trangThai ? "Hiển thị" : "Ẩn"};
     }
 
-    @Override
-    public Object[] toObject() {
-        return new Object[0];
-    }
 }

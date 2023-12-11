@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.sax.views.quanly.views.dialogs.ThungRacDialog">
+  <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="10" right="10"/>
+    <constraints>
+      <xy x="20" y="20" width="389" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="cc160" binding="bg" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="12" left="0" bottom="10" right="0"/>
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <scrollpane id="67bd6">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <opaque value="false"/>
+            </properties>
+            <border type="empty"/>
+            <children>
+              <component id="eae76" class="org.jdesktop.swingx.JXTable" binding="table">
+                <constraints/>
+                <properties>
+                  <autoCreateRowSorter value="false"/>
+                  <editable value="true"/>
+                  <intercellSpacing width="0" height="0"/>
+                  <opaque value="false"/>
+                  <rowHeight value="40"/>
+                  <rowMargin value="0"/>
+                  <selectionMode value="0"/>
+                  <showHorizontalLines value="true"/>
+                  <showVerticalLines value="false"/>
+                  <visibleRowCount value="15"/>
+                </properties>
+                <clientProperties>
+                  <terminateEditOnFocusLost class="java.lang.Boolean" value="true"/>
+                </clientProperties>
+              </component>
+            </children>
+          </scrollpane>
+        </children>
+      </grid>
+      <nested-form id="3f71e" form-file="com/sax/views/components/Search.form" binding="timKiem">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </nested-form>
+      <grid id="3b1e5" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <opaque value="true"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="b3eb2" class="javax.swing.JCheckBox" binding="cbkSelectedAll">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name=".SF NS Text" size="13"/>
+              <text value="Chọn tất cả"/>
+            </properties>
+          </component>
+          <component id="340ba" class="javax.swing.JButton" binding="btnDel" custom-create="true">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="-1" height="30"/>
+              </grid>
+            </constraints>
+            <properties>
+              <borderPainted value="true"/>
+              <font name=".SF NS Text" size="13"/>
+              <text value="Xoá vĩnh viễn"/>
+            </properties>
+          </component>
+          <component id="78fa0" class="javax.swing.JButton" binding="btnRestore" custom-create="true">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="-1" height="30"/>
+              </grid>
+            </constraints>
+            <properties>
+              <borderPainted value="true"/>
+              <font name=".SF NS Text" size="13"/>
+              <text value="Khôi phục"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

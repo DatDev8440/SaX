@@ -1,5 +1,7 @@
 package com.sax.views.quanly.views.dialogs;
 
+import com.formdev.flatlaf.ui.FlatBorder;
+import com.formdev.flatlaf.ui.FlatButtonBorder;
 import com.sax.dtos.CtkmDTO;
 import com.sax.dtos.CtkmSachDTO;
 import com.sax.dtos.SachDTO;
@@ -10,6 +12,7 @@ import com.sax.services.impl.CtkmSachService;
 import com.sax.services.impl.CtkmService;
 import com.sax.services.impl.SachService;
 import com.sax.utils.ContextUtils;
+import com.sax.utils.CurrencyConverter;
 import com.sax.utils.MsgBox;
 import com.sax.utils.Session;
 import com.sax.views.components.ListPageNumber;
@@ -21,6 +24,7 @@ import com.sax.views.components.table.CustomTableCellEditor;
 import com.sax.views.quanly.viewmodel.AbstractViewObject;
 import com.sax.views.quanly.viewmodel.CtkmSachViewObject;
 import com.sax.views.quanly.views.panes.KhuyenMaiPane;
+import org.apache.commons.validator.Msg;
 import org.jdesktop.swingx.JXTable;
 
 import javax.swing.*;
@@ -45,12 +49,18 @@ public class CtkmSachDialog extends JDialog {
     private JButton btnDel;
     private JButton btnSave;
     private JList listPage;
-    private List<CtkmSachDTO> listCtkmSach = new ArrayList<>();
-    private ICtkmService ctkmService = ContextUtils.getBean(CtkmService.class);
-    private ICtkmSachService ctkmSachService = ContextUtils.getBean(CtkmSachService.class);
-    private ISachService sachService = ContextUtils.getBean(SachService.class);
-    private Set tempIdSet = new HashSet();
-    private Loading loading = new Loading(this);
+    private final List<CtkmSachDTO> listCtkmSach = new ArrayList<>();
+    private final ICtkmService ctkmService = ContextUtils.getBean(CtkmService.class);
+    private final ICtkmSachService ctkmSachService = ContextUtils.getBean(CtkmSachService.class);
+    private final ISachService sachService = ContextUtils.getBean(SachService.class);
+    private final Set tempIdSet = new HashSet();
+    private final Loading loading = new Loading(this);
+    private final FlatBorder flatBorder = new FlatButtonBorder() {
+        @Override
+        protected boolean isCellEditor(Component c) {
+            return false;
+        }
+    };
 
     public CtkmDTO ctkmDTO;
     public KhuyenMaiPane khuyenMaiPane;
@@ -83,10 +93,9 @@ public class CtkmSachDialog extends JDialog {
         tempIdSet.clear();
         CtkmSachDTO ctkmSachDTO = new CtkmSachDTO();
         SachDTO sachDTO = new SachDTO();
-        sachDTO.setTenSach("");
         ctkmSachDTO.setCtkm(ctkmDTO);
         ctkmSachDTO.setSach(sachDTO);
-        ctkmSachDTO.setGiaTriGiam(1L);
+        ctkmSachDTO.setGiaTriGiam(100L);
         listCtkmSach.add(ctkmSachDTO);
         fillTable(listCtkmSach.stream().map(CtkmSachViewObject::new).collect(Collectors.toList()));
         table.getColumns().forEach(TableColumn::sizeWidthToFit);
@@ -118,7 +127,7 @@ public class CtkmSachDialog extends JDialog {
                     l.setHorizontalAlignment(SwingConstants.LEFT);
                     p.add(l);
                 } else if (column == 3) {
-                    JLabel l = new JLabel(listCtkmSach.get(row).getGiaTriGiam().toString());
+                    JLabel l = new JLabel(listCtkmSach.get(row).getCtkm().isKieuGiamGia() ? listCtkmSach.get(row).getGiaTriGiam() + "%" : CurrencyConverter.parseString(listCtkmSach.get(row).getGiaTriGiam()));
                     l.setFont(new Font(".SF NS Text", 4, 13));
                     p.add(l);
                 } else {
@@ -155,6 +164,8 @@ public class CtkmSachDialog extends JDialog {
             @Override
             public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
                 JComboBox jComboBox = new JComboBox();
+                jComboBox.setBorder(flatBorder);
+
                 Session.executorService.submit(() -> {
                     sachService.getAllSachNotInCTKM().stream().filter(i -> {
                         for (CtkmSachDTO s : listCtkmSach)
@@ -172,21 +183,15 @@ public class CtkmSachDialog extends JDialog {
                 return jComboBox;
             }
         });
-        table.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(new JTextField()) {
+        table.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(new JCheckBox()) {
             @Override
             public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-                JTextField jTextField = new JTextField(listCtkmSach.get(row).getGiaTriGiam().toString());
-                jTextField.addActionListener((e) -> {
-                    long giaTriGiam = 1;
-                    try {
-                        giaTriGiam = Integer.parseInt(jTextField.getText().trim());
-                        listCtkmSach.get(row).setGiaTriGiam(giaTriGiam);
-                    } catch (NumberFormatException ex) {
-                        MsgBox.alert(CtkmSachDialog.this, "Giá trị giảm phải là số!");
-                        jTextField.setText("1");
-                        listCtkmSach.get(row).setGiaTriGiam(null);
-                    }
-                });
+                JFormattedTextField jTextField = new JFormattedTextField(listCtkmSach.get(row).getGiaTriGiam());
+                jTextField.setFormatterFactory(CurrencyConverter.getVnCurrency());
+                jTextField.setBorder(flatBorder);
+                jTextField.addActionListener((e) ->
+                        listCtkmSach.get(row).setGiaTriGiam(CurrencyConverter.parseLong(jTextField.getText().trim()))
+                );
                 return jTextField;
             }
         });
@@ -194,37 +199,43 @@ public class CtkmSachDialog extends JDialog {
     }
 
     public void save() {
-        boolean check = true;
+        if (table.getRowCount() > 0) {
+            boolean check = true;
 
-        if (ctkmDTO.isKieuGiamGia()) {
-            for (CtkmSachDTO ctkmSachDTO : listCtkmSach) {
-                if (table.getRowCount() == 0) {
-                    MsgBox.alert(this, "Vui lòng thêm sách!");
-                    check = false;
-                    break;
-                }
-                if (ctkmSachDTO.getSach().getId() == 0) {
-                    MsgBox.alert(this, "Vui lòng chọn sách!");
-                    check = false;
-                    break;
-                }
-                if (ctkmSachDTO.getGiaTriGiam() == null) {
-                    MsgBox.alert(this, "Nhập giá trị giảm của sản phẩm " + ctkmSachDTO.getSach().getTenSach());
-                    check = false;
-                    break;
-                }
-                if (ctkmSachDTO.getGiaTriGiam() > 100) {
-                    MsgBox.alert(this, "Giá trị giảm của sản phẩm " + ctkmSachDTO.getSach().getTenSach() + " phải nhỏ hơn 100%");
-                    check = false;
-                    break;
+            if (ctkmDTO.isKieuGiamGia()) {
+                for (CtkmSachDTO ctkmSachDTO : listCtkmSach) {
+                    if (table.getRowCount() == 0) {
+                        MsgBox.alert(this, "Vui lòng thêm sách!");
+                        check = false;
+                        break;
+                    }
+                    if (ctkmSachDTO.getSach().getId() == 0) {
+                        MsgBox.alert(this, "Vui lòng chọn sách!");
+                        check = false;
+                        break;
+                    }
+                    if (ctkmSachDTO.getGiaTriGiam() == null) {
+                        MsgBox.alert(this, "Nhập giá trị giảm của sản phẩm " + ctkmSachDTO.getSach().getTenSach());
+                        check = false;
+                        break;
+                    }
+                    if (ctkmSachDTO.getGiaTriGiam() > 100) {
+                        MsgBox.alert(this, "Giá trị giảm của sản phẩm " + ctkmSachDTO.getSach().getTenSach() + " phải nhỏ hơn 100%");
+                        check = false;
+                        break;
+                    }
                 }
             }
-        }
-        if (check) {
-            ctkmSachService.insetAll(listCtkmSach);
-            khuyenMaiPane.fillTableSP(ctkmSachService.getAll().stream().map(CtkmSachViewObject::new).collect(Collectors.toList()));
-            dispose();
-        }
+            if (check) {
+                try {
+                    ctkmSachService.insetAll(listCtkmSach);
+                    khuyenMaiPane.fillTableSP(ctkmSachService.getAll().stream().map(CtkmSachViewObject::new).collect(Collectors.toList()));
+                    dispose();
+                } catch (Exception e) {
+                    MsgBox.alert(this, e.getMessage());
+                }
+            }
+        } else MsgBox.alert(this, "Vui lòng thêm sách!");
     }
 
     private void delete() {

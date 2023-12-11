@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.sax.views.quanly.views.panes.DonHangPane">
-  <grid id="27dc6" binding="donHangPanel" custom-create="true" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="donHangPanel" custom-create="true" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
@@ -11,7 +11,7 @@
       <grid id="7fd74" binding="bg" custom-create="true" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="12" left="0" bottom="10" right="0"/>
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <background color="-1"/>
@@ -131,7 +131,7 @@
       <grid id="fee28" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <opaque value="true"/>
@@ -147,7 +147,7 @@
               <text value="Chọn tất cả"/>
             </properties>
           </component>
-          <component id="41d5b" class="javax.swing.JButton" binding="btnEdit" custom-create="true">
+          <component id="41d5b" class="javax.swing.JButton" binding="btnDel" custom-create="true">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="-1" height="30"/>
@@ -156,11 +156,24 @@
             <properties>
               <borderPainted value="true"/>
               <font name=".SF NS Text" size="13"/>
-              <text value="..."/>
+              <text value="Xoá"/>
             </properties>
           </component>
         </children>
       </grid>
+      <component id="fe225" class="javax.swing.JButton" binding="btnTrash" custom-create="true">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name=".SF NS Text"/>
+          <horizontalTextPosition value="11"/>
+          <iconTextGap value="0"/>
+          <selected value="false"/>
+          <text value="0"/>
+          <verticalAlignment value="1"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

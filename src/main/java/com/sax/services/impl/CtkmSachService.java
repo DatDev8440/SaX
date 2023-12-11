@@ -48,7 +48,7 @@ public class CtkmSachService implements ICtkmSachService {
 
     @Override
     public CtkmSachDTO insert(CtkmSachDTO e) throws SQLServerException {
-        if (e.getGiaTriGiam() > e.getSach().getGiaBan()){
+        if (e.getGiaTriGiam() > e.getSach().getGiaBan()) {
             throw new RuntimeException("Giá giảm không được quá giá gốc");
         }
         return DTOUtils.getInstance()
@@ -59,10 +59,16 @@ public class CtkmSachService implements ICtkmSachService {
 
     @Override
     public void update(CtkmSachDTO e) throws SQLServerException {
-        if (e.getCtkm().getNgayKetThuc().isAfter(LocalDateTime.now())){
-            repository.save(DTOUtils.getInstance().converter(e, CtkmSach.class));
-        }
-        else throw new RuntimeException("Không thể cập nhật, do chương trình đã kết thúc!");
+        if (e.getCtkm().getNgayKetThuc().isAfter(LocalDateTime.now())) {
+            if (e.getCtkm().isKieuGiamGia()){
+               if (e.getGiaTriGiam()<=100) repository.save(DTOUtils.getInstance().converter(e, CtkmSach.class));
+               else throw new RuntimeException("Giá trị giảm không được vượt quá 100%");
+            }
+            else {
+                if (e.getGiaTriGiam()<=e.getSach().getGiaBan()) repository.save(DTOUtils.getInstance().converter(e, CtkmSach.class));
+                else throw new RuntimeException("Giá trị giảm không được vượt quá giá bán");
+            }
+        } else throw new RuntimeException("Không thể cập nhật, do chương trình đã kết thúc!");
     }
 
     @Override
