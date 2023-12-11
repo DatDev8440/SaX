@@ -17,7 +17,7 @@ public class CurrencyConverter {
     }
 
     public static long parseLong(String price) {
-        return Long.parseLong(price.replace(".", "").replace("đ", ""));
+        return Long.parseLong(price.replace(".", "").replace("đ", "").replace("%", ""));
     }
 
 

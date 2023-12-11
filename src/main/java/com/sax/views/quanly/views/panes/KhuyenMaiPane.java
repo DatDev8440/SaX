@@ -3,14 +3,14 @@ package com.sax.views.quanly.views.panes;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.ui.FlatBorder;
 import com.formdev.flatlaf.ui.FlatButtonBorder;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import com.sax.dtos.CtkmDTO;
+import com.sax.dtos.CtkmSachDTO;
 import com.sax.services.ICtkmSachService;
 import com.sax.services.ICtkmService;
+import com.sax.services.impl.CtkmSachService;
 import com.sax.services.impl.CtkmService;
-import com.sax.utils.ContextUtils;
-import com.sax.utils.MsgBox;
-import com.sax.utils.Session;
-import com.sax.utils.TableUtils;
+import com.sax.utils.*;
 import com.sax.views.components.ListPageNumber;
 import com.sax.views.components.Loading;
 import com.sax.views.components.Search;
@@ -24,6 +24,7 @@ import com.sax.views.quanly.views.dialogs.CtkmSachDialog;
 import lombok.Getter;
 import lombok.Setter;
 import org.jdesktop.swingworker.SwingWorker;
+import org.jdesktop.swingx.JXFormattedTextField;
 import org.jdesktop.swingx.JXTable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -321,7 +322,7 @@ public class KhuyenMaiPane extends JPanel {
                 return;
             }
             TableCellEditor editor = new DefaultCellEditor(new JCheckBox()) {
-                private JTextField textField = new JTextField();
+                private JXFormattedTextField textField = new JXFormattedTextField();
                 private final FlatBorder flatBorder = new FlatButtonBorder() {
                     @Override
                     protected boolean isCellEditor(Component c) {
@@ -331,7 +332,6 @@ public class KhuyenMaiPane extends JPanel {
 
                 @Override
                 public boolean isCellEditable(EventObject anEvent) {
-                    System.out.println("aloooo");
                     return true;
                 }
 
@@ -344,6 +344,26 @@ public class KhuyenMaiPane extends JPanel {
                 public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
                     textField.setText(value.toString());
                     textField.setBorder(flatBorder);
+                    textField.addActionListener((e) -> {
+                        long prevValue = CurrencyConverter.parseLong(value.toString());
+                        long nextValue = CurrencyConverter.parseLong(textField.getText());
+                        if (table.getCellEditor() != null && prevValue != nextValue) {
+                            boolean check = MsgBox.confirm(KhuyenMaiPane.this, "Bạn có muốn cập nhật giá trị giảm không?");
+                            if (check) {
+                                CtkmSachDTO ctkmSachDTO = ctkmSachService.getById((int) table.getValueAt(row, 1));
+                                ctkmSachDTO.setGiaTriGiam(nextValue);
+                                try {
+                                    ctkmSachService.update(ctkmSachDTO);
+                                    textField.setText(ctkmSachDTO.getCtkm().isKieuGiamGia() ? nextValue + "%" : CurrencyConverter.parseString(nextValue));
+                                    table.getCellEditor().stopCellEditing();
+                                } catch (Exception ex) {
+                                    textField.setText(value.toString());
+                                    MsgBox.alert(KhuyenMaiPane.this, ex.getMessage());
+                                    table.getCellEditor().stopCellEditing();
+                                }
+                            } else textField.setText(value.toString());
+                        }
+                    });
                     return textField;
                 }
             };

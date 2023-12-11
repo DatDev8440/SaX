@@ -189,8 +189,10 @@ public class CtkmSachDialog extends JDialog {
                 JFormattedTextField jTextField = new JFormattedTextField(listCtkmSach.get(row).getGiaTriGiam());
                 jTextField.setFormatterFactory(CurrencyConverter.getVnCurrency());
                 jTextField.setBorder(flatBorder);
-                jTextField.addActionListener((e) ->
-                        listCtkmSach.get(row).setGiaTriGiam(CurrencyConverter.parseLong(jTextField.getText().trim()))
+                jTextField.addActionListener((e) -> {
+                            listCtkmSach.get(row).setGiaTriGiam(CurrencyConverter.parseLong(jTextField.getText().trim()));
+                            table.getCellEditor().stopCellEditing();
+                        }
                 );
                 return jTextField;
             }

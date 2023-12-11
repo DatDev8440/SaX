@@ -51,8 +51,7 @@ public class CtkmDialog extends JDialog {
         pack();
         setLocationRelativeTo(parentPane);
         cboGioBD.setSelectedItem(LocalDateTime.now().getHour() < 10 ? "0" + LocalDateTime.now().getHour() : LocalDateTime.now().getHour() + "");
-        cboPhutBD.setSelectedItem(LocalDateTime.now().getHour() < 10 ? "0" + LocalDateTime.now().getMinute() + 1 : LocalDateTime.now().getMinute() + 1 + "");
-        System.out.println(LocalDateTime.now().getMinute() + "");
+        cboPhutBD.setSelectedItem(LocalDateTime.now().getMinute() < 10 ? "0" + LocalDateTime.now().getMinute() + 1 : LocalDateTime.now().getMinute() + 1 + "");
         ngayBatDau.setFormats("dd/MM/yyyy");
         ngayBatDau.setDate(new Date());
         ngayKetThuc.setFormats("dd/MM/yyyy");

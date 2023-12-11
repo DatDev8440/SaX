@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="023b569d-18c2-4df2-8a63-691bc18ea13f" name="Changes" comment="" />
+    <list default="true" id="85d4af93-9716-440b-bbbc-a44bc02c8b87" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,20 +17,20 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectId" id="2ZOKmOPbA5sQaMyvOeQHrCw7GlT" />
+  <component name="ProjectId" id="2ZOik0H8LRtH5jdHIeabzoQjPFj" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;77c70b646374c700c5ebbfc677618f24&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "spring.configuration.checksum": "77c70b646374c700c5ebbfc677618f24"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sax.Application" />
@@ -45,17 +45,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Application" />
@@ -65,13 +54,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="023b569d-18c2-4df2-8a63-691bc18ea13f" name="Changes" comment="" />
-      <created>1702287843790</created>
+      <changelist id="85d4af93-9716-440b-bbbc-a44bc02c8b87" name="Changes" comment="" />
+      <created>1702299665581</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1702287843790</updated>
-      <workItem from="1702287845614" duration="5213000" />
-      <workItem from="1702299309158" duration="286000" />
+      <updated>1702299665581</updated>
+      <workItem from="1702299667599" duration="4059000" />
     </task>
     <servers />
   </component>
