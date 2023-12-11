@@ -106,27 +106,20 @@ public class CtkmSachService implements ICtkmSachService {
                 .filter(ctkmSachDTO -> !(ctkmSachDTO.getGiaTriGiam() < ctkmSachDTO.getSach().getGiaBan()))
                 .map(ctkmSachDTO -> ctkmSachDTO.getSach().getTenSach())
                 .toList();
-        List<CtkmSachDTO> dtos = e.stream().filter(ctkmSachDTO -> ctkmSachDTO.getGiaTriGiam()<ctkmSachDTO.getSach().getGiaBan()).toList();
-
         StringBuilder sb = new StringBuilder();
         tenSachList.forEach(tenSach -> sb.append(tenSach).append(", "));
-
-        if (sb.length() > 0) {
-            sb.delete(sb.length() - 2, sb.length());
-        }
         List<CtkmSachDTO> dtoList = new ArrayList<>();
        if (sb.isEmpty()){
+           List<CtkmSachDTO> dtos = e.stream()
+                   .filter(ctkmSachDTO ->
+                           ctkmSachDTO.getGiaTriGiam()<ctkmSachDTO.getSach().getGiaBan()).toList();
            dtoList= DTOUtils.getInstance()
                    .convertToDTOList(repository.saveAll(DTOUtils.getInstance()
                                    .convertToDTOList(dtos, CtkmSach.class)),
                            CtkmSachDTO.class);
        }
        else {
-           dtoList = DTOUtils.getInstance()
-                   .convertToDTOList(repository.saveAll(DTOUtils.getInstance()
-                                   .convertToDTOList(dtos, CtkmSach.class)),
-                           CtkmSachDTO.class);
-           throw new RuntimeException("Sách :"+sb+" Vượt quá giá quyển sách");
+           throw new RuntimeException("Sách :"+sb+" giá giảm vượt quá giá bán quyển sách");
        }
        return dtoList;
     }
