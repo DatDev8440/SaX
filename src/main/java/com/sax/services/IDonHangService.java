@@ -10,5 +10,4 @@ public interface IDonHangService extends ICrudServices<DonHangDTO,Integer>{
     void updateStatus(Set<Integer>ids,boolean status);
     int countByTrangThai(Boolean trangThai);
     List<DonHangDTO> getAllHindenInvoice();
-
 }
