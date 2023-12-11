@@ -40,4 +40,5 @@ public interface IDonHangRepository extends JpaRepository<DonHang,Integer>, Pagi
     @Query("SELECT e FROM DonHang e WHERE CAST(e.id AS string) like %:keyword% OR e.account.tenNhanVien LIKE %:keyword% OR e.khachHang.tenKhach LIKE %:keyword%")
     List<DonHang> findAllByKeyword(@Param("keyword") String keyword);
     Page<DonHang> findAllByTrangThai(Boolean trangThai, Pageable pageable);
+    int countByTrangThai(Boolean trangThai);
 }

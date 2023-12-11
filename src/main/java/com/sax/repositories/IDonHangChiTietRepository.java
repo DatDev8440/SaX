@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface IDonHangChiTietRepository extends JpaRepository<ChiTietDonHang,Integer> {
     public List<ChiTietDonHang> findAllByDonHang(DonHang donHang);
+
 }

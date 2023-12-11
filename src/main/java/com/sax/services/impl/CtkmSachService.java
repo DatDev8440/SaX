@@ -3,6 +3,7 @@ package com.sax.services.impl;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import com.sax.dtos.CtkmDTO;
 import com.sax.dtos.CtkmSachDTO;
+import com.sax.dtos.SachDTO;
 import com.sax.entities.Ctkm;
 import com.sax.entities.CtkmSach;
 import com.sax.repositories.ICtkmSachRepository;
@@ -15,9 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class CtkmSachService implements ICtkmSachService {
@@ -99,10 +102,33 @@ public class CtkmSachService implements ICtkmSachService {
 
     @Override
     public List<CtkmSachDTO> insetAll(List<CtkmSachDTO> e) {
-        return DTOUtils.getInstance()
-                .convertToDTOList(repository.saveAll(DTOUtils.getInstance()
-                                .convertToDTOList(e, CtkmSach.class)),
-                        CtkmSachDTO.class);
+        List<String> tenSachList = e.stream()
+                .filter(ctkmSachDTO -> !(ctkmSachDTO.getGiaTriGiam() < ctkmSachDTO.getSach().getGiaBan()))
+                .map(ctkmSachDTO -> ctkmSachDTO.getSach().getTenSach())
+                .toList();
+        List<CtkmSachDTO> dtos = e.stream().filter(ctkmSachDTO -> ctkmSachDTO.getGiaTriGiam()<ctkmSachDTO.getSach().getGiaBan()).toList();
+
+        StringBuilder sb = new StringBuilder();
+        tenSachList.forEach(tenSach -> sb.append(tenSach).append(", "));
+
+        if (sb.length() > 0) {
+            sb.delete(sb.length() - 2, sb.length());
+        }
+        List<CtkmSachDTO> dtoList = new ArrayList<>();
+       if (sb.isEmpty()){
+           dtoList= DTOUtils.getInstance()
+                   .convertToDTOList(repository.saveAll(DTOUtils.getInstance()
+                                   .convertToDTOList(dtos, CtkmSach.class)),
+                           CtkmSachDTO.class);
+       }
+       else {
+           dtoList = DTOUtils.getInstance()
+                   .convertToDTOList(repository.saveAll(DTOUtils.getInstance()
+                                   .convertToDTOList(dtos, CtkmSach.class)),
+                           CtkmSachDTO.class);
+           throw new RuntimeException("Sách :"+sb+" Vượt quá giá quyển sách");
+       }
+       return dtoList;
     }
 
     @Override

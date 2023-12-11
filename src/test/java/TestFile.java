@@ -16,6 +16,8 @@ import com.sax.utils.ContextUtils;
 import com.sax.utils.ImageUtils;
 import com.sax.utils.MailService;
 import org.junit.Test;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
@@ -120,5 +122,10 @@ public class TestFile {
 
     @Test
     public void delete() {
+        IDonHangService service = ContextUtils.getBean(IDonHangService.class);
+        System.out.println(service.countByTrangThai(false));
+        System.out.println(        service.getTotalHindenPage(14)
+        );
+        service.getPageHidenInvoice(PageRequest.of(0,14)).forEach(System.out::println);
     }
 }
