@@ -149,22 +149,12 @@ public class DonHangService implements IDonHangService {
     }
 
     @Override
-    public List<DonHangDTO> getPageHidenInvoice(Pageable pageable) {
-        return DTOUtils
-                .getInstance()
-                .convertToDTOList(
-                        repository.findAllByTrangThai(
-                        false,pageable).stream().toList(),
-                        DonHangDTO.class);
-    }
-
-    @Override
-    public int getTotalHindenPage(int amount) {
-        return repository.findAllByTrangThai(false,Pageable.ofSize(amount)).getTotalPages();
-    }
-
-    @Override
     public int countByTrangThai(Boolean trangThai) {
         return repository.countByTrangThai(trangThai);
+    }
+
+    @Override
+    public List<DonHangDTO> getAllHindenInvoice() {
+        return DTOUtils.getInstance().convertToDTOList(repository.findAllByTrangThai(false),DonHangDTO.class);
     }
 }
