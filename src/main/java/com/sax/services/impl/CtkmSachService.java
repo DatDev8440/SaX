@@ -48,7 +48,7 @@ public class CtkmSachService implements ICtkmSachService {
 
     @Override
     public CtkmSachDTO insert(CtkmSachDTO e) throws SQLServerException {
-        if (e.getGiaTriGiam() > e.getSach().getGiaBan()){
+        if (e.getGiaTriGiam() > e.getSach().getGiaBan()) {
             throw new RuntimeException("Giá giảm không được quá giá gốc");
         }
         return DTOUtils.getInstance()
@@ -59,10 +59,9 @@ public class CtkmSachService implements ICtkmSachService {
 
     @Override
     public void update(CtkmSachDTO e) throws SQLServerException {
-        if (e.getCtkm().getNgayKetThuc().isAfter(LocalDateTime.now())){
+        if (e.getCtkm().getNgayKetThuc().isAfter(LocalDateTime.now())) {
             repository.save(DTOUtils.getInstance().converter(e, CtkmSach.class));
-        }
-        else throw new RuntimeException("Không thể cập nhật, do chương trình đã kết thúc!");
+        } else throw new RuntimeException("Không thể cập nhật, do chương trình đã kết thúc!");
     }
 
     @Override
@@ -106,7 +105,7 @@ public class CtkmSachService implements ICtkmSachService {
                 .filter(ctkmSachDTO -> !(ctkmSachDTO.getGiaTriGiam() < ctkmSachDTO.getSach().getGiaBan()))
                 .map(ctkmSachDTO -> ctkmSachDTO.getSach().getTenSach())
                 .toList();
-        List<CtkmSachDTO> dtos = e.stream().filter(ctkmSachDTO -> ctkmSachDTO.getGiaTriGiam()<ctkmSachDTO.getSach().getGiaBan()).toList();
+        List<CtkmSachDTO> dtos = e.stream().filter(ctkmSachDTO -> ctkmSachDTO.getGiaTriGiam() < ctkmSachDTO.getSach().getGiaBan()).toList();
 
         StringBuilder sb = new StringBuilder();
         tenSachList.forEach(tenSach -> sb.append(tenSach).append(", "));
@@ -115,20 +114,19 @@ public class CtkmSachService implements ICtkmSachService {
             sb.delete(sb.length() - 2, sb.length());
         }
         List<CtkmSachDTO> dtoList = new ArrayList<>();
-       if (sb.isEmpty()){
-           dtoList= DTOUtils.getInstance()
-                   .convertToDTOList(repository.saveAll(DTOUtils.getInstance()
-                                   .convertToDTOList(dtos, CtkmSach.class)),
-                           CtkmSachDTO.class);
-       }
-       else {
-           dtoList = DTOUtils.getInstance()
-                   .convertToDTOList(repository.saveAll(DTOUtils.getInstance()
-                                   .convertToDTOList(dtos, CtkmSach.class)),
-                           CtkmSachDTO.class);
-           throw new RuntimeException("Sách :"+sb+" Vượt quá giá quyển sách");
-       }
-       return dtoList;
+        if (sb.isEmpty()) {
+            dtoList = DTOUtils.getInstance()
+                    .convertToDTOList(repository.saveAll(DTOUtils.getInstance()
+                                    .convertToDTOList(dtos, CtkmSach.class)),
+                            CtkmSachDTO.class);
+        } else {
+            dtoList = DTOUtils.getInstance()
+                    .convertToDTOList(repository.saveAll(DTOUtils.getInstance()
+                                    .convertToDTOList(dtos, CtkmSach.class)),
+                            CtkmSachDTO.class);
+            throw new RuntimeException("Sách :" + sb + " Vượt quá giá quyển sách");
+        }
+        return dtoList;
     }
 
     @Override

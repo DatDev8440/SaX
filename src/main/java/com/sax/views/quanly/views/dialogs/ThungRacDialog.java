@@ -48,15 +48,12 @@ public class ThungRacDialog extends JDialog{
     private final IDonHangService donHangService = ContextUtils.getBean(DonHangService.class);
     private Loading loading = new Loading(this);
 
-    private DefaultListModel listPageModel = new DefaultListModel();
-    private int sizeValue = 14;
-    private int pageValue = 1;
-    private Pageable pageable = PageRequest.of(pageValue - 1, sizeValue);
     private Timer timer;
 
     public ThungRacDialog() {
         initComponent();
         btnDel.addActionListener((e) -> delete());
+        btnRestore.addActionListener((e) -> restore());
     }
 
     private void initComponent() {
@@ -92,35 +89,10 @@ public class ThungRacDialog extends JDialog{
     {
         if (tempIdSet.size() > 0)
         {
-            try {
-                donHangService.updateStatus(tempIdSet);
-                new Worker().execute();
-                loading.setVisible(true);
-            } catch (SQLServerException e) {
-                MsgBox.alert(this, e.getMessage());
-            }
-        } else MsgBox.alert(this, "Vui lòng tick ít nhất một đơn hàng!");
-    }
-
-    private void fillListPage() {
-        Session.fillListPage(pageValue, listPageModel, donHangService, sizeValue, listPage);
-    }
-
-    private void selectPageDisplay() {
-        if (listPage.getSelectedValue() instanceof Integer) {
-            pageValue = Integer.parseInt(listPage.getSelectedValue().toString());
-            pageable = PageRequest.of(pageValue - 1, sizeValue);
+            donHangService.updateStatus(tempIdSet, true);
             new Worker().execute();
             loading.setVisible(true);
-        }
-    }
-
-    private void selectSizeDisplay() {
-        sizeValue = Integer.parseInt(cboHienThi.getSelectedItem().toString());
-        pageValue = 1;
-        pageable = PageRequest.of(pageValue - 1, sizeValue);
-        new Worker().execute();
-        loading.setVisible(true);
+        } else MsgBox.alert(this, "Vui lòng tick ít nhất một đơn hàng!");
     }
 
     private void createUIComponents() {
@@ -135,14 +107,13 @@ public class ThungRacDialog extends JDialog{
 
         @Override
         protected List<AbstractViewObject> doInBackground() {
-            return donHangService.getPageHidenInvoice(pageable).stream().map(DonHangViewObject::new).collect(Collectors.toList());
+            return donHangService.getPageHidenInvoice(null).stream().map(DonHangViewObject::new).collect(Collectors.toList());
         }
 
         @Override
         protected void done() {
             try {
                 fillTable(get());
-                if (table.getRowCount() > 0) fillListPage();
                 loading.dispose();
             } catch (InterruptedException | ExecutionException e) {
                 throw new RuntimeException(e);

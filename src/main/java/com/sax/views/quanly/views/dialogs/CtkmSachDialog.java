@@ -189,17 +189,9 @@ public class CtkmSachDialog extends JDialog {
                 JFormattedTextField jTextField = new JFormattedTextField(listCtkmSach.get(row).getGiaTriGiam());
                 jTextField.setFormatterFactory(CurrencyConverter.getVnCurrency());
                 jTextField.setBorder(flatBorder);
-                jTextField.addActionListener((e) -> {
-                    long giaTriGiam = 1;
-                    try {
-                        giaTriGiam = Integer.parseInt(jTextField.getText().trim());
-                        listCtkmSach.get(row).setGiaTriGiam(giaTriGiam);
-                    } catch (NumberFormatException ex) {
-                        MsgBox.alert(CtkmSachDialog.this, "Giá trị giảm phải là số!");
-                        jTextField.setText("1");
-                        listCtkmSach.get(row).setGiaTriGiam(null);
-                    }
-                });
+                jTextField.addActionListener((e) ->
+                        listCtkmSach.get(row).setGiaTriGiam(CurrencyConverter.parseLong(jTextField.getText().trim()))
+                );
                 return jTextField;
             }
         });
@@ -235,9 +227,13 @@ public class CtkmSachDialog extends JDialog {
                 }
             }
             if (check) {
-                ctkmSachService.insetAll(listCtkmSach);
-                khuyenMaiPane.fillTableSP(ctkmSachService.getAll().stream().map(CtkmSachViewObject::new).collect(Collectors.toList()));
-                dispose();
+                try {
+                    ctkmSachService.insetAll(listCtkmSach);
+                    khuyenMaiPane.fillTableSP(ctkmSachService.getAll().stream().map(CtkmSachViewObject::new).collect(Collectors.toList()));
+                    dispose();
+                } catch (Exception e) {
+                    MsgBox.alert(this, e.getMessage());
+                }
             }
         } else MsgBox.alert(this, "Vui lòng thêm sách!");
     }

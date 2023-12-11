@@ -142,7 +142,7 @@ public class DonHangPane extends JPanel {
             } else if (choice == 1) {
                 Session.executorService.submit(() ->
                 {
-                    donHangService.updateStatus(tempIdSet);
+                    donHangService.updateStatus(tempIdSet, false);
                     btnTrash.setText(String.valueOf(donHangService.countByTrangThai(false)));
                     loading.dispose();
                 });
