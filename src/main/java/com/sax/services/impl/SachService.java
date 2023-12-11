@@ -102,17 +102,22 @@ public class SachService implements ISachService {
 
     @Override
     public SachDTO getByBarCode(String barcode) {
-        Sach sach = repository.findByBarCode(barcode).orElseThrow();
+        Sach sach = repository.findByBarCode(barcode).orElseThrow(() -> new NoSuchElementException("Không tìm thấy sách"));
         SachDTO dto = DTOUtils.getInstance().converter(sach, SachDTO.class);
-        sach.getCtkmSach().forEach(ctkmSach -> {
-            if (date.isBefore(ctkmSach.getCtkm().getNgayKetThuc()) && date.isAfter(ctkmSach.getCtkm().getNgayBatDau())) {
-                if (ctkmSach.getCtkm().isKieuGiamGia()) {
-                    dto.setGiaGiam((ctkmSach.getGiaTriGiam() * ctkmSach.getSach().getGiaBan()) / 100);
-                } else {
-                    dto.setGiaGiam(ctkmSach.getGiaTriGiam());
+        if (dto.getTrangThai()){
+            sach.getCtkmSach().forEach(ctkmSach -> {
+                if (date.isBefore(ctkmSach.getCtkm().getNgayKetThuc()) && date.isAfter(ctkmSach.getCtkm().getNgayBatDau())) {
+                    if (ctkmSach.getCtkm().isKieuGiamGia()) {
+                        dto.setGiaGiam((ctkmSach.getGiaTriGiam() * ctkmSach.getSach().getGiaBan()) / 100);
+                    } else {
+                        dto.setGiaGiam(ctkmSach.getGiaTriGiam());
+                    }
                 }
-            }
-        });
+            });
+        }
+        else{
+            throw new RuntimeException("Đang tạm ngưng bán");
+        }
         return dto;
     }
 

@@ -185,12 +185,16 @@ public class Session {
         }
     }
     public static void reload(){
-        ((JLayeredPane) Session.avatar.getComponent(0)).getComponent(0).addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                UserPopup userPopup = new UserPopup();
-                userPopup.setVisible(true);
-            }
-        });
+     try {
+         ((JLayeredPane) Session.avatar.getComponent(0)).getComponent(0).addMouseListener(new MouseAdapter() {
+             @Override
+             public void mouseClicked(MouseEvent e) {
+                 UserPopup userPopup = new UserPopup();
+                 userPopup.setVisible(true);
+             }
+         });
+     }catch (Exception e){
+
+     }
     }
 }

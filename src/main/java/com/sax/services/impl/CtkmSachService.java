@@ -45,6 +45,9 @@ public class CtkmSachService implements ICtkmSachService {
 
     @Override
     public CtkmSachDTO insert(CtkmSachDTO e) throws SQLServerException {
+        if (e.getGiaTriGiam() > e.getSach().getGiaBan()){
+            throw new RuntimeException("Giá giảm không được quá giá gốc");
+        }
         return DTOUtils.getInstance()
                 .converter(repository.
                         save(DTOUtils.getInstance()
