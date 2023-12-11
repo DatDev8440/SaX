@@ -6,6 +6,7 @@ import com.sax.dtos.SachDTO;
 import com.sax.entities.DanhMuc;
 import com.sax.entities.Sach;
 import com.sax.repositories.IDanhMucRepository;
+import com.sax.repositories.IDonHangRepository;
 import com.sax.repositories.IKhachHangRepository;
 import com.sax.repositories.ISachRepository;
 import com.sax.services.*;
@@ -13,7 +14,10 @@ import com.sax.services.impl.*;
 import com.sax.utils.AccountUtils;
 import com.sax.utils.ContextUtils;
 import com.sax.utils.ImageUtils;
+import com.sax.utils.MailService;
 import org.junit.Test;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
@@ -105,5 +109,23 @@ public class TestFile {
         for (PrintService printService : printServices) {
             System.out.println(printService.getName());
         }
+    }
+
+    @Test
+    public void email() {
+        IAccountService service = ContextUtils.getBean(AccountService.class);
+        AccountDTO dto = service.getById(2008);
+        dto.setUsername("ngu");
+        dto.setPassword("c4ca4238a0b923820dcc509a6f75849b");
+        service.updateUsernamePassword(dto);
+    }
+
+    @Test
+    public void delete() {
+        IDonHangService service = ContextUtils.getBean(IDonHangService.class);
+        System.out.println(service.countByTrangThai(false));
+        System.out.println(        service.getTotalHindenPage(14)
+        );
+        service.getPageHidenInvoice(PageRequest.of(0,14)).forEach(System.out::println);
     }
 }

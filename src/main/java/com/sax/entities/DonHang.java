@@ -1,6 +1,7 @@
 package com.sax.entities;
 
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
@@ -38,13 +39,14 @@ public class DonHang {
     @Basic
     @Column(name = "phuong_thuc_thanh_toan", nullable = true)
     private Boolean pttt;
+    @Column(name = "trang_thai", nullable = true)
+    private Boolean trangThai;
     @ManyToOne
     @JoinColumn(name = "id_khach", referencedColumnName = "id", nullable = false)
     private KhachHang khachHang;
     @ManyToOne
     @JoinColumn(name = "id_tai_khoan", referencedColumnName = "id", nullable = false)
     private Account account;
-
-    @OneToMany(mappedBy = "donHang")
+    @OneToMany(mappedBy = "donHang",cascade = CascadeType.REMOVE)
     private Collection<ChiTietDonHang> chiTietDonHangs;
 }

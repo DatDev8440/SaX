@@ -9,6 +9,7 @@ import com.sax.views.components.table.CustomHeaderTableCellRenderer;
 import com.sax.views.components.table.CustomTableCellEditor;
 import com.sax.views.components.table.CustomTableCellRender;
 import com.sax.views.nhanvien.cart.CartModel;
+import com.sax.views.nhanvien.dialog.UserPopup;
 import com.sax.views.nhanvien.doncho.DonChoViewObject;
 import com.sax.views.quanly.viewmodel.AbstractViewObject;
 import com.sax.views.quanly.viewmodel.DonHangViewObject;
@@ -18,6 +19,8 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.nodes.Tag;
 import org.yaml.snakeyaml.representer.Representer;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.*;
 import java.util.List;
@@ -180,5 +183,18 @@ public class Session {
         try (FileWriter writer = new FileWriter(CONFIG_FILE_PATH)) {
             yaml.dump(defaultConfig, writer);
         }
+    }
+    public static void reload(){
+     try {
+         ((JLayeredPane) Session.avatar.getComponent(0)).getComponent(0).addMouseListener(new MouseAdapter() {
+             @Override
+             public void mouseClicked(MouseEvent e) {
+                 UserPopup userPopup = new UserPopup();
+                 userPopup.setVisible(true);
+             }
+         });
+     }catch (Exception e){
+
+     }
     }
 }

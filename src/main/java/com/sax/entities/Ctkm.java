@@ -27,6 +27,6 @@ public class Ctkm {
     private LocalDateTime ngayKetThuc;
     @Column(name = "kieu_giam_gia", nullable = false)
     private boolean kieuGiamGia;
-    @OneToMany(mappedBy = "ctkm")
+    @OneToMany(mappedBy = "ctkm",cascade = CascadeType.REMOVE)
     private Collection<CtkmSach> ctkm;
 }
