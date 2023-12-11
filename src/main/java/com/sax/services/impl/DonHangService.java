@@ -142,9 +142,9 @@ public class DonHangService implements IDonHangService {
     }
 
     @Override
-    public void updateStatus(Set<Integer> ids) {
+    public void updateStatus(Set<Integer> ids, boolean status) {
         List<DonHang>donHangs = repository.findAllById(ids);
-        donHangs.forEach(donHang -> donHang.setTrangThai(false));
+        donHangs.forEach(donHang -> donHang.setTrangThai(status));
         repository.saveAll(donHangs);
     }
 
