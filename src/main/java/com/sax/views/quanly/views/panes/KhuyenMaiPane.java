@@ -8,6 +8,7 @@ import com.sax.services.impl.CtkmService;
 import com.sax.utils.ContextUtils;
 import com.sax.utils.MsgBox;
 import com.sax.utils.Session;
+import com.sax.utils.TableUtils;
 import com.sax.views.components.ListPageNumber;
 import com.sax.views.components.Loading;
 import com.sax.views.components.Search;
@@ -16,7 +17,6 @@ import com.sax.views.components.libraries.RoundPanel;
 import com.sax.views.quanly.viewmodel.AbstractViewObject;
 import com.sax.views.quanly.viewmodel.CtkmSachViewObject;
 import com.sax.views.quanly.viewmodel.CtkmViewObject;
-import com.sax.views.quanly.viewmodel.SachViewObject;
 import com.sax.views.quanly.views.dialogs.CtkmDialog;
 import com.sax.views.quanly.views.dialogs.CtkmSachDialog;
 import lombok.Getter;
@@ -27,6 +27,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import java.awt.*;
@@ -34,13 +35,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class KhuyenMaiPane extends JPanel {
@@ -66,6 +63,10 @@ public class KhuyenMaiPane extends JPanel {
     private JButton btnSuaSP;
     private JButton btnBoLuaChon;
     private JLabel lblTitleSach;
+    private JComboBox cboSapXepKM;
+    private JComboBox cboSXTieuChi;
+    private final String[] tenCotKM = new String[]{"", "Mã sự kiện", "Tên sự kiện", "Ngày bắt đầu", "Ngày kết thúc", "Giảm theo", "Trạng thái"};
+    private final String[] tenCotSP = new String[]{"", "Id", "Tên sách", "Giá bán", "Tên sự kiện", "Ngày bắt đầu", "Ngày kết thúc", "Giá trị giảm", "Trạng thái"};
     private ICtkmSachService ctkmSachService = ContextUtils.getBean(ICtkmSachService.class);
     private ICtkmService ctkmService = ContextUtils.getBean(CtkmService.class);
     private Set tempIdSetCTKM = new HashSet();
@@ -73,8 +74,9 @@ public class KhuyenMaiPane extends JPanel {
     private List<JCheckBox> listCbkCTKM = new ArrayList<>();
     private List<JCheckBox> listCbkSP = new ArrayList<>();
     private Loading loading = new Loading(this);
+    private List<CtkmDTO> tempCtkmListDTO = new ArrayList<>();
 
-    private DefaultListModel listPageModelKM = new DefaultListModel();
+    private final DefaultListModel listPageModelKM = new DefaultListModel();
     @Getter
     @Setter
     private int pageKMValue = 1;
@@ -96,9 +98,7 @@ public class KhuyenMaiPane extends JPanel {
         tableCTKM.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) updateKM();
                 locSPCtkm();
-
             }
         });
         listPageKM.addMouseListener(new MouseAdapter() {
@@ -132,12 +132,17 @@ public class KhuyenMaiPane extends JPanel {
                 timerSP.restart();
             }
         });
+        cboSapXepKM.addActionListener((e) -> sapXepKM());
+        cboSXTieuChi.addActionListener((e) -> sapXepKM());
     }
 
     public void initComponent() {
         kmScroll.getVerticalScrollBar().putClientProperty(FlatClientProperties.STYLE, "track:#F2F2F2");
-        ((DefaultTableModel) tableCTKM.getModel()).setColumnIdentifiers(new String[]{"", "Mã sự kiện", "Tên sự kiện", "Ngày bắt đầu", "Ngày kết thúc", "Giảm theo", "Trạng thái"});
-        ((DefaultTableModel) tableSP.getModel()).setColumnIdentifiers(new String[]{"", "Id", "Tên sách", "Tên sự kiện", "Ngày bắt đầu", "Ngày kết thúc", "Giá trị giảm", "Trạng thái"});
+        ((DefaultTableModel) tableCTKM.getModel()).setColumnIdentifiers(tenCotKM);
+        ((DefaultTableModel) tableSP.getModel()).setColumnIdentifiers(tenCotSP);
+        ((DefaultComboBoxModel) cboSapXepKM.getModel()).addAll(Arrays.stream(tenCotKM).filter(i -> !i.equals("")).collect(Collectors.toList()));
+        cboSapXepKM.setSelectedIndex(3);
+        cboSXTieuChi.setSelectedIndex(1);
         new WorkerKM().execute();
         loading.setVisible(true);
         new WorkerSP(-1).execute();
@@ -155,6 +160,7 @@ public class KhuyenMaiPane extends JPanel {
 
     public void fillTableKM(List<AbstractViewObject> list) {
         Session.fillTable(list, tableCTKM, cbkSelectedAllCTKM, tempIdSetCTKM, listCbkCTKM);
+
     }
 
     private void addKM() {
@@ -207,7 +213,7 @@ public class KhuyenMaiPane extends JPanel {
         } else MsgBox.alert(this, "Vui lòng tick vào ít nhất một chương trình khuyến mại!");
     }
 
-    public void searchByKeywordKM() {
+    private void searchByKeywordKM() {
         String keyword = timKiemCTKM.txtSearch.getText();
         if (!keyword.isEmpty()) {
             fillTableKM(ctkmService.searchByKeyword(keyword).stream().map(CtkmViewObject::new).collect(Collectors.toList()));
@@ -220,6 +226,41 @@ public class KhuyenMaiPane extends JPanel {
             lblTitleSach.setText("Sách được áp dụng trong tất cả CTKM");
             phanTrangPane.setVisible(true);
         }
+    }
+
+    private void sapXepKM() {
+        Comparator<CtkmDTO> idComparator = Comparator.comparingInt(CtkmDTO::getId);
+        Comparator<CtkmDTO> tenSuKienComparator = Comparator.comparing(CtkmDTO::getTenSuKien);
+        Comparator<CtkmDTO> ngayBatDauComparator = Comparator.comparing(CtkmDTO::getNgayBatDau);
+        Comparator<CtkmDTO> ngayKetThucComparator = Comparator.comparing(CtkmDTO::getNgayKetThuc);
+        Comparator<CtkmDTO> kieuGiamGiaComparator = Comparator.comparing((CtkmDTO c) -> c.isKieuGiamGia() ? "Phần trăm" : "Số tiền cố định");
+        Comparator<CtkmDTO> trangThaiComparator = Comparator.comparing(CtkmDTO::getTrangThai);
+        Comparator<CtkmDTO> selectedComparator;
+        switch (cboSapXepKM.getSelectedIndex()) {
+            case 0:
+                selectedComparator = cboSXTieuChi.getSelectedIndex() == 0 ? idComparator : idComparator.reversed();
+                break;
+            case 1:
+                selectedComparator = cboSXTieuChi.getSelectedIndex() == 0 ? tenSuKienComparator : tenSuKienComparator.reversed();
+                break;
+            case 2:
+                selectedComparator = cboSXTieuChi.getSelectedIndex() == 0 ? ngayBatDauComparator : ngayBatDauComparator.reversed();
+                break;
+            case 3:
+                selectedComparator = cboSXTieuChi.getSelectedIndex() == 0 ? ngayKetThucComparator : ngayKetThucComparator.reversed();
+                break;
+            case 4:
+                selectedComparator = cboSXTieuChi.getSelectedIndex() == 0 ? kieuGiamGiaComparator : kieuGiamGiaComparator.reversed();
+                break;
+            case 5:
+                selectedComparator = cboSXTieuChi.getSelectedIndex() == 0 ? trangThaiComparator : trangThaiComparator.reversed();
+                break;
+            default:
+                throw new IllegalArgumentException("Không tìm có lựa chọn!");
+        }
+
+        tempCtkmListDTO.sort(selectedComparator);
+        fillTableKM(tempCtkmListDTO.stream().map(CtkmViewObject::new).collect(Collectors.toList()));
     }
 
     public void fillListPage() {
@@ -247,9 +288,7 @@ public class KhuyenMaiPane extends JPanel {
     public void fillCboCtkm() {
         Session.executorService.submit(() -> {
             cboCTKM.addItem("-Tất cả-");
-            ctkmService.getAll().stream()
-                    .filter(i -> ctkmSachService.getAllSachInCtkm(i).size() > 0)
-                    .forEach(i -> cboCTKM.addItem(i));
+            ctkmService.getAll().stream().filter(i -> ctkmSachService.getAllSachInCtkm(i).size() > 0).forEach(i -> cboCTKM.addItem(i));
         });
     }
 
@@ -275,10 +314,6 @@ public class KhuyenMaiPane extends JPanel {
 
     private void updateSP() {
         if (tableSP.getSelectedRow() >= 0) {
-            if (tableSP.getValueAt(tableSP.getSelectedRow(), 7).toString().equals("Đang diễn ra")) {
-                MsgBox.alert(this, "Sự kiện đang diễn ra, bạn không thể chỉnh sửa!");
-                return;
-            }
             if (tableSP.getValueAt(tableSP.getSelectedRow(), 7).toString().equals("Đã kết thúc")) {
                 MsgBox.alert(this, "Sự kiện đã kết thúc, bạn không thể chỉnh sửa!");
                 return;
@@ -286,6 +321,11 @@ public class KhuyenMaiPane extends JPanel {
             TableCellEditor editor = new DefaultCellEditor(new JCheckBox()) {
                 private JTextField textField = new JTextField();
 
+                @Override
+                public boolean isCellEditable(EventObject anEvent) {
+                    System.out.println("aloooo");
+                    return true;
+                }
 
                 @Override
                 public Object getCellEditorValue() {
@@ -370,7 +410,8 @@ public class KhuyenMaiPane extends JPanel {
     class WorkerKM extends SwingWorker<List<AbstractViewObject>, Integer> {
         @Override
         protected List<AbstractViewObject> doInBackground() {
-            return ctkmService.getPage(pageableKM).stream().map(CtkmViewObject::new).collect(Collectors.toList());
+            tempCtkmListDTO = ctkmService.getPage(pageableKM);
+            return tempCtkmListDTO.stream().map(CtkmViewObject::new).collect(Collectors.toList());
         }
 
         @Override
@@ -378,6 +419,7 @@ public class KhuyenMaiPane extends JPanel {
             try {
                 fillTableKM(get());
                 if (tableCTKM.getRowCount() > 0) fillListPage();
+                sapXepKM();
                 loading.dispose();
             } catch (InterruptedException | ExecutionException e) {
                 throw new RuntimeException(e);

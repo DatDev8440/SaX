@@ -126,7 +126,7 @@ public class NhanVienPane extends JPanel {
             taiKhoanDialog.fillForm();
             taiKhoanDialog.setVisible(true);
             table.clearSelection();
-        }
+        } else MsgBox.alert(this, "Vui lòng chọn một tài khoản!");
     }
 
     private void update() {

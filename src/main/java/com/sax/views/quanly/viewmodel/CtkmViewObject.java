@@ -1,6 +1,7 @@
 package com.sax.views.quanly.viewmodel;
 
 import com.sax.dtos.CtkmDTO;
+import com.sax.utils.DateUtils;
 import lombok.Data;
 
 import javax.swing.*;
@@ -10,26 +11,18 @@ import java.util.Set;
 
 @Data
 public class CtkmViewObject extends AbstractViewObject {
-    public enum TrangThai {
-        DANG_DIEN_RA, DA_KET_THUC, CHUA_BAT_DAU;
-    }
-
 
     private LocalDateTime ngayBatDau;
     private LocalDateTime ngayKetThuc;
     private boolean kieuGiamGia;
+    private String trangThai;
 
     public CtkmViewObject(CtkmDTO ctkmDTO) {
         super(ctkmDTO.getId(), ctkmDTO.getTenSuKien());
         ngayBatDau = ctkmDTO.getNgayBatDau();
         ngayKetThuc = ctkmDTO.getNgayKetThuc();
         kieuGiamGia = ctkmDTO.isKieuGiamGia();
-    }
-
-    public String getTrangThai() {
-        if (LocalDateTime.now().isAfter(ngayBatDau) && LocalDateTime.now().isBefore(ngayKetThuc)) return "Đang diễn ra";
-        else if (LocalDateTime.now().isAfter(ngayKetThuc)) return "Đã kết thúc";
-        return "Chưa bắt đầu";
+        trangThai = ctkmDTO.getTrangThai();
     }
 
     @Override
@@ -39,7 +32,7 @@ public class CtkmViewObject extends AbstractViewObject {
             if (checkBoxDelete.isSelected()) tempIdSet.add(id);
             else tempIdSet.remove(id);
         });
-        return new Object[]{checkBoxDelete, id, name, ngayBatDau, ngayKetThuc, kieuGiamGia ? "Phần trăm" : "Số tiền", getTrangThai()};
+        return new Object[]{checkBoxDelete, id, name, DateUtils.parseString(ngayBatDau), DateUtils.parseString(ngayKetThuc), kieuGiamGia ? "Phần trăm" : "Số tiền", trangThai};
     }
 
     @Override
