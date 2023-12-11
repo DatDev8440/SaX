@@ -20,12 +20,14 @@ public class UserPopup extends JDialog {
     private JLabel lblTen;
     private JPanel contentPane;
     private JButton btnClose;
+    private JButton btnDoiMatKhau;
 
     public UserPopup() {
         btnThongTin.addActionListener((e) -> {
             if (Session.accountid.isVaiTro()) thongTinChiTietQuanLy();
             else thongTinChiTiet();
         });
+        btnDoiMatKhau.addActionListener((e) -> doiMatKhau());
         btnLogout.addActionListener((e) -> dangXuat());
 
         lblTen.setText(Session.accountid.getTenNhanVien());
@@ -50,12 +52,6 @@ public class UserPopup extends JDialog {
         Point cornerPoint = new Point(cornerX - getWidth(), cornerY + 70);
 
         setLocation(cornerPoint);
-        lblTen.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                    new TaiKhoanDialog().setVisible(true);
-            }
-        });
     }
 
     private void dangXuat() {
@@ -81,6 +77,11 @@ public class UserPopup extends JDialog {
         dialog.setVisible(true);
     }
 
+    private void doiMatKhau()
+    {
+        new TaiKhoanDialog().setVisible(true);
+    }
+
     private void thongTinChiTietQuanLy() {
         dispose();
         NhanVienDialog dialog = new NhanVienDialog();
@@ -94,6 +95,7 @@ public class UserPopup extends JDialog {
         contentPane = new PanelShadow(10);
         btnThongTin = new ButtonToolItem("info-c.svg", "info-c.svg");
         btnLogout = new ButtonToolItem("exit-c.svg", "exit-c.svg");
+        btnDoiMatKhau = new ButtonToolItem("lock-c.svg", "lock-c.svg");
         btnClose = new ButtonToolItem("x-c.svg", "x-c.svg");
     }
 }

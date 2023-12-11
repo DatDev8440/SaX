@@ -51,7 +51,10 @@ public class DonHangPane extends JPanel {
     private JPanel phanTrangPane;
     private JComboBox cboHienThi;
     private JList listPage;
+    @Getter
     private JButton btnTrash;
+    @Getter
+    private JPanel toolPane;
     private IDonHangService donHangService = ContextUtils.getBean(DonHangService.class);
     private IDonHangChiTetService donHangChiTetService = ContextUtils.getBean(DonHangChiTietService.class);
     private Set tempIdSet = new HashSet();
@@ -105,7 +108,6 @@ public class DonHangPane extends JPanel {
             searchByKeyword();
             timer.stop();
         });
-
     }
 
     public void fillTable(List<AbstractViewObject> list) {

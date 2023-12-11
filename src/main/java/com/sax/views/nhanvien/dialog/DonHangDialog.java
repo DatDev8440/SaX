@@ -15,8 +15,11 @@ import java.util.stream.Collectors;
 
 public class DonHangDialog extends JDialog {
     private JPanel contentPane;
+    private DonHangPane donHang;
 
     public DonHangDialog() {
+        donHang.getToolPane().setVisible(false);
+        donHang.getBtnTrash().setVisible(false);
         setContentPane(contentPane);
         setModal(true);
         pack();
