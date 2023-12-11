@@ -161,7 +161,7 @@ public class SanPhamPane extends JPanel {
                     MsgBox.alert(this, e.getMessage());
                 }
                 pageValue = sachService.getTotalPage(sizeValue) < pageValue ? sachService.getTotalPage(sizeValue) : pageValue;
-                pageable = PageRequest.of(pageValue - 1, sizeValue);
+                pageable = PageRequest.of(pageValue > 0 ? pageValue - 1 : pageValue, sizeValue);
                 fillTable(sachService.getPage(pageable).stream().map(SachViewObject::new).collect(Collectors.toList()));
                 fillListPage();
                 loading.dispose();

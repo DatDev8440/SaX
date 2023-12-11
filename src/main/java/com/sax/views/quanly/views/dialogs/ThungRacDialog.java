@@ -107,7 +107,7 @@ public class ThungRacDialog extends JDialog{
 
         @Override
         protected List<AbstractViewObject> doInBackground() {
-            return donHangService.getPageHidenInvoice(null).stream().map(DonHangViewObject::new).collect(Collectors.toList());
+            return donHangService.getAllHindenInvoice().stream().map(DonHangViewObject::new).collect(Collectors.toList());
         }
 
         @Override

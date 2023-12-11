@@ -205,7 +205,7 @@ public class KhuyenMaiPane extends JPanel {
                     MsgBox.alert(this, e.getMessage());
                 }
                 pageKMValue = ctkmService.getTotalPage(sizeValue) < pageKMValue ? ctkmService.getTotalPage(sizeValue) : pageKMValue;
-                pageableKM = PageRequest.of(pageKMValue - 1, sizeValue);
+                pageableKM = PageRequest.of(pageKMValue > 0 ? pageKMValue - 1 : pageKMValue, sizeValue);
                 fillTableKM(ctkmService.getPage(pageableKM).stream().map(CtkmViewObject::new).collect(Collectors.toList()));
                 fillListPage();
                 loading.dispose();
