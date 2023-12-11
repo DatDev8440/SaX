@@ -10,6 +10,8 @@ import com.sax.views.quanly.views.dialogs.NhanVienDialog;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class UserPopup extends JDialog {
     private JPanel main;
@@ -20,7 +22,10 @@ public class UserPopup extends JDialog {
     private JButton btnClose;
 
     public UserPopup() {
-        btnThongTin.addActionListener((e) -> thongTinChiTiet());
+        btnThongTin.addActionListener((e) -> {
+            if (Session.accountid.isVaiTro()) thongTinChiTietQuanLy();
+            else thongTinChiTiet();
+        });
         btnLogout.addActionListener((e) -> dangXuat());
 
         lblTen.setText(Session.accountid.getTenNhanVien());
@@ -45,6 +50,12 @@ public class UserPopup extends JDialog {
         Point cornerPoint = new Point(cornerX - getWidth(), cornerY + 70);
 
         setLocation(cornerPoint);
+        lblTen.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                    new TaiKhoanDialog().setVisible(true);
+            }
+        });
     }
 
     private void dangXuat() {
@@ -59,7 +70,7 @@ public class UserPopup extends JDialog {
         dialog.fillForm();
         dialog.getPanelRole().setVisible(false);
         dialog.getTxtName().setEnabled(false);
-        dialog.getBtnSave().setVisible(false);
+//        dialog.getBtnSave().setVisible(false);
         dialog.getTxtEmail().setEnabled(false);
         dialog.getTxtSdt().setEnabled(false);
         dialog.getPanelTT().setVisible(false);
@@ -70,10 +81,19 @@ public class UserPopup extends JDialog {
         dialog.setVisible(true);
     }
 
+    private void thongTinChiTietQuanLy() {
+        dispose();
+        NhanVienDialog dialog = new NhanVienDialog();
+        dialog.id = Session.accountid.getId();
+        dialog.fillForm();
+        dialog.setLocationRelativeTo(Application.app);
+        dialog.setVisible(true);
+    }
+
     private void createUIComponents() {
         contentPane = new PanelShadow(10);
         btnThongTin = new ButtonToolItem("info-c.svg", "info-c.svg");
         btnLogout = new ButtonToolItem("exit-c.svg", "exit-c.svg");
-        btnClose = new ButtonToolItem("x-c.svg","x-c.svg");
+        btnClose = new ButtonToolItem("x-c.svg", "x-c.svg");
     }
 }

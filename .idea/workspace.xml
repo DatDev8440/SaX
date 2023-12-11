@@ -4,18 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dce73a6b-dd24-49d3-9523-3495e70c20e6" name="Changes" comment="" />
+    <list default="true" id="cf533f98-4b2e-409a-ac9a-03d65410d946" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -24,22 +17,21 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectId" id="2ZM2fC96NIrbAhWU8NfQsdINbrl" />
+  <component name="ProjectId" id="2ZOBdPOUMyVGiK3cAH5qluHb3BP" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor.code.editing&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;77c70b646374c700c5ebbfc677618f24&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "spring.configuration.checksum": "77c70b646374c700c5ebbfc677618f24"
   }
-}</component>
-  <component name="RunManager">
+}]]></component>
+  <component name="RunManager" selected="Application.Application">
     <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sax.Application" />
       <module name="SaX" />
@@ -53,23 +45,32 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestFile.delete" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SaX" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestFile" />
+      <option name="METHOD_NAME" value="delete" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Application" />
+        <item itemvalue="JUnit.TestFile.delete" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="dce73a6b-dd24-49d3-9523-3495e70c20e6" name="Changes" comment="" />
-      <created>1702217729058</created>
+      <changelist id="cf533f98-4b2e-409a-ac9a-03d65410d946" name="Changes" comment="" />
+      <created>1702283331385</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1702217729058</updated>
-      <workItem from="1702217732443" duration="5157000" />
-      <workItem from="1702229707555" duration="6515000" />
-      <workItem from="1702264519287" duration="12592000" />
+      <updated>1702283331385</updated>
+      <workItem from="1702283334101" duration="1248000" />
     </task>
     <servers />
   </component>

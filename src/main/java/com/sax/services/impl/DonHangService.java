@@ -8,7 +8,6 @@ import com.sax.repositories.IDonHangRepository;
 import com.sax.repositories.IKhachHangRepository;
 import com.sax.repositories.ISachRepository;
 import com.sax.services.IDonHangService;
-import com.sax.services.IKhachHangService;
 import com.sax.utils.DTOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -62,6 +61,7 @@ public class DonHangService implements IDonHangService {
         donHang.setNgayTao(LocalDateTime.now());
         donHang.setKhachHang(khachHang);
         donHang.setAccount(account);
+        donHang.setTrangThai(true);
         DonHang save = null;
         List<ChiTietDonHang> chiTietDonHang = DTOUtils
                 .getInstance()
@@ -126,18 +126,45 @@ public class DonHangService implements IDonHangService {
 
     @Override
     public int getTotalPage(int amount) {
-        return repository.findAll(Pageable.ofSize(amount)).getTotalPages();
+        return repository.findAllByTrangThai(true,Pageable.ofSize(amount)).getTotalPages();
     }
 
     @Override
     public List<DonHangDTO> getPage(Pageable page) {
         return DTOUtils
                 .getInstance()
-                .convertToDTOList(repository.findAll(page)
+                .convertToDTOList(repository.findAllByTrangThai(true,page)
                         .stream().toList(), DonHangDTO.class);
     }
     @Override
     public List<DonHangDTO> searchByKeyword(String keyword) {
         return DTOUtils.getInstance().convertToDTOList(repository.findAllByKeyword(keyword), DonHangDTO.class);
+    }
+
+    @Override
+    public void updateStatus(Set<Integer> ids) {
+        List<DonHang>donHangs = repository.findAllById(ids);
+        donHangs.forEach(donHang -> donHang.setTrangThai(false));
+        repository.saveAll(donHangs);
+    }
+
+    @Override
+    public List<DonHangDTO> getPageHidenInvoice(Pageable pageable) {
+        return DTOUtils
+                .getInstance()
+                .convertToDTOList(
+                        repository.findAllByTrangThai(
+                        false,pageable).stream().toList(),
+                        DonHangDTO.class);
+    }
+
+    @Override
+    public int getTotalHindenPage(int amount) {
+        return repository.findAllByTrangThai(false,Pageable.ofSize(amount)).getTotalPages();
+    }
+
+    @Override
+    public int countByTrangThai(Boolean trangThai) {
+        return repository.countByTrangThai(trangThai);
     }
 }

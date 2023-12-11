@@ -7,6 +7,7 @@ import com.sax.utils.ImageUtils;
 import com.sax.utils.Session;
 import com.sax.views.components.libraries.ButtonToolItem;
 import com.sax.views.components.menu.CustomMenu;
+import com.sax.views.nhanvien.dialog.UserPopup;
 import com.sax.views.quanly.views.panes.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -48,6 +49,7 @@ public class QuanLyView extends JPanel {
         btnLogout.addActionListener((e) -> Session.logout());
         initComponent();
         addCustomEventListener();
+        Session.reload();
     }
 
     private void initComponent() {

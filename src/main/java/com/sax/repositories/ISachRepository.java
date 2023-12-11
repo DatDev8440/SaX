@@ -50,6 +50,6 @@ public interface ISachRepository extends JpaRepository<Sach, Integer> {
             "WHERE e.id = :id AND (cs.idSach IS NOT NULL OR lsnh.idSach IS NOT NULL OR hdct.idSach IS NOT NULL)")
     Optional<Sach> findRelative(@Param("id")int id);
 
-    @Query("SELECT e FROM Sach e WHERE CAST(e.id AS string) like %:keyword% OR e.tenSach LIKE %:keyword% AND e.trangThai=true")
+    @Query("SELECT e FROM Sach e WHERE e.barCode like %:keyword% OR e.tenSach LIKE %:keyword% AND e.trangThai=true")
     List<Sach> findAllAvailableByKeyword(@Param("keyword") String keyword);
 }

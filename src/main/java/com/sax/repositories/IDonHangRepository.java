@@ -3,6 +3,8 @@ import com.sax.dtos.DoanhThuNamDTO;
 import com.sax.dtos.DoanhThuNgayDTO;
 import com.sax.entities.DonHang;
 import com.sax.entities.Sach;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -37,4 +39,6 @@ public interface IDonHangRepository extends JpaRepository<DonHang,Integer>, Pagi
 
     @Query("SELECT e FROM DonHang e WHERE CAST(e.id AS string) like %:keyword% OR e.account.tenNhanVien LIKE %:keyword% OR e.khachHang.tenKhach LIKE %:keyword%")
     List<DonHang> findAllByKeyword(@Param("keyword") String keyword);
+    Page<DonHang> findAllByTrangThai(Boolean trangThai, Pageable pageable);
+    int countByTrangThai(Boolean trangThai);
 }

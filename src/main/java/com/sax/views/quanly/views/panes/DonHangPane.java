@@ -16,6 +16,7 @@ import com.sax.views.components.libraries.RoundPanel;
 import com.sax.views.nhanvien.dialog.hoadon.HoaDonDialog;
 import com.sax.views.quanly.viewmodel.AbstractViewObject;
 import com.sax.views.quanly.viewmodel.DonHangViewObject;
+import com.sax.views.quanly.views.dialogs.ThungRacDialog;
 import lombok.Getter;
 import lombok.Setter;
 import org.jdesktop.swingworker.SwingWorker;
@@ -92,17 +93,19 @@ public class DonHangPane extends JPanel {
             }
         });
         cbkSelectedAll.addActionListener((e) -> Session.chonTatCa(cbkSelectedAll, table, listCbk, tempIdSet));
+        btnTrash.addActionListener((e) -> openTrash());
     }
 
     public void initComponent() {
         ((DefaultTableModel) table.getModel()).setColumnIdentifiers(new String[]{"", "Mã đơn hàng", "Tên khách hàng", "Nhân viên", "Tiền hàng", "Chiết khấu", "Tổng tiền", "Phương thức thanh toán", "Ngày tạo"});
-
+        Session.executorService.submit(() -> btnTrash.setText(String.valueOf(donHangService.countByTrangThai(false))));
         new Worker().execute();
         loading.setVisible(true);
         timer = new Timer(300, e -> {
             searchByKeyword();
             timer.stop();
         });
+
     }
 
     public void fillTable(List<AbstractViewObject> list) {
@@ -137,9 +140,13 @@ public class DonHangPane extends JPanel {
                 JOptionPane.showMessageDialog(null, "Bạn đã chọn xoá");
                 // Thực hiện hành động xoá tại đây
             } else if (choice == 1) {
-                // Chuyển thùng rác
-                JOptionPane.showMessageDialog(null, "Bạn đã chọn chuyển thùng rác");
-                // Thực hiện hành động chuyển thùng rác tại đây
+                Session.executorService.submit(() ->
+                {
+                    donHangService.updateStatus(tempIdSet);
+                    btnTrash.setText(String.valueOf(donHangService.countByTrangThai(false)));
+                    loading.dispose();
+                });
+                loading.setVisible(true);
             } else if (choice == 2) return;
             new Worker().execute();
             loading.setVisible(true);
@@ -157,11 +164,11 @@ public class DonHangPane extends JPanel {
         }
     }
 
-    public void fillListPage() {
+    private void fillListPage() {
         Session.fillListPage(pageValue, listPageModel, donHangService, sizeValue, listPage);
     }
 
-    public void selectPageDisplay() {
+    private void selectPageDisplay() {
         if (listPage.getSelectedValue() instanceof Integer) {
             pageValue = Integer.parseInt(listPage.getSelectedValue().toString());
             pageable = PageRequest.of(pageValue - 1, sizeValue);
@@ -170,12 +177,17 @@ public class DonHangPane extends JPanel {
         }
     }
 
-    public void selectSizeDisplay() {
+    private void selectSizeDisplay() {
         sizeValue = Integer.parseInt(cboHienThi.getSelectedItem().toString());
         pageValue = 1;
         pageable = PageRequest.of(pageValue - 1, sizeValue);
         new Worker().execute();
         loading.setVisible(true);
+    }
+
+    private void openTrash() {
+        if (Integer.parseInt(btnTrash.getText()) > 0)
+            new ThungRacDialog().setVisible(true);
     }
 
     private void createUIComponents() {

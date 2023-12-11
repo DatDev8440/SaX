@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal" created-in="IU-231.8109.175">
-    <data-source name="sax@localhost" uuid="ba8ced40-d405-43a7-9c2a-d158020de620">
+    <data-source name="sax@localhost" uuid="dae64bde-1921-4e05-b2b0-9c59bc112925">
       <database-info product="Microsoft SQL Server" version="14.00.1000" jdbc-version="4.2" driver-name="Microsoft JDBC Driver 12.2 for SQL Server" driver-version="12.2.0.0" dbms="MSSQL" exact-version="14.0.1000" exact-driver-version="12.2">
         <extra-name-characters>$#@</extra-name-characters>
         <identifier-quote-string>&quot;</identifier-quote-string>
@@ -16,10 +16,6 @@
           </node>
         </introspection-scope>
       </schema-mapping>
-    </data-source>
-    <data-source name="@localhost" uuid="74e51f5b-0bb8-4575-9ebb-265313b91c1f">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
-      <schema-mapping />
     </data-source>
   </component>
 </project>

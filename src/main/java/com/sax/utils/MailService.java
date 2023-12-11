@@ -8,8 +8,9 @@ import javax.mail.*;
 import javax.mail.Session;
 import javax.mail.internet.*;
 
-public class MailService{
+public class MailService {
     private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
     private static String generateRandomString() {
         SecureRandom random = new SecureRandom();
         StringBuilder randomString = new StringBuilder(6);
@@ -21,6 +22,7 @@ public class MailService{
 
         return randomString.toString();
     }
+
     public static void sendEmail(String email) throws MessagingException {
         Properties properties = new Properties();
         properties.put("mail.smtp.host", "smtp.gmail.com");
@@ -34,18 +36,23 @@ public class MailService{
                 return new PasswordAuthentication("dungbhph35753@fpt.edu.vn", "hjda gxxc hluu sfzz");
             }
         });
-            Message message = new MimeMessage(session);
-               message.setFrom(new InternetAddress("dungbhph35753@fpt.edu.vn"));
-               message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-               message.setSubject("Lấy mã xác nhận lấy lại mật");
-               String otp = generateRandomString();
-               com.sax.utils.Session.otp = otp;
-               message.setText("Mã xác nhân là: "+otp);
-               Transport.send(message);
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress("dungbhph35753@fpt.edu.vn"));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+        message.setSubject("Lấy mã xác nhận lấy lại mật");
+        String otp = generateRandomString();
+        com.sax.utils.Session.otp = otp;
+        message.setText("Mã xác nhân là: " + otp);
+        Transport.send(message);
     }
+        public static boolean isValidEmail(String email) {
+            try {
+                InternetAddress internetAddress = new InternetAddress(email);
+                internetAddress.validate();
+                return true;
+            } catch (AddressException e) {
+                return false;
+            }
+        }
 
-    public static boolean checkMail(String email){
-        EmailValidator validator = EmailValidator.getInstance();
-        return validator.isValid(email);
-    }
 }
