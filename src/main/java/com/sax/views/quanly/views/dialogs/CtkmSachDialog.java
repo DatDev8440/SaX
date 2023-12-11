@@ -232,6 +232,7 @@ public class CtkmSachDialog extends JDialog {
                     khuyenMaiPane.fillTableSP(ctkmSachService.getAll().stream().map(CtkmSachViewObject::new).collect(Collectors.toList()));
                     dispose();
                 } catch (Exception e) {
+                    e.printStackTrace();
                     MsgBox.alert(this, e.getMessage());
                 }
             }

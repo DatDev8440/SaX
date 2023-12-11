@@ -109,7 +109,7 @@ public class CtkmSachService implements ICtkmSachService {
     @Override
     public List<CtkmSachDTO> insetAll(List<CtkmSachDTO> e) {
         List<String> tenSachList = e.stream()
-                .filter(ctkmSachDTO -> !(ctkmSachDTO.getGiaTriGiam() < ctkmSachDTO.getSach().getGiaBan()))
+                .filter(ctkmSachDTO -> !(ctkmSachDTO.getGiaTriGiam() <= ctkmSachDTO.getSach().getGiaBan()))
                 .map(ctkmSachDTO -> ctkmSachDTO.getSach().getTenSach())
                 .toList();
         StringBuilder sb = new StringBuilder();
@@ -118,7 +118,7 @@ public class CtkmSachService implements ICtkmSachService {
        if (sb.isEmpty()){
            List<CtkmSachDTO> dtos = e.stream()
                    .filter(ctkmSachDTO ->
-                           ctkmSachDTO.getGiaTriGiam()<ctkmSachDTO.getSach().getGiaBan()).toList();
+                           ctkmSachDTO.getGiaTriGiam()<=ctkmSachDTO.getSach().getGiaBan()).toList();
            dtoList= DTOUtils.getInstance()
                    .convertToDTOList(repository.saveAll(DTOUtils.getInstance()
                                    .convertToDTOList(dtos, CtkmSach.class)),
