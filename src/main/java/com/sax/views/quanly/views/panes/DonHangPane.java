@@ -164,7 +164,7 @@ public class DonHangPane extends JPanel {
         }
     }
 
-    private void fillListPage() {
+    public void fillListPage() {
         Session.fillListPage(pageValue, listPageModel, donHangService, sizeValue, listPage);
     }
 
@@ -186,8 +186,11 @@ public class DonHangPane extends JPanel {
     }
 
     private void openTrash() {
-        if (Integer.parseInt(btnTrash.getText()) > 0)
-            new ThungRacDialog().setVisible(true);
+        if (Integer.parseInt(btnTrash.getText()) > 0) {
+            ThungRacDialog thungRacDialog = new ThungRacDialog();
+            thungRacDialog.setParentPane(this);
+            thungRacDialog.setVisible(true);
+        }
     }
 
     private void createUIComponents() {
@@ -201,7 +204,7 @@ public class DonHangPane extends JPanel {
         listPage = new ListPageNumber();
     }
 
-    class Worker extends SwingWorker<List<AbstractViewObject>, Integer> {
+    public class Worker extends SwingWorker<List<AbstractViewObject>, Integer> {
 
         @Override
         protected List<AbstractViewObject> doInBackground() {

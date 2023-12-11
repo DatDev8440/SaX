@@ -127,7 +127,7 @@ public class CtkmSachDialog extends JDialog {
                     l.setHorizontalAlignment(SwingConstants.LEFT);
                     p.add(l);
                 } else if (column == 3) {
-                    JLabel l = new JLabel(listCtkmSach.get(row).getGiaTriGiam().toString());
+                    JLabel l = new JLabel(listCtkmSach.get(row).getCtkm().isKieuGiamGia() ? listCtkmSach.get(row).getGiaTriGiam() + "%" : CurrencyConverter.parseString(listCtkmSach.get(row).getGiaTriGiam()));
                     l.setFont(new Font(".SF NS Text", 4, 13));
                     p.add(l);
                 } else {

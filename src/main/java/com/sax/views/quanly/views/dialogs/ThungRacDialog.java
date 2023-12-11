@@ -35,8 +35,6 @@ import java.util.stream.Collectors;
 public class ThungRacDialog extends JDialog{
     private JPanel bg;
     private JXTable table;
-    private JPanel phanTrangPane;
-    private JComboBox cboHienThi;
     private JList listPage;
     private Search timKiem;
     private JCheckBox cbkSelectedAll;
@@ -50,10 +48,14 @@ public class ThungRacDialog extends JDialog{
 
     private Timer timer;
 
+    @Setter
+    private DonHangPane parentPane;
+
     public ThungRacDialog() {
         initComponent();
         btnDel.addActionListener((e) -> delete());
         btnRestore.addActionListener((e) -> restore());
+        cbkSelectedAll.addActionListener((e) -> Session.chonTatCa(cbkSelectedAll, table, listCbk, tempIdSet));
     }
 
     private void initComponent() {
@@ -92,6 +94,8 @@ public class ThungRacDialog extends JDialog{
             donHangService.updateStatus(tempIdSet, true);
             new Worker().execute();
             loading.setVisible(true);
+            parentPane.fillListPage();
+            dispose();
         } else MsgBox.alert(this, "Vui lòng tick ít nhất một đơn hàng!");
     }
 
