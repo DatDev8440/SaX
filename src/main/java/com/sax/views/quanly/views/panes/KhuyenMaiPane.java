@@ -1,6 +1,8 @@
 package com.sax.views.quanly.views.panes;
 
 import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.ui.FlatBorder;
+import com.formdev.flatlaf.ui.FlatButtonBorder;
 import com.sax.dtos.CtkmDTO;
 import com.sax.services.ICtkmSachService;
 import com.sax.services.ICtkmService;
@@ -314,12 +316,18 @@ public class KhuyenMaiPane extends JPanel {
 
     private void updateSP() {
         if (tableSP.getSelectedRow() >= 0) {
-            if (tableSP.getValueAt(tableSP.getSelectedRow(), 7).toString().equals("Đã kết thúc")) {
+            if (tableSP.getValueAt(tableSP.getSelectedRow(), 8).toString().equals("Đã kết thúc")) {
                 MsgBox.alert(this, "Sự kiện đã kết thúc, bạn không thể chỉnh sửa!");
                 return;
             }
             TableCellEditor editor = new DefaultCellEditor(new JCheckBox()) {
                 private JTextField textField = new JTextField();
+                private final FlatBorder flatBorder = new FlatButtonBorder() {
+                    @Override
+                    protected boolean isCellEditor(Component c) {
+                        return false;
+                    }
+                };
 
                 @Override
                 public boolean isCellEditable(EventObject anEvent) {
@@ -335,12 +343,13 @@ public class KhuyenMaiPane extends JPanel {
                 @Override
                 public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
                     textField.setText(value.toString());
+                    textField.setBorder(flatBorder);
                     return textField;
                 }
             };
-            tableSP.getColumnModel().getColumn(6).setCellEditor(editor);
+            tableSP.getColumnModel().getColumn(7).setCellEditor(editor);
 
-            tableSP.editCellAt(tableSP.getSelectedRow(), 6);
+            tableSP.editCellAt(tableSP.getSelectedRow(), 7);
         } else MsgBox.alert(this, "Vui lòng chọn một sản phẩm trong chương trình khuyến mại!");
     }
 
