@@ -32,7 +32,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
-public class ThungRacDialog extends JDialog{
+public class ThungRacDialog extends JDialog {
     private JPanel bg;
     private JXTable table;
     private JList listPage;
@@ -68,15 +68,12 @@ public class ThungRacDialog extends JDialog{
         setLocationRelativeTo(Application.app);
     }
 
-    private void fillTable(List<AbstractViewObject> list)
-    {
+    private void fillTable(List<AbstractViewObject> list) {
         Session.fillTable(list, table, cbkSelectedAll, tempIdSet, listCbk);
     }
 
-    private void delete()
-    {
-        if (tempIdSet.size() > 0)
-        {
+    private void delete() {
+        if (tempIdSet.size() > 0) {
             try {
                 donHangService.deleteAll(tempIdSet);
                 new Worker().execute();
@@ -87,13 +84,12 @@ public class ThungRacDialog extends JDialog{
         } else MsgBox.alert(this, "Vui lòng tick ít nhất một đơn hàng!");
     }
 
-    private void restore()
-    {
-        if (tempIdSet.size() > 0)
-        {
+    private void restore() {
+        if (tempIdSet.size() > 0) {
             donHangService.updateStatus(tempIdSet, true);
             new Worker().execute();
             loading.setVisible(true);
+            parentPane.getBtnTrash().setText(String.valueOf(donHangService.countByTrangThai(false)));
             parentPane.fillListPage();
             parentPane.fillTable(donHangService.getPage(parentPane.getPageable()).stream().map(DonHangViewObject::new).collect(Collectors.toList()));
         } else MsgBox.alert(this, "Vui lòng tick ít nhất một đơn hàng!");

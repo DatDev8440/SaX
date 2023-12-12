@@ -6,6 +6,10 @@ import com.sax.utils.DateUtils;
 import com.sax.utils.ImageUtils;
 import com.sax.views.components.libraries.ButtonToolItem;
 import com.sax.views.nhanvien.dialog.hoadon.table.TableCustom;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.printing.PDFPageable;
+import org.apache.pdfbox.printing.PDFPrintable;
+import org.apache.pdfbox.printing.Scaling;
 import org.jdesktop.swingx.JXTable;
 
 import javax.print.*;
@@ -16,6 +20,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.print.*;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -92,7 +97,6 @@ public class HoaDonDialog extends JDialog {
             hd.paint(g2D);
             g2D.translate(0, this.getHeight());
             hd.paint(g2D);
-//            ImageUtils.saveBufferImageToFile(hoadon, "invoices/" + donHangDTO.getId() + ".png");
             ImageUtils.saveBufferImageToPdf(hoadon, "invoices/" + donHangDTO.getId() + ".pdf");
             dispose();
         });
@@ -105,30 +109,29 @@ public class HoaDonDialog extends JDialog {
             g2D.translate(0, this.getHeight());
             hd.paint(g2D);
             ImageUtils.saveBufferImageToRaster(hoadon, "invoices/" + donHangDTO.getId() + ".png");
+            ImageUtils.saveBufferImageToPdf(hoadon, "invoices/" + donHangDTO.getId() + ".pdf");
 
-            FileInputStream fileInputStream = null;
             try {
-                fileInputStream = new FileInputStream("images/invoices/" + donHangDTO.getId() + ".png");
-            } catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
-            DocFlavor myFormat = DocFlavor.INPUT_STREAM.PNG;
+                FileInputStream fileInputStream = new FileInputStream("images/invoices/" + donHangDTO.getId() + ".png");
 
-            Doc myDoc = new SimpleDoc(fileInputStream, myFormat, null);
-            PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
-            aset.add(new Copies(1));
-            aset.add(OrientationRequested.REVERSE_PORTRAIT);
-//            aset.add(Sides.ONE_SIDED);
+                DocFlavor myFormat = DocFlavor.INPUT_STREAM.PNG;
 
-            PrintService[] services = PrintServiceLookup.lookupPrintServices(myFormat, aset);
-            System.out.println(Arrays.toString(services));
-            if (services.length != 0) {
-                DocPrintJob printJob = services[0].createPrintJob();
-                try {
-                    printJob.print(myDoc, aset);
-                } catch (PrintException pe) {
-                    throw new RuntimeException(pe);
+                Doc myDoc = new SimpleDoc(fileInputStream, myFormat, null);
+                PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
+                aset.add(new Copies(1));
+                aset.add(OrientationRequested.REVERSE_PORTRAIT);
+
+                PrintService[] services = PrintServiceLookup.lookupPrintServices(myFormat, aset);
+                if (services.length != 0) {
+                    DocPrintJob printJob = services[0].createPrintJob();
+                    try {
+                        printJob.print(myDoc, aset);
+                    } catch (PrintException pe) {
+                        throw new RuntimeException(pe);
+                    }
                 }
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
             }
             dispose();
         });

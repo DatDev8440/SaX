@@ -24,13 +24,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "spring.configuration.checksum": "77c70b646374c700c5ebbfc677618f24"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;77c70b646374c700c5ebbfc677618f24&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sax.Application" />
@@ -59,7 +59,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1702299665581</updated>
-      <workItem from="1702299667599" duration="10181000" />
+      <workItem from="1702299667599" duration="13210000" />
+      <workItem from="1702347914458" duration="2204000" />
+      <workItem from="1702350508308" duration="3129000" />
     </task>
     <servers />
   </component>
