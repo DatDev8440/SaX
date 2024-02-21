@@ -2,26 +2,37 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="SaX:jar" />
+      <artifact name="SaX:jar2" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85d4af93-9716-440b-bbbc-a44bc02c8b87" name="Changes" comment="" />
+    <list default="true" id="85d4af93-9716-440b-bbbc-a44bc02c8b87" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/invoices/26148.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/invoices/26148.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/invoices/26149.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/invoices/26149.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/invoices/5018.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/images/invoices/5018.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/invoices/5018.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/z4456789335193_3a1aedd5f724b169ada370b62cce326c.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/z4464627249814_5f914828ad50f09a64256f2d21c73c64.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/images/z4464627249814_5f914828ad50f09a64256f2d21c73c64.jpg" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="useMavenConfig" value="true" />
-      </MavenGeneralSettings>
-    </option>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2ZOik0H8LRtH5jdHIeabzoQjPFj" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
@@ -33,8 +44,10 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/callm/OneDrive/Desktop",
     "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.0",
+    "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.34285715",
     "spring.configuration.checksum": "77c70b646374c700c5ebbfc677618f24"
   }
